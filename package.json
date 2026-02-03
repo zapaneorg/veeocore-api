@@ -1,0 +1,37 @@
+{
+  "name": "veeocore",
+  "version": "1.0.0",
+  "description": "VeeoCore - Moteur de tarification et dispatch chauffeurs SaaS",
+  "private": true,
+  "workspaces": [
+    "packages/*",
+    "apps/*"
+  ],
+  "scripts": {
+    "dev": "concurrently \"npm run dev:api\" \"npm run dev:admin\"",
+    "dev:api": "npm run dev --workspace=@veeo/api",
+    "dev:admin": "npm run dev --workspace=@veeo/admin",
+    "build": "npm run build --workspaces",
+    "test": "npm run test --workspaces",
+    "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
+    "clean": "rm -rf node_modules packages/*/node_modules apps/*/node_modules"
+  },
+  "keywords": [
+    "vtc",
+    "taxi",
+    "pricing",
+    "dispatch",
+    "saas",
+    "booking"
+  ],
+  "author": "VeeoStras",
+  "license": "UNLICENSED",
+  "devDependencies": {
+    "concurrently": "^8.2.2",
+    "eslint": "^8.56.0",
+    "prettier": "^3.2.4"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

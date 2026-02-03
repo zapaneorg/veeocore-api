@@ -1,0 +1,894 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VeeoCore API - Documentation</title>
+  <link rel="stylesheet" href="https://unpkg.com/swagger-ui-dist@5.11.0/swagger-ui.css">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+    
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: linear-gradient(180deg, #f8fafc 0%, #f1f5f9 100%);
+      min-height: 100vh;
+    }
+    
+    .docs-header {
+      background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #a855f7 100%);
+      padding: 20px 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 4px 20px rgba(99, 102, 241, 0.3);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    
+    .docs-logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      color: white;
+    }
+    
+    .docs-logo-icon {
+      font-size: 28px;
+    }
+    
+    .docs-logo-text {
+      font-size: 24px;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+    }
+    
+    .docs-logo-badge {
+      background: rgba(255,255,255,0.2);
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 600;
+      backdrop-filter: blur(10px);
+    }
+    
+    .docs-nav {
+      display: flex;
+      gap: 8px;
+    }
+    
+    .docs-nav a {
+      color: rgba(255,255,255,0.9);
+      text-decoration: none;
+      padding: 10px 20px;
+      border-radius: 10px;
+      font-weight: 500;
+      font-size: 14px;
+      transition: all 0.2s;
+    }
+    
+    .docs-nav a:hover {
+      background: rgba(255,255,255,0.2);
+      color: white;
+    }
+    
+    .docs-nav a.active {
+      background: rgba(255,255,255,0.25);
+    }
+    
+    /* API Key Notice */
+    .api-key-notice {
+      background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+      border: 1px solid #475569;
+      border-radius: 16px;
+      padding: 20px 28px;
+      margin: 24px auto;
+      max-width: 1200px;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      color: white;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+    }
+    
+    .api-key-notice-icon {
+      font-size: 36px;
+      flex-shrink: 0;
+    }
+    
+    .api-key-notice-content {
+      flex: 1;
+    }
+    
+    .api-key-notice-content h3 {
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+    
+    .api-key-notice-content p {
+      color: #cbd5e1;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+    
+    .api-key-notice-content code {
+      background: rgba(99, 102, 241, 0.4);
+      color: #c7d2fe;
+      padding: 3px 10px;
+      border-radius: 6px;
+      font-family: 'JetBrains Mono', 'Fira Code', monospace;
+      font-size: 13px;
+      font-weight: 600;
+    }
+    
+    /* Quick Links */
+    .quick-links {
+      max-width: 1200px;
+      margin: 0 auto 24px;
+      padding: 0 24px;
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    
+    .quick-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 18px;
+      background: white;
+      border: 1px solid #e2e8f0;
+      border-radius: 10px;
+      color: #475569;
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 600;
+      transition: all 0.2s;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    }
+    
+    .quick-link:hover {
+      border-color: #6366f1;
+      color: #6366f1;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(99, 102, 241, 0.15);
+    }
+    
+    .quick-link-icon {
+      font-size: 16px;
+    }
+    
+    /* Swagger UI Customizations */
+    .swagger-ui {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px 48px;
+    }
+    
+    .swagger-ui .topbar {
+      display: none;
+    }
+    
+    .swagger-ui .wrapper {
+      padding: 0;
+    }
+    
+    .swagger-ui .info {
+      margin: 24px 0 32px 0;
+      background: white;
+      padding: 32px;
+      border-radius: 16px;
+      border: 1px solid #e2e8f0;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+    }
+    
+    .swagger-ui .info hgroup.main {
+      margin: 0;
+    }
+    
+    .swagger-ui .info .title {
+      font-family: 'Inter', sans-serif !important;
+      font-size: 32px !important;
+      font-weight: 800 !important;
+      color: #1e293b !important;
+      letter-spacing: -0.5px;
+    }
+    
+    .swagger-ui .info .title small {
+      background: linear-gradient(135deg, #6366f1, #8b5cf6) !important;
+      color: white !important;
+      padding: 4px 12px !important;
+      border-radius: 8px !important;
+      font-size: 12px !important;
+      font-weight: 600 !important;
+      vertical-align: middle;
+      margin-left: 12px;
+    }
+    
+    .swagger-ui .info .description {
+      font-family: 'Inter', sans-serif !important;
+      font-size: 15px !important;
+      color: #64748b !important;
+      line-height: 1.6 !important;
+      margin-top: 12px;
+    }
+    
+    .swagger-ui .info .description p {
+      margin: 0;
+    }
+    
+    /* Tags / Sections */
+    .swagger-ui .opblock-tag-section {
+      margin-bottom: 24px;
+    }
+    
+    .swagger-ui .opblock-tag {
+      font-family: 'Inter', sans-serif !important;
+      font-size: 20px !important;
+      font-weight: 700 !important;
+      color: #1e293b !important;
+      border-bottom: 2px solid #e2e8f0 !important;
+      padding: 16px 0 !important;
+      margin: 0 !important;
+    }
+    
+    .swagger-ui .opblock-tag:hover {
+      background: transparent !important;
+    }
+    
+    .swagger-ui .opblock-tag small {
+      font-size: 13px !important;
+      color: #64748b !important;
+      font-weight: 500 !important;
+    }
+    
+    /* Operation blocks */
+    .swagger-ui .opblock {
+      border-radius: 12px !important;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06) !important;
+      margin-bottom: 12px !important;
+      border-width: 1px !important;
+      overflow: hidden;
+    }
+    
+    .swagger-ui .opblock .opblock-summary {
+      padding: 14px 20px !important;
+    }
+    
+    .swagger-ui .opblock .opblock-summary-method {
+      border-radius: 6px !important;
+      font-weight: 700 !important;
+      font-size: 12px !important;
+      padding: 6px 12px !important;
+      min-width: 70px;
+    }
+    
+    .swagger-ui .opblock .opblock-summary-path {
+      font-family: 'JetBrains Mono', 'Fira Code', monospace !important;
+      font-size: 14px !important;
+      font-weight: 600 !important;
+      color: #1e293b !important;
+    }
+    
+    .swagger-ui .opblock .opblock-summary-description {
+      font-family: 'Inter', sans-serif !important;
+      font-size: 13px !important;
+      color: #64748b !important;
+    }
+    
+    /* POST - Purple */
+    .swagger-ui .opblock.opblock-post {
+      border-color: #6366f1 !important;
+      background: linear-gradient(135deg, rgba(99, 102, 241, 0.03) 0%, rgba(139, 92, 246, 0.03) 100%) !important;
+    }
+    
+    .swagger-ui .opblock.opblock-post .opblock-summary-method {
+      background: linear-gradient(135deg, #6366f1, #8b5cf6) !important;
+    }
+    
+    .swagger-ui .opblock.opblock-post .opblock-summary {
+      border-color: rgba(99, 102, 241, 0.2) !important;
+    }
+    
+    /* GET - Green */
+    .swagger-ui .opblock.opblock-get {
+      border-color: #10b981 !important;
+      background: rgba(16, 185, 129, 0.03) !important;
+    }
+    
+    .swagger-ui .opblock.opblock-get .opblock-summary-method {
+      background: linear-gradient(135deg, #10b981, #059669) !important;
+    }
+    
+    /* PUT - Orange */
+    .swagger-ui .opblock.opblock-put {
+      border-color: #f59e0b !important;
+      background: rgba(245, 158, 11, 0.03) !important;
+    }
+    
+    .swagger-ui .opblock.opblock-put .opblock-summary-method {
+      background: linear-gradient(135deg, #f59e0b, #d97706) !important;
+    }
+    
+    /* DELETE - Red */
+    .swagger-ui .opblock.opblock-delete {
+      border-color: #ef4444 !important;
+      background: rgba(239, 68, 68, 0.03) !important;
+    }
+    
+    .swagger-ui .opblock.opblock-delete .opblock-summary-method {
+      background: linear-gradient(135deg, #ef4444, #dc2626) !important;
+    }
+    
+    /* Expanded state */
+    .swagger-ui .opblock.is-open .opblock-summary {
+      border-bottom: 1px solid rgba(0,0,0,0.1) !important;
+    }
+    
+    .swagger-ui .opblock-body {
+      background: white !important;
+    }
+    
+    .swagger-ui .opblock-body pre {
+      background: #1e293b !important;
+      border-radius: 8px !important;
+      color: #e2e8f0 !important;
+    }
+    
+    .swagger-ui .opblock-section-header {
+      background: #f8fafc !important;
+      border-radius: 0 !important;
+    }
+    
+    .swagger-ui .opblock-section-header h4 {
+      font-family: 'Inter', sans-serif !important;
+      font-size: 13px !important;
+      font-weight: 600 !important;
+      color: #475569 !important;
+    }
+    
+    /* Tables */
+    .swagger-ui table.parameters {
+      margin: 0 !important;
+    }
+    
+    .swagger-ui table thead tr th {
+      font-family: 'Inter', sans-serif !important;
+      font-size: 12px !important;
+      font-weight: 600 !important;
+      color: #64748b !important;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      padding: 12px 16px !important;
+      background: #f8fafc !important;
+    }
+    
+    .swagger-ui table tbody tr td {
+      font-family: 'Inter', sans-serif !important;
+      font-size: 14px !important;
+      color: #1e293b !important;
+      padding: 12px 16px !important;
+      border-color: #e2e8f0 !important;
+    }
+    
+    .swagger-ui .parameter__name {
+      font-family: 'JetBrains Mono', monospace !important;
+      font-weight: 600 !important;
+      color: #6366f1 !important;
+    }
+    
+    .swagger-ui .parameter__type {
+      font-size: 12px !important;
+      color: #64748b !important;
+    }
+    
+    .swagger-ui .parameter__in {
+      font-size: 11px !important;
+      color: #94a3b8 !important;
+    }
+    
+    /* Models */
+    .swagger-ui .model-box {
+      background: #f8fafc !important;
+      border-radius: 8px !important;
+    }
+    
+    .swagger-ui .model {
+      font-family: 'JetBrains Mono', monospace !important;
+      color: #1e293b !important;
+    }
+    
+    .swagger-ui .model .property.primitive {
+      color: #6366f1 !important;
+    }
+    
+    /* Buttons */
+    .swagger-ui .btn {
+      font-family: 'Inter', sans-serif !important;
+      font-weight: 600 !important;
+      border-radius: 8px !important;
+      transition: all 0.2s !important;
+    }
+    
+    .swagger-ui .btn.execute {
+      background: linear-gradient(135deg, #6366f1, #8b5cf6) !important;
+      border: none !important;
+      box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3) !important;
+    }
+    
+    .swagger-ui .btn.execute:hover {
+      box-shadow: 0 6px 20px rgba(99, 102, 241, 0.4) !important;
+    }
+    
+    .swagger-ui .btn.cancel {
+      border-color: #e2e8f0 !important;
+      color: #64748b !important;
+    }
+    
+    /* Responses */
+    .swagger-ui .responses-inner h4 {
+      font-family: 'Inter', sans-serif !important;
+      font-weight: 600 !important;
+      color: #1e293b !important;
+    }
+    
+    .swagger-ui .response .response-col_status {
+      font-family: 'JetBrains Mono', monospace !important;
+      font-weight: 700 !important;
+    }
+    
+    .swagger-ui .response .response-col_description {
+      font-family: 'Inter', sans-serif !important;
+      color: #64748b !important;
+    }
+    
+    /* Markdown descriptions */
+    .swagger-ui .markdown p,
+    .swagger-ui .renderedMarkdown p {
+      font-family: 'Inter', sans-serif !important;
+      color: #64748b !important;
+      line-height: 1.6 !important;
+    }
+    
+    /* Scrollbar */
+    .swagger-ui ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+    
+    .swagger-ui ::-webkit-scrollbar-track {
+      background: #f1f5f9;
+      border-radius: 4px;
+    }
+    
+    .swagger-ui ::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 4px;
+    }
+    
+    .swagger-ui ::-webkit-scrollbar-thumb:hover {
+      background: #94a3b8;
+    }
+    
+    /* Responsive */
+    @media (max-width: 768px) {
+      .docs-header {
+        flex-direction: column;
+        gap: 16px;
+        padding: 16px;
+      }
+      
+      .docs-nav {
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+      
+      .docs-nav a {
+        padding: 8px 14px;
+        font-size: 13px;
+      }
+      
+      .swagger-ui {
+        padding: 0 16px 32px;
+      }
+      
+      .swagger-ui .info {
+        padding: 20px;
+      }
+      
+      .swagger-ui .info .title {
+        font-size: 24px !important;
+      }
+      
+      .api-key-notice {
+        flex-direction: column;
+        text-align: center;
+        margin: 16px;
+        padding: 20px;
+      }
+      
+      .quick-links {
+        padding: 0 16px;
+        justify-content: center;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="docs-header">
+    <a href="index.html" class="docs-logo">
+      <span class="docs-logo-icon">⚡</span>
+      <span class="docs-logo-text">VeeoCore</span>
+      <span class="docs-logo-badge">API v1.2</span>
+    </a>
+    <nav class="docs-nav">
+      <a href="index.html">🏠 Accueil</a>
+      <a href="index.html#demo">🎮 Demo</a>
+      <a href="docs.html" class="active">📖 Documentation</a>
+      <a href="https://github.com/zapaneorg/veeocore-api" target="_blank">🐙 GitHub</a>
+    </nav>
+  </header>
+  
+  <div class="api-key-notice">
+    <span class="api-key-notice-icon">🔑</span>
+    <div class="api-key-notice-content">
+      <h3>Clé API de test disponible</h3>
+      <p>Utilisez l'en-tête <code>X-API-Key: demo-key</code> pour tester l'API en mode démo. Accès complet aux endpoints de pricing avec les véhicules VeeoStras.</p>
+    </div>
+  </div>
+  
+  <div class="quick-links">
+    <a href="#Pricing" class="quick-link">
+      <span class="quick-link-icon">💰</span>
+      Pricing API
+    </a>
+    <a href="#Bookings" class="quick-link">
+      <span class="quick-link-icon">📅</span>
+      Bookings API
+    </a>
+    <a href="#Drivers" class="quick-link">
+      <span class="quick-link-icon">🚗</span>
+      Drivers API
+    </a>
+    <a href="#Geo" class="quick-link">
+      <span class="quick-link-icon">🗺️</span>
+      Geo API
+    </a>
+    <a href="/api/v1/openapi" target="_blank" class="quick-link">
+      <span class="quick-link-icon">📄</span>
+      OpenAPI JSON
+    </a>
+  </div>
+
+  <div id="swagger-ui"></div>
+  
+  <script src="https://unpkg.com/swagger-ui-dist@5.11.0/swagger-ui-bundle.js"></script>
+  <script>
+    const spec = {
+      openapi: "3.0.0",
+      info: {
+        title: "VeeoCore API",
+        version: "1.2.0",
+        description: "API SaaS de calcul de prix et gestion de réservations VTC. Intégrez facilement un système de réservation complet dans votre application.",
+        contact: {
+          email: "api@veeo-stras.fr",
+          name: "VeeoCore Support"
+        }
+      },
+      servers: [
+        { url: "https://api-core.veeo-stras.fr", description: "Production" }
+      ],
+      tags: [
+        { name: "Pricing", description: "Calcul de prix en temps réel" },
+        { name: "Bookings", description: "Gestion des réservations" },
+        { name: "Drivers", description: "Gestion des chauffeurs" },
+        { name: "Geo", description: "Géocodage et calculs de distance" }
+      ],
+      paths: {
+        "/api/v1/pricing/calculate": {
+          post: {
+            tags: ["Pricing"],
+            summary: "Calculer les prix pour tous les véhicules",
+            description: "Retourne les devis pour tous les types de véhicules disponibles avec breakdown détaillé.",
+            security: [{ ApiKeyAuth: [] }],
+            requestBody: {
+              required: true,
+              content: {
+                "application/json": {
+                  schema: {
+                    type: "object",
+                    required: ["distanceKm", "durationMin"],
+                    properties: {
+                      distanceKm: { type: "number", example: 15.5, description: "Distance en kilomètres" },
+                      durationMin: { type: "number", example: 25, description: "Durée estimée en minutes" },
+                      passengers: { type: "integer", example: 2, description: "Nombre de passagers" },
+                      luggage: { type: "integer", example: 2, description: "Nombre de bagages" },
+                      pickup: {
+                        type: "object",
+                        properties: {
+                          lat: { type: "number", example: 48.58 },
+                          lng: { type: "number", example: 7.75 },
+                          address: { type: "string", example: "Gare de Strasbourg" }
+                        }
+                      },
+                      dropoff: {
+                        type: "object",
+                        properties: {
+                          lat: { type: "number", example: 48.55 },
+                          lng: { type: "number", example: 7.68 },
+                          address: { type: "string", example: "Aéroport de Strasbourg" }
+                        }
+                      },
+                      bookingTime: { type: "string", format: "date-time", example: "2026-02-03T14:30:00Z" }
+                    }
+                  }
+                }
+              }
+            },
+            responses: {
+              200: {
+                description: "Devis calculés avec succès",
+                content: {
+                  "application/json": {
+                    schema: {
+                      type: "object",
+                      properties: {
+                        success: { type: "boolean", example: true },
+                        data: {
+                          type: "object",
+                          properties: {
+                            quotes: {
+                              type: "array",
+                              items: {
+                                type: "object",
+                                properties: {
+                                  vehicleType: { type: "string", example: "veeo_x" },
+                                  name: { type: "string", example: "Veeo X" },
+                                  price: { type: "number", example: 35.50 },
+                                  surgeMultiplier: { type: "number", example: 1.0 },
+                                  breakdown: { type: "object" }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              401: { description: "Clé API manquante ou invalide" },
+              400: { description: "Paramètres invalides" }
+            }
+          }
+        },
+        "/api/v1/pricing/quote": {
+          post: {
+            tags: ["Pricing"],
+            summary: "Calculer le prix pour un véhicule spécifique",
+            security: [{ ApiKeyAuth: [] }],
+            requestBody: {
+              required: true,
+              content: {
+                "application/json": {
+                  schema: {
+                    type: "object",
+                    required: ["distanceKm", "durationMin", "vehicleType"],
+                    properties: {
+                      distanceKm: { type: "number", example: 15.2 },
+                      durationMin: { type: "number", example: 22 },
+                      vehicleType: { type: "string", enum: ["veeo_x", "veeo_pet", "veeo_vite", "veeo_xl", "veeo_van"] }
+                    }
+                  }
+                }
+              }
+            },
+            responses: {
+              200: { description: "Prix calculé avec succès" },
+              401: { description: "Clé API invalide" }
+            }
+          }
+        },
+        "/api/v1/bookings": {
+          get: {
+            tags: ["Bookings"],
+            summary: "Lister les réservations",
+            description: "Récupère toutes les réservations du tenant avec pagination.",
+            security: [{ ApiKeyAuth: [] }],
+            parameters: [
+              { name: "status", in: "query", schema: { type: "string", enum: ["pending", "confirmed", "completed", "cancelled"] } },
+              { name: "limit", in: "query", schema: { type: "integer", default: 20 } },
+              { name: "offset", in: "query", schema: { type: "integer", default: 0 } }
+            ],
+            responses: {
+              200: { description: "Liste des réservations" }
+            }
+          },
+          post: {
+            tags: ["Bookings"],
+            summary: "Créer une réservation",
+            security: [{ ApiKeyAuth: [] }],
+            requestBody: {
+              required: true,
+              content: {
+                "application/json": {
+                  schema: {
+                    type: "object",
+                    required: ["pickup", "dropoff", "vehicleType", "customerName", "customerPhone"],
+                    properties: {
+                      pickup: {
+                        type: "object",
+                        properties: {
+                          lat: { type: "number" },
+                          lng: { type: "number" },
+                          address: { type: "string" }
+                        }
+                      },
+                      dropoff: {
+                        type: "object",
+                        properties: {
+                          lat: { type: "number" },
+                          lng: { type: "number" },
+                          address: { type: "string" }
+                        }
+                      },
+                      vehicleType: { type: "string" },
+                      scheduledAt: { type: "string", format: "date-time" },
+                      customerName: { type: "string", example: "Jean Dupont" },
+                      customerPhone: { type: "string", example: "0612345678" },
+                      customerEmail: { type: "string" },
+                      notes: { type: "string" },
+                      price: { type: "number" }
+                    }
+                  }
+                }
+              }
+            },
+            responses: {
+              201: { description: "Réservation créée" },
+              400: { description: "Données invalides" }
+            }
+          }
+        },
+        "/api/v1/bookings/{id}": {
+          get: {
+            tags: ["Bookings"],
+            summary: "Détails d'une réservation",
+            security: [{ ApiKeyAuth: [] }],
+            parameters: [
+              { name: "id", in: "path", required: true, schema: { type: "string" } }
+            ],
+            responses: {
+              200: { description: "Détails de la réservation" },
+              404: { description: "Réservation non trouvée" }
+            }
+          }
+        },
+        "/api/v1/drivers": {
+          get: {
+            tags: ["Drivers"],
+            summary: "Lister les chauffeurs",
+            security: [{ ApiKeyAuth: [] }],
+            responses: {
+              200: { description: "Liste des chauffeurs" }
+            }
+          },
+          post: {
+            tags: ["Drivers"],
+            summary: "Créer un chauffeur",
+            security: [{ ApiKeyAuth: [] }],
+            requestBody: {
+              content: {
+                "application/json": {
+                  schema: {
+                    type: "object",
+                    required: ["name", "phone"],
+                    properties: {
+                      name: { type: "string" },
+                      phone: { type: "string" },
+                      email: { type: "string" },
+                      vehicleType: { type: "string" }
+                    }
+                  }
+                }
+              }
+            },
+            responses: {
+              201: { description: "Chauffeur créé" }
+            }
+          }
+        },
+        "/api/v1/drivers/available": {
+          get: {
+            tags: ["Drivers"],
+            summary: "Chauffeurs disponibles",
+            description: "Liste les chauffeurs actuellement disponibles pour une course.",
+            security: [{ ApiKeyAuth: [] }],
+            parameters: [
+              { name: "lat", in: "query", schema: { type: "number" }, description: "Latitude de la position" },
+              { name: "lng", in: "query", schema: { type: "number" }, description: "Longitude de la position" },
+              { name: "vehicleType", in: "query", schema: { type: "string" } }
+            ],
+            responses: {
+              200: { description: "Liste des chauffeurs disponibles" }
+            }
+          }
+        },
+        "/api/v1/geo/geocode": {
+          get: {
+            tags: ["Geo"],
+            summary: "Géocoder une adresse",
+            security: [{ ApiKeyAuth: [] }],
+            parameters: [
+              { name: "address", in: "query", required: true, schema: { type: "string" } }
+            ],
+            responses: {
+              200: { description: "Coordonnées de l'adresse" }
+            }
+          }
+        },
+        "/api/v1/geo/distance": {
+          post: {
+            tags: ["Geo"],
+            summary: "Calculer distance et durée",
+            security: [{ ApiKeyAuth: [] }],
+            requestBody: {
+              content: {
+                "application/json": {
+                  schema: {
+                    type: "object",
+                    properties: {
+                      origin: {
+                        type: "object",
+                        properties: { lat: { type: "number" }, lng: { type: "number" } }
+                      },
+                      destination: {
+                        type: "object",
+                        properties: { lat: { type: "number" }, lng: { type: "number" } }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            responses: {
+              200: { description: "Distance et durée calculées" }
+            }
+          }
+        }
+      },
+      components: {
+        securitySchemes: {
+          ApiKeyAuth: {
+            type: "apiKey",
+            in: "header",
+            name: "X-API-Key",
+            description: "Clé API fournie lors de l'inscription"
+          }
+        }
+      }
+    };
+    
+    SwaggerUIBundle({
+      spec: spec,
+      dom_id: '#swagger-ui',
+      presets: [
+        SwaggerUIBundle.presets.apis,
+        SwaggerUIBundle.SwaggerUIStandalonePreset
+      ],
+      layout: "BaseLayout",
+      deepLinking: true,
+      showExtensions: true,
+      showCommonExtensions: true
+    });
+  </script>
+</body>
+</html>

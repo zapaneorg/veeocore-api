@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VeeoCore API - Démo Interactive</title>
+  <meta name="description" content="Découvrez VeeoCore API - La solution SaaS de calcul de prix et gestion VTC. Testez en temps réel.">
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Styles -->
+  <link rel="stylesheet" href="styles.css?v=3.2">
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🚗</text></svg>">
+</head>
+<body>
+  <!-- Navigation -->
+  <nav class="navbar">
+    <div class="container nav-content">
+      <a href="#" class="logo">
+        <span class="logo-icon">⚡</span>
+        <span class="logo-text">VeeoCore</span>
+        <span class="logo-badge">API</span>
+      </a>
+      <div class="nav-links">
+        <a href="#demo" class="nav-link">Démo</a>
+        <a href="#features" class="nav-link">Fonctionnalités</a>
+        <a href="#pricing" class="nav-link">Tarifs</a>
+        <a href="docs.html" class="nav-link">Documentation</a>
+      </div>
+      <div class="nav-actions">
+        <a href="#contact" class="btn btn-ghost">Contact</a>
+        <a href="#demo" class="btn btn-primary">Essayer gratuitement</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-bg">
+      <div class="hero-gradient"></div>
+      <div class="hero-pattern"></div>
+    </div>
+    <div class="container hero-content">
+      <div class="hero-badge">
+        <span class="badge-dot"></span>
+        <span>Nouveau : Dispatch automatique disponible</span>
+      </div>
+      <h1 class="hero-title">
+        L'API VTC qui<br>
+        <span class="gradient-text">propulse votre business</span>
+      </h1>
+      <p class="hero-subtitle">
+        Calcul de prix en temps réel, dispatch intelligent, géocodage et analytics.<br>
+        Intégrez VeeoCore en quelques lignes de code.
+      </p>
+      <div class="hero-cta">
+        <a href="#demo" class="btn btn-large btn-primary">
+          <span>Tester la démo</span>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M5 12h14M12 5l7 7-7 7"/>
+          </svg>
+        </a>
+        <a href="#docs" class="btn btn-large btn-outline">
+          <span>Documentation</span>
+        </a>
+      </div>
+      <div class="hero-stats">
+        <div class="stat">
+          <span class="stat-value">< 50ms</span>
+          <span class="stat-label">Latence moyenne</span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat">
+          <span class="stat-value">99.9%</span>
+          <span class="stat-label">Disponibilité</span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat">
+          <span class="stat-value">10k+</span>
+          <span class="stat-label">Requêtes/sec</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Demo Section -->
+  <section id="demo" class="demo-section">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-badge">Démo interactive</span>
+        <h2 class="section-title">Testez l'API en temps réel</h2>
+        <p class="section-subtitle">
+          Simulez un calcul de prix VTC avec notre formulaire de réservation
+        </p>
+      </div>
+
+      <div class="demo-grid">
+        <!-- Booking Form -->
+        <div class="demo-form-wrapper">
+          <div class="demo-form-card">
+            <div class="form-header">
+              <div class="form-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="12" cy="12" r="10"/>
+                  <path d="M12 6v6l4 2"/>
+                </svg>
+              </div>
+              <div>
+                <h3 class="form-title">Réservation VTC</h3>
+                <p class="form-subtitle">Obtenez un devis instantané</p>
+              </div>
+            </div>
+
+            <form id="bookingForm" class="booking-form">
+              <!-- Pickup -->
+              <div class="form-group">
+                <label class="form-label">
+                  <span class="label-icon pickup-icon">A</span>
+                  Point de départ
+                </label>
+                <div class="input-wrapper">
+                  <input 
+                    type="text" 
+                    id="pickup" 
+                    class="form-input" 
+                    placeholder="Ex: Gare de Strasbourg"
+                    autocomplete="off"
+                  >
+                  <button type="button" class="input-action" onclick="useCurrentLocation('pickup')">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <circle cx="12" cy="12" r="3"/>
+                      <path d="M12 2v4m0 12v4M2 12h4m12 0h4"/>
+                    </svg>
+                  </button>
+                </div>
+                <div id="pickupSuggestions" class="suggestions-dropdown"></div>
+              </div>
+
+              <!-- Dropoff -->
+              <div class="form-group">
+                <label class="form-label">
+                  <span class="label-icon dropoff-icon">B</span>
+                  Destination
+                </label>
+                <div class="input-wrapper">
+                  <input 
+                    type="text" 
+                    id="dropoff" 
+                    class="form-input" 
+                    placeholder="Ex: Aéroport de Strasbourg"
+                    autocomplete="off"
+                  >
+                </div>
+                <div id="dropoffSuggestions" class="suggestions-dropdown"></div>
+              </div>
+
+              <!-- Route Line Visual -->
+              <div class="route-visual">
+                <div class="route-line"></div>
+              </div>
+
+              <!-- Date & Time -->
+              <div class="form-row">
+                <div class="form-group">
+                  <label class="form-label">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <rect x="3" y="4" width="18" height="18" rx="2"/>
+                      <path d="M16 2v4M8 2v4M3 10h18"/>
+                    </svg>
+                    Date
+                  </label>
+                  <input type="date" id="bookingDate" class="form-input">
+                </div>
+                <div class="form-group">
+                  <label class="form-label">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <circle cx="12" cy="12" r="10"/>
+                      <path d="M12 6v6l4 2"/>
+                    </svg>
+                    Heure
+                  </label>
+                  <input type="time" id="bookingTime" class="form-input">
+                </div>
+              </div>
+
+              <!-- Passengers & Luggage -->
+              <div class="form-row">
+                <div class="form-group">
+                  <label class="form-label">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                      <circle cx="9" cy="7" r="4"/>
+                      <path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>
+                    </svg>
+                    Passagers
+                  </label>
+                  <div class="counter-input">
+                    <button type="button" class="counter-btn" onclick="updateCounter('passengers', -1)">−</button>
+                    <span id="passengersCount" class="counter-value">1</span>
+                    <button type="button" class="counter-btn" onclick="updateCounter('passengers', 1)">+</button>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="form-label">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <rect x="3" y="8" width="18" height="12" rx="2"/>
+                      <path d="M7 8V6a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v2"/>
+                    </svg>
+                    Bagages
+                  </label>
+                  <div class="counter-input">
+                    <button type="button" class="counter-btn" onclick="updateCounter('luggage', -1)">−</button>
+                    <span id="luggageCount" class="counter-value">0</span>
+                    <button type="button" class="counter-btn" onclick="updateCounter('luggage', 1)">+</button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Submit Button -->
+              <button type="submit" class="btn btn-primary btn-block btn-calculate">
+                <span class="btn-text">Calculer le prix</span>
+                <span class="btn-loader"></span>
+              </button>
+            </form>
+          </div>
+
+          <!-- Powered by badge -->
+          <div class="powered-badge">
+            <span>Propulsé par</span>
+            <strong>VeeoCore API</strong>
+          </div>
+        </div>
+
+        <!-- Results Panel -->
+        <div class="demo-results">
+          <!-- Vehicle Options -->
+          <div id="vehicleResults" class="vehicle-results">
+            <div class="results-placeholder">
+              <div class="placeholder-icon">
+                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                  <path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.5 2.8c-.1.2-.1.5-.1.8v4.5c0 .6.4 1 1 1h2"/>
+                  <circle cx="7" cy="17" r="2"/>
+                  <circle cx="17" cy="17" r="2"/>
+                </svg>
+              </div>
+              <p>Remplissez le formulaire pour voir les tarifs</p>
+            </div>
+          </div>
+
+          <!-- API Response -->
+          <div class="api-response-card">
+            <div class="api-response-header">
+              <span class="api-badge">
+                <span class="api-dot"></span>
+                API Response
+              </span>
+              <button class="copy-btn" onclick="copyApiResponse()">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect x="9" y="9" width="13" height="13" rx="2"/>
+                  <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+                </svg>
+                Copier
+              </button>
+            </div>
+            <pre id="apiResponse" class="api-response-code"><code>{
+  "message": "En attente d'une requête..."
+}</code></pre>
+          </div>
+
+          <!-- Request Info -->
+          <div class="request-info">
+            <div class="info-item">
+              <span class="info-label">Endpoint</span>
+              <code class="info-value">POST /api/v1/pricing/calculate</code>
+            </div>
+            <div class="info-item">
+              <span class="info-label">Latence</span>
+              <span id="latencyValue" class="info-value latency-badge">--</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features Section -->
+  <section id="features" class="features-section">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-badge">Fonctionnalités</span>
+        <h2 class="section-title">Tout ce dont vous avez besoin</h2>
+        <p class="section-subtitle">
+          Une API complète pour gérer votre activité VTC
+        </p>
+      </div>
+
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon" style="--icon-color: #3b82f6;">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+            </svg>
+          </div>
+          <h3>Calcul de prix</h3>
+          <p>Tarification dynamique avec surge, zones et routes à prix fixe. Calcul instantané.</p>
+          <a href="#" class="feature-link">En savoir plus →</a>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon" style="--icon-color: #10b981;">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10"/>
+              <path d="M12 6v6l4 2"/>
+            </svg>
+          </div>
+          <h3>ETA & Géocodage</h3>
+          <p>Temps d'arrivée estimé, conversion adresses/coordonnées, matrice de distances.</p>
+          <a href="#" class="feature-link">En savoir plus →</a>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon" style="--icon-color: #f59e0b;">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
+              <circle cx="9" cy="7" r="4"/>
+              <path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>
+            </svg>
+          </div>
+          <h3>Dispatch intelligent</h3>
+          <p>Attribution automatique des courses aux chauffeurs les plus proches et disponibles.</p>
+          <a href="#" class="feature-link">En savoir plus →</a>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon" style="--icon-color: #8b5cf6;">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M3 3v18h18"/>
+              <path d="M18 17V9M13 17V5M8 17v-3"/>
+            </svg>
+          </div>
+          <h3>Analytics</h3>
+          <p>Statistiques détaillées : revenus, réservations, performance chauffeurs.</p>
+          <a href="#" class="feature-link">En savoir plus →</a>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon" style="--icon-color: #ec4899;">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+              <path d="M3.29 7L12 12l8.71-5M12 22V12"/>
+            </svg>
+          </div>
+          <h3>Zones & Prix fixes</h3>
+          <p>Configurez des zones de tarification et des routes aéroport/gare à prix fixe.</p>
+          <a href="#" class="feature-link">En savoir plus →</a>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon" style="--icon-color: #06b6d4;">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+            </svg>
+          </div>
+          <h3>Sécurité</h3>
+          <p>Authentification API Key, rate limiting, HTTPS, isolation des données multi-tenant.</p>
+          <a href="#" class="feature-link">En savoir plus →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pricing Section -->
+  <section id="pricing" class="pricing-section">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-badge">Tarifs</span>
+        <h2 class="section-title">Des tarifs adaptés à votre activité</h2>
+        <p class="section-subtitle">
+          Commencez gratuitement, évoluez selon vos besoins
+        </p>
+      </div>
+
+      <div class="pricing-grid">
+        <!-- Free -->
+        <div class="pricing-card">
+          <div class="pricing-header">
+            <h3 class="pricing-name">Free</h3>
+            <div class="pricing-price">
+              <span class="price-amount">0€</span>
+              <span class="price-period">/mois</span>
+            </div>
+            <p class="pricing-description">Pour tester l'API</p>
+          </div>
+          <ul class="pricing-features">
+            <li><span class="check">✓</span> 100 requêtes/jour</li>
+            <li><span class="check">✓</span> 2 chauffeurs max</li>
+            <li><span class="check">✓</span> Calcul de prix</li>
+            <li><span class="check">✓</span> Géocodage</li>
+            <li class="disabled"><span class="cross">×</span> Dispatch</li>
+            <li class="disabled"><span class="cross">×</span> Analytics</li>
+          </ul>
+          <a href="#contact" class="btn btn-outline btn-block">Commencer</a>
+        </div>
+
+        <!-- Starter -->
+        <div class="pricing-card">
+          <div class="pricing-header">
+            <h3 class="pricing-name">Starter</h3>
+            <div class="pricing-price">
+              <span class="price-amount">49€</span>
+              <span class="price-period">/mois</span>
+            </div>
+            <p class="pricing-description">Pour les petites flottes</p>
+          </div>
+          <ul class="pricing-features">
+            <li><span class="check">✓</span> 5 000 requêtes/jour</li>
+            <li><span class="check">✓</span> 10 chauffeurs max</li>
+            <li><span class="check">✓</span> Calcul de prix</li>
+            <li><span class="check">✓</span> Géocodage & ETA</li>
+            <li><span class="check">✓</span> Dispatch automatique</li>
+            <li><span class="check">✓</span> Webhooks</li>
+          </ul>
+          <a href="#contact" class="btn btn-outline btn-block">Choisir Starter</a>
+        </div>
+
+        <!-- Pro - Popular -->
+        <div class="pricing-card pricing-popular">
+          <div class="popular-badge">Populaire</div>
+          <div class="pricing-header">
+            <h3 class="pricing-name">Pro</h3>
+            <div class="pricing-price">
+              <span class="price-amount">149€</span>
+              <span class="price-period">/mois</span>
+            </div>
+            <p class="pricing-description">Pour les flottes établies</p>
+          </div>
+          <ul class="pricing-features">
+            <li><span class="check">✓</span> 50 000 requêtes/jour</li>
+            <li><span class="check">✓</span> 50 chauffeurs max</li>
+            <li><span class="check">✓</span> Toutes les fonctionnalités</li>
+            <li><span class="check">✓</span> Analytics avancées</li>
+            <li><span class="check">✓</span> Custom branding</li>
+            <li><span class="check">✓</span> Support prioritaire</li>
+          </ul>
+          <a href="#contact" class="btn btn-primary btn-block">Choisir Pro</a>
+        </div>
+
+        <!-- Enterprise -->
+        <div class="pricing-card">
+          <div class="pricing-header">
+            <h3 class="pricing-name">Enterprise</h3>
+            <div class="pricing-price">
+              <span class="price-amount">Sur mesure</span>
+            </div>
+            <p class="pricing-description">Pour les grandes flottes</p>
+          </div>
+          <ul class="pricing-features">
+            <li><span class="check">✓</span> Requêtes illimitées</li>
+            <li><span class="check">✓</span> Chauffeurs illimités</li>
+            <li><span class="check">✓</span> SLA garanti 99.9%</li>
+            <li><span class="check">✓</span> Serveur dédié</li>
+            <li><span class="check">✓</span> Intégration sur mesure</li>
+            <li><span class="check">✓</span> Account manager</li>
+          </ul>
+          <a href="#contact" class="btn btn-outline btn-block">Nous contacter</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Code Example Section -->
+  <section id="docs" class="code-section">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-badge">Intégration</span>
+        <h2 class="section-title">Intégrez en quelques minutes</h2>
+        <p class="section-subtitle">
+          Une API REST simple et bien documentée
+        </p>
+      </div>
+
+      <div class="code-tabs">
+        <div class="tabs-header">
+          <button class="tab-btn active" data-tab="curl">cURL</button>
+          <button class="tab-btn" data-tab="javascript">JavaScript</button>
+          <button class="tab-btn" data-tab="python">Python</button>
+          <button class="tab-btn" data-tab="php">PHP</button>
+        </div>
+        <div class="tabs-content">
+          <div class="tab-panel active" id="curl-panel">
+            <pre><code class="language-bash"><span class="token comment"># Calculer un prix VTC</span>
+curl -X POST https://api-core.veeo-stras.fr/api/v1/pricing/calculate \
+  -H <span class="token string">"Content-Type: application/json"</span> \
+  -H <span class="token string">"X-API-Key: YOUR_API_KEY"</span> \
+  -d <span class="token string">'{
+    "distanceKm": 15.2,
+    "durationMin": 22,
+    "bookingTime": "2026-02-03T18:30:00Z"
+  }'</span></code></pre>
+          </div>
+          <div class="tab-panel" id="javascript-panel">
+            <pre><code class="language-javascript"><span class="token keyword">const</span> response = <span class="token keyword">await</span> <span class="token function">fetch</span>(<span class="token string">'https://api-core.veeo-stras.fr/api/v1/pricing/calculate'</span>, {
+  <span class="token property">method</span>: <span class="token string">'POST'</span>,
+  <span class="token property">headers</span>: {
+    <span class="token string">'Content-Type'</span>: <span class="token string">'application/json'</span>,
+    <span class="token string">'X-API-Key'</span>: <span class="token string">'YOUR_API_KEY'</span>
+  },
+  <span class="token property">body</span>: <span class="token function">JSON.stringify</span>({
+    <span class="token property">distanceKm</span>: <span class="token number">15.2</span>,
+    <span class="token property">durationMin</span>: <span class="token number">22</span>,
+    <span class="token property">bookingTime</span>: <span class="token string">'2026-02-03T18:30:00Z'</span>
+  })
+});
+
+<span class="token keyword">const</span> data = <span class="token keyword">await</span> response.<span class="token function">json</span>();
+<span class="token builtin">console</span>.<span class="token function">log</span>(data.data.quotes);</code></pre>
+          </div>
+          <div class="tab-panel" id="python-panel">
+            <pre><code class="language-python"><span class="token keyword">import</span> requests
+
+response = requests.<span class="token function">post</span>(
+    <span class="token string">'https://api-core.veeo-stras.fr/api/v1/pricing/calculate'</span>,
+    headers={
+        <span class="token string">'Content-Type'</span>: <span class="token string">'application/json'</span>,
+        <span class="token string">'X-API-Key'</span>: <span class="token string">'YOUR_API_KEY'</span>
+    },
+    json={
+        <span class="token string">'distanceKm'</span>: <span class="token number">15.2</span>,
+        <span class="token string">'durationMin'</span>: <span class="token number">22</span>,
+        <span class="token string">'bookingTime'</span>: <span class="token string">'2026-02-03T18:30:00Z'</span>
+    }
+)
+
+quotes = response.<span class="token function">json</span>()[<span class="token string">'data'</span>][<span class="token string">'quotes'</span>]
+<span class="token keyword">print</span>(quotes)</code></pre>
+          </div>
+          <div class="tab-panel" id="php-panel">
+            <pre><code class="language-php"><span class="token variable">$ch</span> = <span class="token function">curl_init</span>();
+
+<span class="token function">curl_setopt_array</span>(<span class="token variable">$ch</span>, [
+    CURLOPT_URL => <span class="token string">'https://api-core.veeo-stras.fr/api/v1/pricing/calculate'</span>,
+    CURLOPT_POST => <span class="token keyword">true</span>,
+    CURLOPT_HTTPHEADER => [
+        <span class="token string">'Content-Type: application/json'</span>,
+        <span class="token string">'X-API-Key: YOUR_API_KEY'</span>
+    ],
+    CURLOPT_POSTFIELDS => <span class="token function">json_encode</span>([
+        <span class="token string">'distanceKm'</span> => <span class="token number">15.2</span>,
+        <span class="token string">'durationMin'</span> => <span class="token number">22</span>,
+        <span class="token string">'bookingTime'</span> => <span class="token string">'2026-02-03T18:30:00Z'</span>
+    ]),
+    CURLOPT_RETURNTRANSFER => <span class="token keyword">true</span>
+]);
+
+<span class="token variable">$response</span> = <span class="token function">curl_exec</span>(<span class="token variable">$ch</span>);
+<span class="token variable">$data</span> = <span class="token function">json_decode</span>(<span class="token variable">$response</span>, <span class="token keyword">true</span>);</code></pre>
+          </div>
+        </div>
+      </div>
+
+      <div class="docs-cta">
+        <a href="https://api-core.veeo-stras.fr/api/docs" target="_blank" class="btn btn-large btn-primary">
+          Documentation complète
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <section id="contact" class="contact-section">
+    <div class="container">
+      <div class="contact-card">
+        <div class="contact-content">
+          <h2>Prêt à démarrer ?</h2>
+          <p>Contactez-nous pour obtenir votre clé API et commencer l'intégration.</p>
+          <form class="contact-form" id="contactForm">
+            <div class="form-row">
+              <input type="text" placeholder="Votre nom" required class="form-input">
+              <input type="email" placeholder="Email professionnel" required class="form-input">
+            </div>
+            <input type="text" placeholder="Nom de votre entreprise" class="form-input">
+            <select class="form-input">
+              <option value="">Plan souhaité</option>
+              <option value="free">Free - Test</option>
+              <option value="starter">Starter - 49€/mois</option>
+              <option value="pro">Pro - 149€/mois</option>
+              <option value="enterprise">Enterprise - Sur mesure</option>
+            </select>
+            <textarea placeholder="Décrivez votre projet..." rows="3" class="form-input"></textarea>
+            <button type="submit" class="btn btn-primary btn-block">
+              Demander un accès
+            </button>
+          </form>
+        </div>
+        <div class="contact-info">
+          <div class="info-block">
+            <h4>Support technique</h4>
+            <p>api@veeo-stras.fr</p>
+          </div>
+          <div class="info-block">
+            <h4>Commercial</h4>
+            <p>contact@veeo-stras.fr</p>
+          </div>
+          <div class="info-block">
+            <h4>Documentation</h4>
+            <a href="https://api-core.veeo-stras.fr/api/docs">api-core.veeo-stras.fr/api/docs</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-brand">
+          <a href="#" class="logo">
+            <span class="logo-icon">⚡</span>
+            <span class="logo-text">VeeoCore</span>
+          </a>
+          <p>L'API VTC qui propulse votre business</p>
+        </div>
+        <div class="footer-links">
+          <div class="footer-col">
+            <h5>Produit</h5>
+            <a href="#features">Fonctionnalités</a>
+            <a href="#pricing">Tarifs</a>
+            <a href="#docs">Documentation</a>
+          </div>
+          <div class="footer-col">
+            <h5>Ressources</h5>
+            <a href="#">Guide d'intégration</a>
+            <a href="#">Changelog</a>
+            <a href="#">Status API</a>
+          </div>
+          <div class="footer-col">
+            <h5>Entreprise</h5>
+            <a href="#">À propos</a>
+            <a href="#">Contact</a>
+            <a href="#">Mentions légales</a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2026 VeeoCore. Tous droits réservés.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="app.js?v=3.5"></script>
+</body>
+</html>

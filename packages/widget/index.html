@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VeeoCore Widget - Demo</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      padding: 40px 20px;
+    }
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    h1 {
+      color: white;
+      text-align: center;
+      margin-bottom: 8px;
+      font-size: 32px;
+    }
+    .subtitle {
+      color: rgba(255,255,255,0.8);
+      text-align: center;
+      margin-bottom: 40px;
+    }
+    .demo-section {
+      background: white;
+      border-radius: 16px;
+      padding: 32px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+      margin-bottom: 32px;
+    }
+    .demo-section h2 {
+      margin-bottom: 24px;
+      color: #1f2937;
+    }
+    .code-block {
+      background: #1f2937;
+      color: #e5e7eb;
+      padding: 20px;
+      border-radius: 8px;
+      overflow-x: auto;
+      font-family: 'Fira Code', monospace;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+    .code-block .comment { color: #6b7280; }
+    .code-block .string { color: #34d399; }
+    .code-block .keyword { color: #f472b6; }
+    .code-block .function { color: #60a5fa; }
+    .toggle-theme {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+    .toggle-theme button {
+      padding: 8px 16px;
+      border: 2px solid #e5e7eb;
+      background: white;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .toggle-theme button.active {
+      border-color: #2563eb;
+      background: #eff6ff;
+    }
+    .features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+      margin-top: 32px;
+    }
+    .feature {
+      background: #f9fafb;
+      padding: 16px;
+      border-radius: 8px;
+    }
+    .feature h4 {
+      margin-bottom: 8px;
+      color: #1f2937;
+    }
+    .feature p {
+      color: #6b7280;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🚖 VeeoCore Widget</h1>
+    <p class="subtitle">Widget de réservation VTC embeddable en quelques lignes de code</p>
+    
+    <div class="demo-section">
+      <h2>Demo Live</h2>
+      
+      <div class="toggle-theme">
+        <button class="active" onclick="setTheme('light')">☀️ Light</button>
+        <button onclick="setTheme('dark')">🌙 Dark</button>
+      </div>
+      
+      <div id="veeo-booking"></div>
+    </div>
+    
+    <div class="demo-section">
+      <h2>Integration</h2>
+      <p style="margin-bottom: 16px; color: #6b7280;">Ajoutez ces lignes à votre site pour intégrer le widget :</p>
+      
+      <div class="code-block">
+<span class="comment">&lt;!-- Inclure le script --&gt;</span>
+&lt;<span class="keyword">script</span> 
+  <span class="function">src</span>=<span class="string">"https://cdn.veeocore.com/widget.js"</span>
+  <span class="function">data-api-key</span>=<span class="string">"votre_cle_api"</span>
+  <span class="function">data-theme</span>=<span class="string">"light"</span>
+  <span class="function">data-primary-color</span>=<span class="string">"#2563eb"</span>&gt;
+&lt;/<span class="keyword">script</span>&gt;
+
+<span class="comment">&lt;!-- Container du widget --&gt;</span>
+&lt;<span class="keyword">div</span> <span class="function">id</span>=<span class="string">"veeo-booking"</span>&gt;&lt;/<span class="keyword">div</span>&gt;
+      </div>
+      
+      <div class="features">
+        <div class="feature">
+          <h4>🎨 Personnalisable</h4>
+          <p>Thème clair/sombre, couleur principale, locale</p>
+        </div>
+        <div class="feature">
+          <h4>📱 Responsive</h4>
+          <p>S'adapte à tous les écrans</p>
+        </div>
+        <div class="feature">
+          <h4>⚡ Léger</h4>
+          <p>Moins de 15KB gzippé</p>
+        </div>
+        <div class="feature">
+          <h4>🔗 Callbacks</h4>
+          <p>onQuoteReceived, onBookingCreated</p>
+        </div>
+      </div>
+    </div>
+    
+    <div class="demo-section">
+      <h2>Utilisation programmatique</h2>
+      <div class="code-block">
+<span class="keyword">import</span> { VeeoWidget } <span class="keyword">from</span> <span class="string">'@veeo/widget'</span>;
+
+<span class="keyword">const</span> widget = <span class="keyword">new</span> <span class="function">VeeoWidget</span>({
+  apiKey: <span class="string">'votre_cle_api'</span>,
+  theme: <span class="string">'light'</span>,
+  primaryColor: <span class="string">'#2563eb'</span>,
+  vehicles: [<span class="string">'standard'</span>, <span class="string">'premium'</span>, <span class="string">'van'</span>],
+  <span class="function">onQuoteReceived</span>: (quote) => {
+    console.<span class="function">log</span>(<span class="string">'Prix:'</span>, quote.finalPrice);
+  },
+  <span class="function">onBookingCreated</span>: (booking) => {
+    console.<span class="function">log</span>(<span class="string">'Réservation:'</span>, booking.id);
+  }
+});
+
+widget.<span class="function">mount</span>(<span class="string">'veeo-booking'</span>);
+      </div>
+    </div>
+  </div>
+  
+  <script type="module">
+    import { VeeoWidget } from './src/index.ts';
+    
+    let widget = new VeeoWidget({
+      apiKey: '0615455a5be1913a03b77f00cafc73db',
+      apiUrl: 'http://localhost:4000',
+      theme: 'light',
+      primaryColor: '#2563eb',
+      onQuoteReceived: (quote) => {
+        console.log('Quote received:', quote);
+      },
+      onBookingCreated: (booking) => {
+        console.log('Booking created:', booking);
+        alert('🎉 Réservation créée !\\nRéf: ' + booking.reference + '\\nPrix: ' + booking.total_price + '€');
+      }
+    });
+    
+    widget.mount('veeo-booking');
+    
+    window.setTheme = (theme) => {
+      widget.destroy();
+      
+      // Supprimer les anciens styles pour permettre la réinjection
+      const oldStyles = document.getElementById('veeo-widget-styles');
+      if (oldStyles) oldStyles.remove();
+      
+      widget = new VeeoWidget({
+        apiKey: '0615455a5be1913a03b77f00cafc73db',
+        apiUrl: 'http://localhost:4000',
+        theme: theme,
+        primaryColor: '#2563eb',
+        onQuoteReceived: (quote) => {
+          console.log('Quote received:', quote);
+        },
+        onBookingCreated: (booking) => {
+          console.log('Booking created:', booking);
+          alert('🎉 Réservation créée !\\nRéf: ' + booking.reference + '\\nPrix: ' + booking.total_price + '€');
+        }
+      });
+      widget.mount('veeo-booking');
+      
+      document.querySelectorAll('.toggle-theme button').forEach(btn => {
+        btn.classList.remove('active');
+        if (btn.textContent.includes(theme === 'light' ? 'Light' : 'Dark')) {
+          btn.classList.add('active');
+        }
+      });
+    };
+  </script>
+</body>
+</html>

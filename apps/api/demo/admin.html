@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VeeoCore Admin - Gestion des Clés API</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="admin-styles.css">
+</head>
+<body>
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <a href="/" class="logo">
+        <span class="logo-icon">🚀</span>
+        <span>VeeoCore</span>
+        <span class="logo-badge">Admin</span>
+      </a>
+    </div>
+    
+    <nav class="sidebar-nav">
+      <div class="nav-section">
+        <span class="nav-section-title">Principal</span>
+        <a href="#" class="nav-item active">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="3" width="7" height="9" rx="1"></rect>
+            <rect x="14" y="3" width="7" height="5" rx="1"></rect>
+            <rect x="14" y="12" width="7" height="9" rx="1"></rect>
+            <rect x="3" y="16" width="7" height="5" rx="1"></rect>
+          </svg>
+          Dashboard
+        </a>
+        <a href="#" class="nav-item">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 11-7.778 7.778 5.5 5.5 0 017.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"></path>
+          </svg>
+          Clés API
+        </a>
+        <a href="#" class="nav-item">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"></path>
+            <circle cx="9" cy="7" r="4"></circle>
+            <path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"></path>
+          </svg>
+          Clients
+        </a>
+      </div>
+      
+      <div class="nav-section">
+        <span class="nav-section-title">Analytics</span>
+        <a href="#" class="nav-item">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="20" x2="18" y2="10"></line>
+            <line x1="12" y1="20" x2="12" y2="4"></line>
+            <line x1="6" y1="20" x2="6" y2="14"></line>
+          </svg>
+          Utilisation
+        </a>
+        <a href="#" class="nav-item">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+          </svg>
+          Sécurité
+        </a>
+      </div>
+      
+      <div class="nav-section">
+        <span class="nav-section-title">Paramètres</span>
+        <a href="#" class="nav-item">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="3"></circle>
+            <path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-2 2 2 2 0 01-2-2v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83 0 2 2 0 010-2.83l.06-.06a1.65 1.65 0 00.33-1.82 1.65 1.65 0 00-1.51-1H3a2 2 0 01-2-2 2 2 0 012-2h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 010-2.83 2 2 0 012.83 0l.06.06a1.65 1.65 0 001.82.33H9a1.65 1.65 0 001-1.51V3a2 2 0 012-2 2 2 0 012 2v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 0 2 2 0 010 2.83l-.06.06a1.65 1.65 0 00-.33 1.82V9a1.65 1.65 0 001.51 1H21a2 2 0 012 2 2 2 0 01-2 2h-.09a1.65 1.65 0 00-1.51 1z"></path>
+          </svg>
+          Configuration
+        </a>
+      </div>
+    </nav>
+    
+    <div class="sidebar-footer">
+      <div class="user-info">
+        <div class="user-avatar">VE</div>
+        <div class="user-details">
+          <span class="user-name">VeeoStras Admin</span>
+          <span class="user-role">Super Admin</span>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <!-- Header -->
+    <header class="content-header">
+      <div class="header-left">
+        <h1>Gestion des Clés API</h1>
+        <p>Créez et gérez les clés API pour vos clients</p>
+      </div>
+      <div class="header-right">
+        <button class="btn btn-primary" onclick="openCreateModal()">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="12" y1="5" x2="12" y2="19"></line>
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+          </svg>
+          Nouvelle Clé API
+        </button>
+      </div>
+    </header>
+
+    <!-- Stats Cards -->
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-icon" style="--color: #6366f1;">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 11-7.778 7.778 5.5 5.5 0 017.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"></path>
+          </svg>
+        </div>
+        <div class="stat-content">
+          <span class="stat-value" id="total-keys">12</span>
+          <span class="stat-label">Clés API actives</span>
+        </div>
+      </div>
+      
+      <div class="stat-card">
+        <div class="stat-icon" style="--color: #10b981;">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M22 12h-4l-3 9L9 3l-3 9H2"></path>
+          </svg>
+        </div>
+        <div class="stat-content">
+          <span class="stat-value" id="total-requests">45.2K</span>
+          <span class="stat-label">Requêtes ce mois</span>
+        </div>
+      </div>
+      
+      <div class="stat-card">
+        <div class="stat-icon" style="--color: #f59e0b;">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"></path>
+            <circle cx="9" cy="7" r="4"></circle>
+            <path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"></path>
+          </svg>
+        </div>
+        <div class="stat-content">
+          <span class="stat-value" id="total-clients">8</span>
+          <span class="stat-label">Clients actifs</span>
+        </div>
+      </div>
+      
+      <div class="stat-card">
+        <div class="stat-icon" style="--color: #ef4444;">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="12" y1="8" x2="12" y2="12"></line>
+            <line x1="12" y1="16" x2="12.01" y2="16"></line>
+          </svg>
+        </div>
+        <div class="stat-content">
+          <span class="stat-value" id="rate-limited">23</span>
+          <span class="stat-label">Rate limits atteints</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- API Keys Table -->
+    <div class="table-card">
+      <div class="table-header">
+        <h2>Clés API</h2>
+        <div class="table-filters">
+          <div class="search-box">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+            <input type="text" placeholder="Rechercher..." id="search-input">
+          </div>
+          <select class="filter-select" id="plan-filter">
+            <option value="">Tous les plans</option>
+            <option value="free">Free</option>
+            <option value="starter">Starter</option>
+            <option value="pro">Pro</option>
+            <option value="enterprise">Enterprise</option>
+          </select>
+          <select class="filter-select" id="status-filter">
+            <option value="">Tous les statuts</option>
+            <option value="active">Actif</option>
+            <option value="suspended">Suspendu</option>
+            <option value="expired">Expiré</option>
+          </select>
+        </div>
+      </div>
+      
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Client</th>
+            <th>Clé API</th>
+            <th>Plan</th>
+            <th>Utilisation</th>
+            <th>Statut</th>
+            <th>Créé le</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="api-keys-table">
+          <!-- Rows will be inserted by JavaScript -->
+        </tbody>
+      </table>
+      
+      <div class="table-footer">
+        <span class="showing-text">Affichage de <strong>1-10</strong> sur <strong>12</strong> clés</span>
+        <div class="pagination">
+          <button class="page-btn" disabled>&larr; Précédent</button>
+          <button class="page-btn page-number active">1</button>
+          <button class="page-btn page-number">2</button>
+          <button class="page-btn">Suivant &rarr;</button>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Create API Key Modal -->
+  <div class="modal-overlay" id="create-modal">
+    <div class="modal">
+      <div class="modal-header">
+        <h3>Créer une nouvelle clé API</h3>
+        <button class="modal-close" onclick="closeCreateModal()">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+      
+      <form id="create-key-form" onsubmit="createApiKey(event)">
+        <div class="modal-body">
+          <div class="form-group">
+            <label class="form-label">Nom du client</label>
+            <input type="text" class="form-input" name="clientName" placeholder="Ex: VTC Paris Express" required>
+          </div>
+          
+          <div class="form-group">
+            <label class="form-label">Email</label>
+            <input type="email" class="form-input" name="email" placeholder="contact@client.com" required>
+          </div>
+          
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Plan</label>
+              <select class="form-input" name="plan" required>
+                <option value="free">Free - 100 req/jour</option>
+                <option value="starter">Starter - 5,000 req/jour</option>
+                <option value="pro" selected>Pro - 50,000 req/jour</option>
+                <option value="enterprise">Enterprise - Illimité</option>
+              </select>
+            </div>
+            
+            <div class="form-group">
+              <label class="form-label">Expiration</label>
+              <select class="form-input" name="expiration">
+                <option value="never">Jamais</option>
+                <option value="30">30 jours</option>
+                <option value="90" selected>90 jours</option>
+                <option value="365">1 an</option>
+              </select>
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <label class="form-label">Domaines autorisés (optionnel)</label>
+            <input type="text" class="form-input" name="domains" placeholder="example.com, app.example.com">
+            <span class="form-hint">Séparez les domaines par des virgules. Laissez vide pour autoriser tous les domaines.</span>
+          </div>
+          
+          <div class="form-group">
+            <label class="form-label">IPs autorisées (optionnel)</label>
+            <input type="text" class="form-input" name="ips" placeholder="192.168.1.1, 10.0.0.0/24">
+            <span class="form-hint">Séparez les IPs par des virgules. Laissez vide pour autoriser toutes les IPs.</span>
+          </div>
+        </div>
+        
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline" onclick="closeCreateModal()">Annuler</button>
+          <button type="submit" class="btn btn-primary">Créer la clé API</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Key Details Modal -->
+  <div class="modal-overlay" id="key-modal">
+    <div class="modal modal-wide">
+      <div class="modal-header">
+        <h3>Détails de la clé API</h3>
+        <button class="modal-close" onclick="closeKeyModal()">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+      
+      <div class="modal-body">
+        <div class="key-display">
+          <span class="key-label">Clé API</span>
+          <div class="key-value">
+            <code id="modal-api-key">veco_live_xxxxxxxxxxxx</code>
+            <button class="copy-btn" onclick="copyToClipboard()">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                <path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"></path>
+              </svg>
+              Copier
+            </button>
+          </div>
+        </div>
+        
+        <div class="detail-grid">
+          <div class="detail-item">
+            <span class="detail-label">Client</span>
+            <span class="detail-value" id="modal-client">VTC Paris Express</span>
+          </div>
+          <div class="detail-item">
+            <span class="detail-label">Email</span>
+            <span class="detail-value" id="modal-email">contact@vtc-paris.com</span>
+          </div>
+          <div class="detail-item">
+            <span class="detail-label">Plan</span>
+            <span class="detail-value" id="modal-plan">
+              <span class="plan-badge pro">Pro</span>
+            </span>
+          </div>
+          <div class="detail-item">
+            <span class="detail-label">Statut</span>
+            <span class="detail-value" id="modal-status">
+              <span class="status-badge active">Actif</span>
+            </span>
+          </div>
+          <div class="detail-item">
+            <span class="detail-label">Créé le</span>
+            <span class="detail-value" id="modal-created">15 Jan 2026</span>
+          </div>
+          <div class="detail-item">
+            <span class="detail-label">Expire le</span>
+            <span class="detail-value" id="modal-expires">15 Avr 2026</span>
+          </div>
+        </div>
+        
+        <div class="usage-section">
+          <h4>Utilisation (30 derniers jours)</h4>
+          <div class="usage-chart" id="usage-chart">
+            <!-- Chart will be rendered by JavaScript -->
+          </div>
+          <div class="usage-stats">
+            <div class="usage-stat">
+              <span class="usage-value">12,456</span>
+              <span class="usage-label">Requêtes totales</span>
+            </div>
+            <div class="usage-stat">
+              <span class="usage-value">415</span>
+              <span class="usage-label">Moyenne/jour</span>
+            </div>
+            <div class="usage-stat">
+              <span class="usage-value">98.7%</span>
+              <span class="usage-label">Taux de succès</span>
+            </div>
+            <div class="usage-stat">
+              <span class="usage-value">142ms</span>
+              <span class="usage-label">Latence moyenne</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="modal-footer">
+        <button class="btn btn-outline btn-danger" onclick="revokeKey()">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M18.36 6.64a9 9 0 11-12.73 0"></path>
+            <line x1="12" y1="2" x2="12" y2="12"></line>
+          </svg>
+          Révoquer
+        </button>
+        <button class="btn btn-primary" onclick="closeKeyModal()">Fermer</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Success Modal -->
+  <div class="modal-overlay" id="success-modal">
+    <div class="modal modal-success">
+      <div class="success-icon">
+        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M22 11.08V12a10 10 0 11-5.93-9.14"></path>
+          <polyline points="22 4 12 14.01 9 11.01"></polyline>
+        </svg>
+      </div>
+      <h3>Clé API créée avec succès!</h3>
+      <p>Copiez cette clé maintenant. Elle ne sera plus affichée.</p>
+      
+      <div class="new-key-display">
+        <code id="new-api-key">veco_live_xxxxxxxxxxxxxxxxxxxxxxxx</code>
+        <button class="copy-btn-large" onclick="copyNewKey()">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+            <path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"></path>
+          </svg>
+          Copier la clé
+        </button>
+      </div>
+      
+      <button class="btn btn-primary btn-block" onclick="closeSuccessModal()">J'ai copié ma clé</button>
+    </div>
+  </div>
+
+  <script src="admin.js"></script>
+</body>
+</html>
