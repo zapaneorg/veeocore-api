@@ -29,8 +29,10 @@
       <div class="nav-links">
         <a href="#demo" class="nav-link">Démo</a>
         <a href="#features" class="nav-link">Fonctionnalités</a>
+        <a href="#installation" class="nav-link">Installation</a>
         <a href="#pricing" class="nav-link">Tarifs</a>
         <a href="docs.html" class="nav-link">Documentation</a>
+        <a href="admin.html" class="nav-link">Admin</a>
       </div>
       <div class="nav-actions">
         <a href="#contact" class="btn btn-ghost">Contact</a>
@@ -574,6 +576,171 @@ quotes = response.<span class="token function">json</span>()[<span class="token 
     </div>
   </section>
 
+  <!-- Installation Section -->
+  <section id="installation" class="installation-section">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-badge">Installation rapide</span>
+        <h2 class="section-title">Déployez en une commande</h2>
+        <p class="section-subtitle">
+          Des scripts d'installation automatisés pour lancer votre plateforme VTC en quelques minutes
+        </p>
+      </div>
+
+      <div class="install-grid">
+        <!-- Dashboard Tenant Admin -->
+        <div class="install-card">
+          <div class="install-header">
+            <div class="install-icon" style="background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                <rect x="3" y="3" width="18" height="18" rx="2"/>
+                <path d="M3 9h18M9 21V9"/>
+              </svg>
+            </div>
+            <div>
+              <h3 class="install-title">Dashboard Tenant Admin</h3>
+              <span class="install-badge">React + TypeScript</span>
+            </div>
+          </div>
+          
+          <p class="install-description">
+            Dashboard complet pour gérer votre flotte VTC : chauffeurs, réservations, tarification dynamique et analytics.
+          </p>
+          
+          <ul class="install-features">
+            <li><span class="check">✓</span> Gestion des chauffeurs (ajout, modification, statuts)</li>
+            <li><span class="check">✓</span> Suivi des réservations en temps réel</li>
+            <li><span class="check">✓</span> Configuration de la tarification (base, km, temps)</li>
+            <li><span class="check">✓</span> Analytics et statistiques détaillées</li>
+            <li><span class="check">✓</span> Interface responsive moderne</li>
+          </ul>
+
+          <div class="install-command">
+            <code>curl -fsSL https://api-core.veeo-stras.fr/install/tenant-admin.sh | bash -s -- --tenant-id=YOUR_ID --api-key=YOUR_KEY</code>
+            <button class="copy-install-btn" onclick="copyInstallCommand('tenant-admin')">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="9" y="9" width="13" height="13" rx="2"/>
+                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+              </svg>
+            </button>
+          </div>
+
+          <div class="install-actions">
+            <a href="/install/tenant-admin.sh" download class="btn btn-primary">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                <path d="M7 10l5 5 5-5"/>
+                <path d="M12 15V3"/>
+              </svg>
+              Télécharger le script
+            </a>
+            <a href="admin.html#installation-tenant" class="btn btn-outline">Documentation</a>
+          </div>
+        </div>
+
+        <!-- App Driver PWA -->
+        <div class="install-card">
+          <div class="install-header">
+            <div class="install-icon" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%);">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                <rect x="5" y="2" width="14" height="20" rx="2"/>
+                <path d="M12 18h.01"/>
+              </svg>
+            </div>
+            <div>
+              <h3 class="install-title">App Driver (PWA)</h3>
+              <span class="install-badge install-badge-green">PWA Mobile</span>
+            </div>
+          </div>
+          
+          <p class="install-description">
+            Application mobile PWA pour vos chauffeurs : gestion des courses, navigation GPS, notifications push et mode hors ligne.
+          </p>
+          
+          <ul class="install-features">
+            <li><span class="check">✓</span> PWA installable sur mobile</li>
+            <li><span class="check">✓</span> Notifications push en temps réel</li>
+            <li><span class="check">✓</span> Géolocalisation GPS continue</li>
+            <li><span class="check">✓</span> Mode hors ligne avec synchronisation</li>
+            <li><span class="check">✓</span> Interface optimisée touch</li>
+          </ul>
+
+          <div class="install-command">
+            <code>curl -fsSL https://api-core.veeo-stras.fr/install/driver-app.sh | bash -s -- --tenant-id=YOUR_ID --api-key=YOUR_KEY</code>
+            <button class="copy-install-btn" onclick="copyInstallCommand('driver-app')">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="9" y="9" width="13" height="13" rx="2"/>
+                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+              </svg>
+            </button>
+          </div>
+
+          <div class="install-actions">
+            <a href="/install/driver-app.sh" download class="btn btn-primary btn-green">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                <path d="M7 10l5 5 5-5"/>
+                <path d="M12 15V3"/>
+              </svg>
+              Télécharger le script
+            </a>
+            <a href="admin.html#installation-driver" class="btn btn-outline">Documentation</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Installation Steps -->
+      <div class="install-steps">
+        <h3>Comment ça marche ?</h3>
+        <div class="steps-grid">
+          <div class="step">
+            <div class="step-number">1</div>
+            <h4>Obtenez vos clés</h4>
+            <p>Contactez-nous pour obtenir votre <code>tenant-id</code> et <code>api-key</code></p>
+          </div>
+          <div class="step">
+            <div class="step-number">2</div>
+            <h4>Exécutez le script</h4>
+            <p>Copiez la commande et exécutez-la dans votre terminal</p>
+          </div>
+          <div class="step">
+            <div class="step-number">3</div>
+            <h4>Lancez l'application</h4>
+            <p>Suivez les instructions affichées (<code>npm run dev</code>)</p>
+          </div>
+          <div class="step">
+            <div class="step-number">4</div>
+            <h4>Déployez</h4>
+            <p>Build et déployez sur votre serveur ou hébergeur</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- API Info -->
+      <div class="install-api-info">
+        <h4>API d'installation</h4>
+        <div class="api-endpoints">
+          <div class="endpoint">
+            <span class="method get">GET</span>
+            <code>/install/info</code>
+            <span class="desc">Informations sur les scripts disponibles</span>
+          </div>
+          <div class="endpoint">
+            <span class="method get">GET</span>
+            <code>/install/tenant-admin.sh</code>
+            <span class="desc">Script d'installation Dashboard Tenant</span>
+          </div>
+          <div class="endpoint">
+            <span class="method get">GET</span>
+            <code>/install/driver-app.sh</code>
+            <span class="desc">Script d'installation App Driver PWA</span>
+          </div>
+        </div>
+        <a href="/install/info" target="_blank" class="btn btn-outline btn-small">Voir les infos API →</a>
+      </div>
+    </div>
+  </section>
+
   <!-- Contact Section -->
   <section id="contact" class="contact-section">
     <div class="container">
@@ -633,12 +800,19 @@ quotes = response.<span class="token function">json</span>()[<span class="token 
           <div class="footer-col">
             <h5>Produit</h5>
             <a href="#features">Fonctionnalités</a>
+            <a href="#installation">Installation</a>
             <a href="#pricing">Tarifs</a>
             <a href="docs.html">Documentation</a>
           </div>
           <div class="footer-col">
+            <h5>Installation</h5>
+            <a href="/install/tenant-admin.sh">Dashboard Tenant</a>
+            <a href="/install/driver-app.sh">App Driver PWA</a>
+            <a href="/install/info" target="_blank">API Info</a>
+          </div>
+          <div class="footer-col">
             <h5>Ressources</h5>
-            <a href="#">Guide d'intégration</a>
+            <a href="admin.html">Admin VeeoCore</a>
             <a href="#">Changelog</a>
             <a href="#">Status API</a>
           </div>

@@ -6,12 +6,10 @@
 import { Router } from 'express';
 import fs from 'fs';
 import path from 'path';
-import { fileURLToPath } from 'url';
 
 const router = Router();
 
-// Chemin vers les scripts
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
+// Chemin vers les scripts (relatif au dossier src)
 const scriptsPath = path.resolve(__dirname, '../../../../scripts');
 
 /**

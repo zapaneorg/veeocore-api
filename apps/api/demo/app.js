@@ -1062,3 +1062,35 @@ document.addEventListener('DOMContentLoaded', async () => {
   
   console.log('✅ VeeoCore Demo v3 fully initialized');
 });
+
+// =====================================================
+// INSTALL COMMAND COPY
+// =====================================================
+
+function copyInstallCommand(type) {
+  const commands = {
+    'tenant-admin': 'curl -fsSL https://api-core.veeo-stras.fr/install/tenant-admin.sh | bash -s -- --tenant-id=YOUR_ID --api-key=YOUR_KEY',
+    'driver-app': 'curl -fsSL https://api-core.veeo-stras.fr/install/driver-app.sh | bash -s -- --tenant-id=YOUR_ID --api-key=YOUR_KEY'
+  };
+  
+  const command = commands[type];
+  if (command) {
+    navigator.clipboard.writeText(command).then(() => {
+      const btn = event.target.closest('.copy-install-btn');
+      if (btn) {
+        const originalHTML = btn.innerHTML;
+        btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>';
+        btn.style.color = '#10b981';
+        setTimeout(() => {
+          btn.innerHTML = originalHTML;
+          btn.style.color = '';
+        }, 2000);
+      }
+    }).catch(err => {
+      console.error('Failed to copy:', err);
+    });
+  }
+}
+
+// Make function globally available
+window.copyInstallCommand = copyInstallCommand;
