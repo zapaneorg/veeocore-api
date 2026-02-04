@@ -5,6 +5,7 @@
 import { Router, Request, Response } from 'express';
 import { z } from 'zod';
 import { supabase } from '../lib/supabase';
+import { wsManager } from '../lib/websocket';
 
 const router = Router();
 
@@ -169,10 +170,17 @@ router.post('/', async (req: Request, res: Response) => {
       return res.status(400).json({ error: 'CREATE_ERROR', message: error.message });
     }
 
-    // TODO: Déclencher le dispatch si pas programmée
-    // if (!bookingData.scheduledFor) {
-    //   await dispatchEngine.submitRideRequest(data);
-    // }
+    // Émettre l'événement WebSocket pour la nouvelle réservation
+    wsManager.emitNewBooking({
+      tenant_id: req.tenant!.id,
+      id: data.id,
+      pickupAddress: data.pickup_address,
+      dropoffAddress: data.dropoff_address,
+      pickupTime: data.scheduled_for || new Date().toISOString(),
+      estimatedPrice: data.total_price,
+      vehicleType: data.vehicle_type,
+      passengerName: data.customer_name
+    });
 
     res.status(201).json({
       success: true,
@@ -236,6 +244,25 @@ router.post('/:id/assign', async (req: Request, res: Response) => {
     .update({ status: 'busy' })
     .eq('id', driverId);
 
+  // Notifier le chauffeur via WebSocket
+  wsManager.notifyDriver(driverId, 'booking:assigned', {
+    bookingId: data.id,
+    pickupAddress: data.pickup_address,
+    dropoffAddress: data.dropoff_address,
+    pickupTime: data.scheduled_for,
+    passengerName: data.customer_name,
+    passengerPhone: data.customer_phone,
+    estimatedPrice: data.total_price,
+    timestamp: new Date().toISOString()
+  });
+
+  // Notifier les admins
+  wsManager.notifyTenantAdmins(req.tenant!.id, 'booking:assigned', {
+    bookingId: data.id,
+    driverId,
+    timestamp: new Date().toISOString()
+  });
+
   res.json({
     success: true,
     data: { booking: data }
@@ -294,6 +321,14 @@ router.post('/:id/status', async (req: Request, res: Response) => {
       .eq('id', data.driver_id);
   }
 
+  // Émettre la notification WebSocket du changement de statut
+  wsManager.emitBookingStatusChange(
+    req.tenant!.id,
+    data.id,
+    status,
+    data.driver_id
+  );
+
   res.json({
     success: true,
     data: { booking: data }
@@ -330,7 +365,22 @@ router.post('/:id/cancel', async (req: Request, res: Response) => {
       .from('tenant_drivers')
       .update({ status: 'available' })
       .eq('id', data.driver_id);
+    
+    // Notifier le chauffeur de l'annulation
+    wsManager.notifyDriver(data.driver_id, 'booking:cancelled', {
+      bookingId: data.id,
+      reason,
+      timestamp: new Date().toISOString()
+    });
   }
+
+  // Notifier les admins
+  wsManager.notifyTenantAdmins(req.tenant!.id, 'booking:cancelled', {
+    bookingId: data.id,
+    reason,
+    driverId: data.driver_id,
+    timestamp: new Date().toISOString()
+  });
 
   res.json({
     success: true,

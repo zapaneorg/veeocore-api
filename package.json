@@ -11,6 +11,9 @@
     "dev": "concurrently \"npm run dev:api\" \"npm run dev:admin\"",
     "dev:api": "npm run dev --workspace=@veeo/api",
     "dev:admin": "npm run dev --workspace=@veeo/admin",
+    "dev:tenant-admin": "npm run dev --workspace=@veeo/tenant-admin",
+    "dev:driver": "npm run dev --workspace=@veeocore/driver-app",
+    "dev:all": "concurrently \"npm run dev:api\" \"npm run dev:tenant-admin\" \"npm run dev:driver\"",
     "build": "npm run build --workspaces",
     "test": "npm run test --workspaces",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
@@ -29,7 +32,8 @@
   "devDependencies": {
     "concurrently": "^8.2.2",
     "eslint": "^8.56.0",
-    "prettier": "^3.2.4"
+    "prettier": "^3.2.4",
+    "socket.io-client": "^4.8.3"
   },
   "engines": {
     "node": ">=18.0.0"

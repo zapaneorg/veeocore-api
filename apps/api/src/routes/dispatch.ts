@@ -8,6 +8,7 @@ import { supabase } from '../lib/supabase';
 import { calculateDistance } from './utils/geo';
 import { isFeatureAllowed } from '../lib/plan-limits';
 import logger from '../lib/logger';
+import { wsManager } from '../lib/websocket';
 
 const router = Router();
 
@@ -200,6 +201,28 @@ router.post('/request', checkDispatchFeature, async (req: Request, res: Response
 
     // TODO: Envoyer les notifications push aux chauffeurs
     // Pour chaque chauffeur: envoyer via FCM/WebSocket
+    
+    // Notifier les chauffeurs via WebSocket
+    driversToNotify.forEach(driver => {
+      wsManager.notifyDriver(driver.id, 'booking:dispatch_request', {
+        requestId,
+        bookingId: params.bookingId,
+        pickup: params.pickup,
+        vehicleType: params.vehicleType,
+        distance: Math.round(driver.distance * 100) / 100,
+        timeout: config.driverResponseTimeoutSec,
+        expiresAt: expiresAt.toISOString()
+      });
+    });
+
+    // Notifier les admins qu'un dispatch est en cours
+    wsManager.notifyTenantAdmins(tenantId, 'dispatch:started', {
+      requestId,
+      bookingId: params.bookingId,
+      driversNotified: driversToNotify.length,
+      timestamp: new Date().toISOString()
+    });
+
     logger.info('Dispatch notifications sent', { 
       requestId, 
       driverCount: driversToNotify.length 
@@ -285,7 +308,7 @@ router.post('/respond', checkDispatchFeature, async (req: Request, res: Response
       dispatchRequest.acceptedBy = driverId;
       
       // Mettre à jour la réservation
-      await supabase
+      const { data: booking } = await supabase
         .from('tenant_bookings')
         .update({
           status: 'assigned',
@@ -293,7 +316,9 @@ router.post('/respond', checkDispatchFeature, async (req: Request, res: Response
           assigned_at: new Date().toISOString()
         })
         .eq('id', dispatchRequest.bookingId)
-        .eq('tenant_id', dispatchRequest.tenantId);
+        .eq('tenant_id', dispatchRequest.tenantId)
+        .select()
+        .single();
 
       // Mettre à jour le statut du chauffeur
       await supabase
@@ -301,6 +326,41 @@ router.post('/respond', checkDispatchFeature, async (req: Request, res: Response
         .update({ status: 'busy' })
         .eq('id', driverId)
         .eq('tenant_id', dispatchRequest.tenantId);
+
+      // Notifier les autres chauffeurs que la course a été prise
+      dispatchRequest.notifiedDrivers
+        .filter(id => id !== driverId)
+        .forEach(otherId => {
+          wsManager.notifyDriver(otherId, 'booking:taken', {
+            requestId,
+            bookingId: dispatchRequest.bookingId,
+            message: 'Cette course a été acceptée par un autre chauffeur'
+          });
+        });
+
+      // Notifier les admins
+      wsManager.notifyTenantAdmins(dispatchRequest.tenantId, 'dispatch:completed', {
+        requestId,
+        bookingId: dispatchRequest.bookingId,
+        driverId,
+        status: 'assigned',
+        timestamp: new Date().toISOString()
+      });
+
+      // Notifier le chauffeur avec les détails de la course
+      if (booking) {
+        wsManager.notifyDriver(driverId, 'booking:assigned', {
+          bookingId: booking.id,
+          pickupAddress: booking.pickup_address,
+          dropoffAddress: booking.dropoff_address,
+          pickupLat: booking.pickup_lat,
+          pickupLng: booking.pickup_lng,
+          passengerName: booking.customer_name,
+          passengerPhone: booking.customer_phone,
+          estimatedPrice: booking.total_price,
+          timestamp: new Date().toISOString()
+        });
+      }
 
       logger.event('dispatch_accepted', {
         requestId,

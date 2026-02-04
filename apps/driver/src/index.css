@@ -1,0 +1,120 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+html {
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  @apply bg-gray-50 text-gray-900;
+  font-family: 'Inter', system-ui, sans-serif;
+  overscroll-behavior: none;
+}
+
+/* Mobile-first safe area */
+.safe-bottom {
+  padding-bottom: env(safe-area-inset-bottom, 0);
+}
+
+.safe-top {
+  padding-top: env(safe-area-inset-top, 0);
+}
+
+/* Slide animations */
+@keyframes slideUp {
+  from {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.animate-slide-up {
+  animation: slideUp 0.3s ease-out;
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.2s ease-out;
+}
+
+/* Status badge pulse */
+.status-pulse {
+  @apply relative;
+}
+
+.status-pulse::before {
+  content: '';
+  @apply absolute inset-0 rounded-full;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+/* Touch feedback */
+.touch-active:active {
+  @apply scale-95 transition-transform duration-75;
+}
+
+/* Bottom navigation */
+.bottom-nav {
+  @apply fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200;
+  padding-bottom: env(safe-area-inset-bottom, 0);
+}
+
+/* Card styling */
+.card {
+  @apply bg-white rounded-2xl shadow-sm border border-gray-100;
+}
+
+/* Button variants */
+.btn-primary {
+  @apply bg-primary-500 text-white font-semibold py-3 px-6 rounded-xl 
+         hover:bg-primary-600 active:bg-primary-700 
+         transition-colors duration-200;
+}
+
+.btn-secondary {
+  @apply bg-gray-100 text-gray-700 font-semibold py-3 px-6 rounded-xl 
+         hover:bg-gray-200 active:bg-gray-300 
+         transition-colors duration-200;
+}
+
+.btn-success {
+  @apply bg-success-500 text-white font-semibold py-3 px-6 rounded-xl 
+         hover:bg-success-600 active:bg-success-600 
+         transition-colors duration-200;
+}
+
+.btn-danger {
+  @apply bg-danger-500 text-white font-semibold py-3 px-6 rounded-xl 
+         hover:bg-danger-600 active:bg-danger-600 
+         transition-colors duration-200;
+}
+
+/* Map placeholder */
+.map-container {
+  @apply bg-gradient-to-br from-blue-100 to-blue-50 rounded-xl overflow-hidden;
+  background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%230ea5e9' fill-opacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+}
