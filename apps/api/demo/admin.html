@@ -7,7 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="admin-styles.css?v=20260204-2105">
+  <link rel="stylesheet" href="admin-styles.css?v=20260204-2200">
 </head>
 <body>
   <!-- Sidebar -->
@@ -63,6 +63,31 @@
             <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
           </svg>
           Sécurité
+        </a>
+      </div>
+
+      <div class="nav-section">
+        <span class="nav-section-title">Applications</span>
+        <a href="javascript:void(0)" class="nav-item" data-page="apps-install" onclick="navigateTo('apps-install'); return false;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1"></path>
+            <polyline points="7 10 12 15 17 10"></polyline>
+            <line x1="12" y1="15" x2="12" y2="3"></line>
+          </svg>
+          Installation
+        </a>
+        <a href="javascript:void(0)" class="nav-item" data-page="docs-tenant" onclick="navigateTo('docs-tenant'); return false;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M9 17V7m0 10a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h2a2 2 0 012 2m0 10a2 2 0 002 2h2a2 2 0 002-2M9 7a2 2 0 012-2h2a2 2 0 012 2m0 10V7"></path>
+          </svg>
+          Doc Tenant Admin
+        </a>
+        <a href="javascript:void(0)" class="nav-item" data-page="docs-driver" onclick="navigateTo('docs-driver'); return false;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect>
+            <line x1="12" y1="18" x2="12.01" y2="18"></line>
+          </svg>
+          Doc App Driver
         </a>
       </div>
       
@@ -875,6 +900,490 @@
       </div>
     </section>
 
+    <!-- ==================== PAGE: APPS INSTALLATION ==================== -->
+    <section class="page-section" id="page-apps-install" style="display: none;">
+      <header class="content-header">
+        <div class="header-left">
+          <h1>📦 Installation des Applications</h1>
+          <p>Déployez le Dashboard Tenant et l'App Driver en quelques commandes</p>
+        </div>
+      </header>
+
+      <!-- Credentials Section -->
+      <div class="table-card" style="margin-bottom: 24px;">
+        <div class="table-header">
+          <h2>🔐 Vos Credentials</h2>
+        </div>
+        <div style="padding: 20px;">
+          <p style="color: #64748b; margin-bottom: 16px;">Entrez vos identifiants pour générer les commandes d'installation personnalisées.</p>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px;">
+            <div>
+              <label style="display: block; font-weight: 500; margin-bottom: 8px;">Tenant ID</label>
+              <input type="text" id="install-tenant-id" placeholder="votre-tenant-id" class="form-input" style="width: 100%;">
+            </div>
+            <div>
+              <label style="display: block; font-weight: 500; margin-bottom: 8px;">API Key</label>
+              <input type="text" id="install-api-key" placeholder="key_xxxxxxxx" class="form-input" style="width: 100%;">
+            </div>
+          </div>
+          <button class="btn btn-primary" onclick="generateInstallCommands()">Générer les commandes</button>
+        </div>
+      </div>
+
+      <!-- Apps Grid -->
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px;">
+        <!-- Dashboard Tenant Admin -->
+        <div class="table-card">
+          <div class="table-header" style="background: linear-gradient(135deg, #3b82f6, #1d4ed8); color: white;">
+            <h2>🖥️ Dashboard Tenant Admin</h2>
+          </div>
+          <div style="padding: 20px;">
+            <p style="color: #64748b; margin-bottom: 16px;">Dashboard complet pour gérer votre flotte VTC.</p>
+            <ul style="list-style: none; padding: 0; margin-bottom: 20px;">
+              <li style="padding: 8px 0; display: flex; align-items: center; gap: 8px;">
+                <span style="color: #10b981;">✓</span> Gestion des chauffeurs
+              </li>
+              <li style="padding: 8px 0; display: flex; align-items: center; gap: 8px;">
+                <span style="color: #10b981;">✓</span> Suivi des réservations temps réel
+              </li>
+              <li style="padding: 8px 0; display: flex; align-items: center; gap: 8px;">
+                <span style="color: #10b981;">✓</span> Configuration de la tarification
+              </li>
+              <li style="padding: 8px 0; display: flex; align-items: center; gap: 8px;">
+                <span style="color: #10b981;">✓</span> Analytics et statistiques
+              </li>
+            </ul>
+            
+            <div style="background: #1e293b; border-radius: 8px; padding: 16px; margin-bottom: 16px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                <span style="color: #94a3b8; font-size: 12px; text-transform: uppercase;">Commande d'installation</span>
+                <button onclick="copyToClipboard('tenant-admin-cmd')" style="background: none; border: none; color: #94a3b8; cursor: pointer;">📋</button>
+              </div>
+              <code id="tenant-admin-cmd" style="color: #4ade80; font-size: 12px; word-break: break-all; display: block;">
+curl -fsSL https://api-core.veeo-stras.fr/install/tenant-admin.sh | bash -s -- --tenant-id=YOUR_ID --api-key=YOUR_KEY
+              </code>
+            </div>
+            
+            <a href="/install/tenant-admin.sh" download class="btn btn-primary" style="width: 100%; text-align: center;">
+              ⬇️ Télécharger le script
+            </a>
+          </div>
+        </div>
+
+        <!-- App Driver PWA -->
+        <div class="table-card">
+          <div class="table-header" style="background: linear-gradient(135deg, #10b981, #059669); color: white;">
+            <h2>📱 App Driver (PWA)</h2>
+          </div>
+          <div style="padding: 20px;">
+            <p style="color: #64748b; margin-bottom: 16px;">Application mobile PWA pour vos chauffeurs.</p>
+            <ul style="list-style: none; padding: 0; margin-bottom: 20px;">
+              <li style="padding: 8px 0; display: flex; align-items: center; gap: 8px;">
+                <span style="color: #10b981;">✓</span> Application PWA installable
+              </li>
+              <li style="padding: 8px 0; display: flex; align-items: center; gap: 8px;">
+                <span style="color: #10b981;">✓</span> Notifications push temps réel
+              </li>
+              <li style="padding: 8px 0; display: flex; align-items: center; gap: 8px;">
+                <span style="color: #10b981;">✓</span> Géolocalisation GPS
+              </li>
+              <li style="padding: 8px 0; display: flex; align-items: center; gap: 8px;">
+                <span style="color: #10b981;">✓</span> Mode hors ligne
+              </li>
+            </ul>
+            
+            <div style="background: #1e293b; border-radius: 8px; padding: 16px; margin-bottom: 16px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                <span style="color: #94a3b8; font-size: 12px; text-transform: uppercase;">Commande d'installation</span>
+                <button onclick="copyToClipboard('driver-app-cmd')" style="background: none; border: none; color: #94a3b8; cursor: pointer;">📋</button>
+              </div>
+              <code id="driver-app-cmd" style="color: #4ade80; font-size: 12px; word-break: break-all; display: block;">
+curl -fsSL https://api-core.veeo-stras.fr/install/driver-app.sh | bash -s -- --tenant-id=YOUR_ID --api-key=YOUR_KEY
+              </code>
+            </div>
+            
+            <a href="/install/driver-app.sh" download class="btn btn-primary" style="width: 100%; text-align: center; background: #10b981;">
+              ⬇️ Télécharger le script
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Requirements -->
+      <div class="table-card" style="margin-top: 24px;">
+        <div class="table-header">
+          <h2>⚙️ Prérequis</h2>
+        </div>
+        <div style="padding: 20px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;">
+          <div style="display: flex; align-items: flex-start; gap: 12px;">
+            <div style="width: 48px; height: 48px; background: #dcfce7; border-radius: 12px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+              <span style="font-size: 24px;">📦</span>
+            </div>
+            <div>
+              <h4 style="margin: 0 0 4px 0;">Node.js 18+</h4>
+              <p style="margin: 0; color: #64748b; font-size: 14px;">Runtime JavaScript</p>
+              <a href="https://nodejs.org" target="_blank" style="color: #3b82f6; font-size: 14px;">nodejs.org →</a>
+            </div>
+          </div>
+          <div style="display: flex; align-items: flex-start; gap: 12px;">
+            <div style="width: 48px; height: 48px; background: #fee2e2; border-radius: 12px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+              <span style="font-size: 24px;">📋</span>
+            </div>
+            <div>
+              <h4 style="margin: 0 0 4px 0;">npm 9+</h4>
+              <p style="margin: 0; color: #64748b; font-size: 14px;">Gestionnaire de paquets</p>
+              <span style="color: #64748b; font-size: 14px;">Inclus avec Node.js</span>
+            </div>
+          </div>
+          <div style="display: flex; align-items: flex-start; gap: 12px;">
+            <div style="width: 48px; height: 48px; background: #dbeafe; border-radius: 12px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+              <span style="font-size: 24px;">💻</span>
+            </div>
+            <div>
+              <h4 style="margin: 0 0 4px 0;">Terminal</h4>
+              <p style="margin: 0; color: #64748b; font-size: 14px;">Bash, Zsh ou PowerShell</p>
+              <span style="color: #64748b; font-size: 14px;">Linux, macOS ou WSL</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Instructions -->
+      <div class="table-card" style="margin-top: 24px;">
+        <div class="table-header">
+          <h2>📖 Guide d'installation</h2>
+        </div>
+        <div style="padding: 20px;">
+          <div style="display: flex; gap: 16px; margin-bottom: 20px;">
+            <div style="width: 32px; height: 32px; background: #3b82f6; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; flex-shrink: 0;">1</div>
+            <div>
+              <h4 style="margin: 0 0 4px 0;">Copiez la commande</h4>
+              <p style="margin: 0; color: #64748b;">Cliquez sur l'icône 📋 à côté de la commande d'installation.</p>
+            </div>
+          </div>
+          <div style="display: flex; gap: 16px; margin-bottom: 20px;">
+            <div style="width: 32px; height: 32px; background: #3b82f6; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; flex-shrink: 0;">2</div>
+            <div>
+              <h4 style="margin: 0 0 4px 0;">Collez dans votre terminal</h4>
+              <p style="margin: 0; color: #64748b;">Ouvrez un terminal et collez la commande. Le script téléchargera et installera tout automatiquement.</p>
+            </div>
+          </div>
+          <div style="display: flex; gap: 16px;">
+            <div style="width: 32px; height: 32px; background: #3b82f6; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; flex-shrink: 0;">3</div>
+            <div>
+              <h4 style="margin: 0 0 4px 0;">Lancez l'application</h4>
+              <p style="margin: 0; color: #64748b;">Entrez dans le dossier créé et lancez <code style="background: #f1f5f9; padding: 2px 6px; border-radius: 4px;">npm run dev</code></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== PAGE: DOC TENANT ADMIN ==================== -->
+    <section class="page-section" id="page-docs-tenant" style="display: none;">
+      <header class="content-header">
+        <div class="header-left">
+          <h1>📚 Documentation Dashboard Tenant</h1>
+          <p>Guide complet pour utiliser le Dashboard d'administration</p>
+        </div>
+        <div class="header-actions">
+          <a href="docs-tenant.html" target="_blank" class="btn btn-primary">
+            📖 Ouvrir la documentation complète
+          </a>
+        </div>
+      </header>
+
+      <div class="table-card" style="margin-bottom: 24px;">
+        <div class="table-header">
+          <h2>🚀 Démarrage rapide</h2>
+        </div>
+        <div style="padding: 20px;">
+          <h4>1. Installation</h4>
+          <div style="background: #1e293b; border-radius: 8px; padding: 16px; margin: 12px 0;">
+            <code style="color: #4ade80;">curl -fsSL https://api-core.veeo-stras.fr/install/tenant-admin.sh | bash -s -- --tenant-id=YOUR_ID --api-key=YOUR_KEY</code>
+          </div>
+          
+          <h4>2. Lancement</h4>
+          <div style="background: #1e293b; border-radius: 8px; padding: 16px; margin: 12px 0;">
+            <code style="color: #4ade80;">cd veeocore-tenant-admin && npm run dev</code>
+          </div>
+          
+          <h4>3. Accès</h4>
+          <p style="color: #64748b;">Ouvrez <a href="http://localhost:5174" target="_blank" style="color: #3b82f6;">http://localhost:5174</a> dans votre navigateur.</p>
+        </div>
+      </div>
+
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px;">
+        <div class="table-card">
+          <div class="table-header">
+            <h2>👥 Gestion des Chauffeurs</h2>
+          </div>
+          <div style="padding: 20px;">
+            <ul style="list-style: none; padding: 0;">
+              <li style="padding: 10px 0; border-bottom: 1px solid #e2e8f0;">
+                <strong>Ajouter un chauffeur</strong>
+                <p style="margin: 4px 0 0; color: #64748b; font-size: 14px;">Créez un profil avec nom, email, téléphone et véhicule.</p>
+              </li>
+              <li style="padding: 10px 0; border-bottom: 1px solid #e2e8f0;">
+                <strong>Gérer les statuts</strong>
+                <p style="margin: 4px 0 0; color: #64748b; font-size: 14px;">Disponible, occupé, hors ligne, en pause.</p>
+              </li>
+              <li style="padding: 10px 0; border-bottom: 1px solid #e2e8f0;">
+                <strong>Géolocalisation</strong>
+                <p style="margin: 4px 0 0; color: #64748b; font-size: 14px;">Suivez vos chauffeurs en temps réel sur la carte.</p>
+              </li>
+              <li style="padding: 10px 0;">
+                <strong>Statistiques</strong>
+                <p style="margin: 4px 0 0; color: #64748b; font-size: 14px;">Courses effectuées, gains, évaluations clients.</p>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="table-card">
+          <div class="table-header">
+            <h2>📅 Gestion des Réservations</h2>
+          </div>
+          <div style="padding: 20px;">
+            <ul style="list-style: none; padding: 0;">
+              <li style="padding: 10px 0; border-bottom: 1px solid #e2e8f0;">
+                <strong>Vue calendrier</strong>
+                <p style="margin: 4px 0 0; color: #64748b; font-size: 14px;">Visualisez toutes les courses planifiées.</p>
+              </li>
+              <li style="padding: 10px 0; border-bottom: 1px solid #e2e8f0;">
+                <strong>Attribution automatique</strong>
+                <p style="margin: 4px 0 0; color: #64748b; font-size: 14px;">Dispatch intelligent vers le chauffeur optimal.</p>
+              </li>
+              <li style="padding: 10px 0; border-bottom: 1px solid #e2e8f0;">
+                <strong>Suivi temps réel</strong>
+                <p style="margin: 4px 0 0; color: #64748b; font-size: 14px;">Statut live via WebSocket.</p>
+              </li>
+              <li style="padding: 10px 0;">
+                <strong>Historique</strong>
+                <p style="margin: 4px 0 0; color: #64748b; font-size: 14px;">Export PDF/CSV des courses.</p>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="table-card">
+          <div class="table-header">
+            <h2>💰 Configuration Tarifs</h2>
+          </div>
+          <div style="padding: 20px;">
+            <ul style="list-style: none; padding: 0;">
+              <li style="padding: 10px 0; border-bottom: 1px solid #e2e8f0;">
+                <strong>Prix de base</strong>
+                <p style="margin: 4px 0 0; color: #64748b; font-size: 14px;">Montant minimum de départ.</p>
+              </li>
+              <li style="padding: 10px 0; border-bottom: 1px solid #e2e8f0;">
+                <strong>Prix par km</strong>
+                <p style="margin: 4px 0 0; color: #64748b; font-size: 14px;">Tarification distance.</p>
+              </li>
+              <li style="padding: 10px 0; border-bottom: 1px solid #e2e8f0;">
+                <strong>Prix par minute</strong>
+                <p style="margin: 4px 0 0; color: #64748b; font-size: 14px;">Tarification temps d'attente.</p>
+              </li>
+              <li style="padding: 10px 0;">
+                <strong>Majorations</strong>
+                <p style="margin: 4px 0 0; color: #64748b; font-size: 14px;">Nuit, week-end, jours fériés.</p>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="table-card">
+          <div class="table-header">
+            <h2>📊 Analytics</h2>
+          </div>
+          <div style="padding: 20px;">
+            <ul style="list-style: none; padding: 0;">
+              <li style="padding: 10px 0; border-bottom: 1px solid #e2e8f0;">
+                <strong>Revenus</strong>
+                <p style="margin: 4px 0 0; color: #64748b; font-size: 14px;">Graphiques jour/semaine/mois.</p>
+              </li>
+              <li style="padding: 10px 0; border-bottom: 1px solid #e2e8f0;">
+                <strong>Performance chauffeurs</strong>
+                <p style="margin: 4px 0 0; color: #64748b; font-size: 14px;">Top performers, taux d'acceptation.</p>
+              </li>
+              <li style="padding: 10px 0; border-bottom: 1px solid #e2e8f0;">
+                <strong>Zones populaires</strong>
+                <p style="margin: 4px 0 0; color: #64748b; font-size: 14px;">Heatmap des courses.</p>
+              </li>
+              <li style="padding: 10px 0;">
+                <strong>Prévisions</strong>
+                <p style="margin: 4px 0 0; color: #64748b; font-size: 14px;">Anticipez la demande.</p>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="table-card" style="margin-top: 24px;">
+        <div class="table-header">
+          <h2>🔌 Intégration API</h2>
+        </div>
+        <div style="padding: 20px;">
+          <p style="color: #64748b; margin-bottom: 16px;">Le dashboard communique avec l'API VeeoCore via les endpoints suivants :</p>
+          <div style="background: #f8fafc; border-radius: 8px; padding: 16px; font-family: monospace; font-size: 14px;">
+            <div style="margin-bottom: 8px;"><span style="color: #10b981;">GET</span> /api/v1/drivers - Liste des chauffeurs</div>
+            <div style="margin-bottom: 8px;"><span style="color: #3b82f6;">POST</span> /api/v1/drivers - Créer un chauffeur</div>
+            <div style="margin-bottom: 8px;"><span style="color: #10b981;">GET</span> /api/v1/bookings - Liste des réservations</div>
+            <div style="margin-bottom: 8px;"><span style="color: #3b82f6;">POST</span> /api/v1/bookings - Créer une réservation</div>
+            <div style="margin-bottom: 8px;"><span style="color: #10b981;">GET</span> /api/v1/analytics/dashboard - Statistiques</div>
+            <div><span style="color: #f59e0b;">PUT</span> /api/v1/pricing/config - Configuration tarifs</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== PAGE: DOC DRIVER APP ==================== -->
+    <section class="page-section" id="page-docs-driver" style="display: none;">
+      <header class="content-header">
+        <div class="header-left">
+          <h1>📱 Documentation App Driver</h1>
+          <p>Guide complet pour l'application chauffeur PWA</p>
+        </div>
+        <div class="header-actions">
+          <a href="docs-driver.html" target="_blank" class="btn btn-primary" style="background: #10b981;">
+            📖 Ouvrir la documentation complète
+          </a>
+        </div>
+      </header>
+
+      <div class="table-card" style="margin-bottom: 24px;">
+        <div class="table-header" style="background: linear-gradient(135deg, #10b981, #059669); color: white;">
+          <h2>🚀 Démarrage rapide</h2>
+        </div>
+        <div style="padding: 20px;">
+          <h4>1. Installation</h4>
+          <div style="background: #1e293b; border-radius: 8px; padding: 16px; margin: 12px 0;">
+            <code style="color: #4ade80;">curl -fsSL https://api-core.veeo-stras.fr/install/driver-app.sh | bash -s -- --tenant-id=YOUR_ID --api-key=YOUR_KEY</code>
+          </div>
+          
+          <h4>2. Lancement</h4>
+          <div style="background: #1e293b; border-radius: 8px; padding: 16px; margin: 12px 0;">
+            <code style="color: #4ade80;">cd veeocore-driver-app && npm run dev</code>
+          </div>
+          
+          <h4>3. Installation PWA sur mobile</h4>
+          <ol style="color: #64748b; padding-left: 20px;">
+            <li>Ouvrez l'app sur votre mobile via l'URL locale</li>
+            <li>Menu → "Ajouter à l'écran d'accueil"</li>
+            <li>L'app s'installe comme une application native</li>
+          </ol>
+        </div>
+      </div>
+
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px;">
+        <div class="table-card">
+          <div class="table-header">
+            <h2>🔔 Notifications Push</h2>
+          </div>
+          <div style="padding: 20px;">
+            <ul style="list-style: none; padding: 0;">
+              <li style="padding: 10px 0; border-bottom: 1px solid #e2e8f0;">
+                <strong>Nouvelle course</strong>
+                <p style="margin: 4px 0 0; color: #64748b; font-size: 14px;">Alerte immédiate avec détails du trajet.</p>
+              </li>
+              <li style="padding: 10px 0; border-bottom: 1px solid #e2e8f0;">
+                <strong>Affectation</strong>
+                <p style="margin: 4px 0 0; color: #64748b; font-size: 14px;">Confirmation d'attribution de course.</p>
+              </li>
+              <li style="padding: 10px 0; border-bottom: 1px solid #e2e8f0;">
+                <strong>Annulation</strong>
+                <p style="margin: 4px 0 0; color: #64748b; font-size: 14px;">Notification si course annulée.</p>
+              </li>
+              <li style="padding: 10px 0;">
+                <strong>Messages</strong>
+                <p style="margin: 4px 0 0; color: #64748b; font-size: 14px;">Communication dispatch/admin.</p>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="table-card">
+          <div class="table-header">
+            <h2>📍 Géolocalisation</h2>
+          </div>
+          <div style="padding: 20px;">
+            <ul style="list-style: none; padding: 0;">
+              <li style="padding: 10px 0; border-bottom: 1px solid #e2e8f0;">
+                <strong>Position en continu</strong>
+                <p style="margin: 4px 0 0; color: #64748b; font-size: 14px;">GPS transmis toutes les 5 secondes.</p>
+              </li>
+              <li style="padding: 10px 0; border-bottom: 1px solid #e2e8f0;">
+                <strong>Navigation intégrée</strong>
+                <p style="margin: 4px 0 0; color: #64748b; font-size: 14px;">Lancement Waze/Google Maps.</p>
+              </li>
+              <li style="padding: 10px 0; border-bottom: 1px solid #e2e8f0;">
+                <strong>Mode économie</strong>
+                <p style="margin: 4px 0 0; color: #64748b; font-size: 14px;">Batterie préservée hors course.</p>
+              </li>
+              <li style="padding: 10px 0;">
+                <strong>Historique</strong>
+                <p style="margin: 4px 0 0; color: #64748b; font-size: 14px;">Tracé complet des trajets.</p>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="table-card">
+          <div class="table-header">
+            <h2>🚗 Gestion des Courses</h2>
+          </div>
+          <div style="padding: 20px;">
+            <ul style="list-style: none; padding: 0;">
+              <li style="padding: 10px 0; border-bottom: 1px solid #e2e8f0;">
+                <strong>Accepter/Refuser</strong>
+                <p style="margin: 4px 0 0; color: #64748b; font-size: 14px;">Swipe pour répondre rapidement.</p>
+              </li>
+              <li style="padding: 10px 0; border-bottom: 1px solid #e2e8f0;">
+                <strong>Démarrer la course</strong>
+                <p style="margin: 4px 0 0; color: #64748b; font-size: 14px;">Un tap pour lancer le chrono.</p>
+              </li>
+              <li style="padding: 10px 0; border-bottom: 1px solid #e2e8f0;">
+                <strong>Terminer</strong>
+                <p style="margin: 4px 0 0; color: #64748b; font-size: 14px;">Confirmation et récapitulatif.</p>
+              </li>
+              <li style="padding: 10px 0;">
+                <strong>Historique</strong>
+                <p style="margin: 4px 0 0; color: #64748b; font-size: 14px;">Toutes vos courses passées.</p>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="table-card">
+          <div class="table-header">
+            <h2>🔌 Événements WebSocket</h2>
+          </div>
+          <div style="padding: 20px;">
+            <div style="background: #f8fafc; border-radius: 8px; padding: 16px; font-family: monospace; font-size: 13px;">
+              <div style="margin-bottom: 8px;"><span style="color: #8b5cf6;">booking:new</span> - Nouvelle course disponible</div>
+              <div style="margin-bottom: 8px;"><span style="color: #10b981;">booking:assigned</span> - Course attribuée</div>
+              <div style="margin-bottom: 8px;"><span style="color: #f59e0b;">booking:cancelled</span> - Annulation</div>
+              <div style="margin-bottom: 8px;"><span style="color: #3b82f6;">location:update</span> - MAJ position</div>
+              <div><span style="color: #ef4444;">driver:status</span> - Changement de statut</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="table-card" style="margin-top: 24px;">
+        <div class="table-header">
+          <h2>🔐 Credentials de Test</h2>
+        </div>
+        <div style="padding: 20px;">
+          <p style="color: #64748b; margin-bottom: 16px;">Utilisez ces identifiants pour tester l'application :</p>
+          <div style="background: #dbeafe; border: 1px solid #3b82f6; border-radius: 8px; padding: 16px;">
+            <div style="margin-bottom: 8px;"><strong>Email :</strong> chauffeur@demo.veeocore.fr</div>
+            <div><strong>Mot de passe :</strong> demo2026</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
   </main>
 
   <!-- Create API Key Modal -->
@@ -1070,6 +1579,6 @@
     </div>
   </div>
 
-  <script src="admin.js?v=20260204-2105"></script>
+  <script src="admin.js?v=20260204-2200"></script>
 </body>
 </html>

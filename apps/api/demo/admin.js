@@ -608,3 +608,44 @@ style.textContent = `
   }
 `;
 document.head.appendChild(style);
+
+/**
+ * Generate install commands with user credentials
+ */
+function generateInstallCommands() {
+  const tenantId = document.getElementById('install-tenant-id')?.value?.trim() || 'YOUR_ID';
+  const apiKey = document.getElementById('install-api-key')?.value?.trim() || 'YOUR_KEY';
+  
+  const baseUrl = 'https://api-core.veeo-stras.fr';
+  
+  const tenantAdminCmd = document.getElementById('tenant-admin-cmd');
+  const driverAppCmd = document.getElementById('driver-app-cmd');
+  
+  if (tenantAdminCmd) {
+    tenantAdminCmd.textContent = `curl -fsSL ${baseUrl}/install/tenant-admin.sh | bash -s -- --tenant-id=${tenantId} --api-key=${apiKey}`;
+  }
+  
+  if (driverAppCmd) {
+    driverAppCmd.textContent = `curl -fsSL ${baseUrl}/install/driver-app.sh | bash -s -- --tenant-id=${tenantId} --api-key=${apiKey}`;
+  }
+  
+  showToast('Commandes générées avec vos credentials');
+}
+
+/**
+ * Copy text to clipboard
+ * @param {string} elementId - ID of element containing text to copy
+ */
+function copyToClipboard(elementId) {
+  const element = document.getElementById(elementId);
+  if (!element) return;
+  
+  const text = element.textContent.trim();
+  
+  navigator.clipboard.writeText(text).then(() => {
+    showToast('Copié dans le presse-papier');
+  }).catch(err => {
+    console.error('Erreur copie:', err);
+    showToast('Erreur de copie');
+  });
+}
