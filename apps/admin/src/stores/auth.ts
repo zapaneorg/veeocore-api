@@ -1,6 +1,10 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
+// Credentials de démo
+const DEMO_EMAIL = 'admin@demo.veeocore.fr';
+const DEMO_PASSWORD = 'admin2026';
+
 interface User {
   id: string;
   email: string;
@@ -33,25 +37,29 @@ export const useAuthStore = create<AuthState>()(
       token: null,
       isAuthenticated: false,
 
-      login: async (email: string, _password: string) => {
+      login: async (email: string, password: string) => {
+        // Validation des credentials de démo
+        if (email !== DEMO_EMAIL || password !== DEMO_PASSWORD) {
+          return false;
+        }
+
         try {
-          // TODO: Appeler l'API de login
-          // const response = await api.post('/auth/login', { email, _password });
+          // TODO: Appeler l'API de login en production
+          // const response = await api.post('/auth/login', { email, password });
           
-          // Simulation
           const mockUser = {
             id: '1',
-            email,
-            name: 'Admin',
+            email: DEMO_EMAIL,
+            name: 'Admin VeeoCore',
             role: 'admin'
           };
           const mockTenant = {
             id: '1',
-            name: 'Demo Company',
+            name: 'VeeoCore Demo',
             slug: 'demo',
             plan: 'pro'
           };
-          const mockToken = 'mock_jwt_token';
+          const mockToken = 'demo_jwt_token_' + Date.now();
 
           set({
             user: mockUser,
