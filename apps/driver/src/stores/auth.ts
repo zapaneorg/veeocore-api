@@ -3,6 +3,29 @@ import { persist } from 'zustand/middleware'
 import type { AuthState, Driver } from '../types'
 import { api } from '../lib/api'
 
+// Demo credentials pour test
+const DEMO_EMAIL = 'chauffeur@demo.veeocore.fr'
+const DEMO_PASSWORD = 'demo2026'
+
+const DEMO_DRIVER: Driver = {
+  id: 'drv_demo123',
+  tenantId: 'ten_veeo_demo',
+  firstName: 'Jean',
+  lastName: 'Dupont',
+  email: 'chauffeur@demo.veeocore.fr',
+  phone: '+33 6 12 34 56 78',
+  status: 'available',
+  rating: 4.9,
+  totalRides: 156,
+  vehicleType: 'berline',
+  vehiclePlate: 'AB-123-CD',
+  vehicleBrand: 'Mercedes',
+  vehicleModel: 'Classe E',
+  vehicleColor: 'Noir',
+  earningsToday: 145.50,
+  earningsMonth: 3250.00
+}
+
 export const useAuthStore = create<AuthState>()(
   persist(
     (set, get) => ({
@@ -11,6 +34,17 @@ export const useAuthStore = create<AuthState>()(
       isAuthenticated: false,
 
       login: async (email: string, password: string) => {
+        // Mode démo
+        if (email === DEMO_EMAIL && password === DEMO_PASSWORD) {
+          set({
+            driver: DEMO_DRIVER,
+            token: 'demo_token_veeocore_driver',
+            isAuthenticated: true,
+          })
+          return
+        }
+
+        // Mode production
         const response = await api.post('/auth/driver/login', { email, password })
         const { driver, token } = response.data.data
 

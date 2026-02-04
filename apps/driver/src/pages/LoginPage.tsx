@@ -97,6 +97,15 @@ export default function LoginPage() {
             Mot de passe oublié ?
           </a>
         </div>
+
+        {/* Demo credentials hint */}
+        <div className="mt-6 p-4 bg-gray-50 rounded-xl border border-gray-200">
+          <p className="text-xs text-gray-500 text-center mb-2">🔑 Accès démo</p>
+          <p className="text-sm text-gray-600 text-center font-mono">
+            chauffeur@demo.veeocore.fr<br/>
+            demo2026
+          </p>
+        </div>
       </div>
 
       {/* Footer */}
