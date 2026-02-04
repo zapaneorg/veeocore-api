@@ -76,9 +76,14 @@ export default function LoginPage() {
           </button>
         </form>
 
-        <p className="mt-6 text-center text-sm text-gray-500">
-          Demo: entrez n'importe quel email/mot de passe
-        </p>
+        {/* Demo credentials hint */}
+        <div className="mt-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+          <p className="text-sm font-medium text-blue-800 mb-2">🔐 Identifiants de test :</p>
+          <div className="space-y-1 text-sm text-blue-700">
+            <p><span className="font-medium">Email:</span> admin@demo.veeocore.fr</p>
+            <p><span className="font-medium">Mot de passe:</span> admin2026</p>
+          </div>
+        </div>
       </div>
     </div>
   );
