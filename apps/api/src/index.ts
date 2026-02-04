@@ -40,6 +40,7 @@ import tenantAuthRoutes from './routes/tenant-auth';
 import tenantDashboardRoutes from './routes/tenant-dashboard';
 import driverAuthRoutes from './routes/driver-auth';
 import driverApiRoutes from './routes/driver-api';
+import installRoutes from './routes/install';
 
 const app = express();
 const httpServer = createServer(app);
@@ -191,6 +192,9 @@ app.use('/api/v1/driver', driverApiRoutes);
 
 // Stripe Webhooks (raw body pour signature)
 app.use('/api/v1/stripe', stripeWebhooksRoutes);
+
+// Routes d'installation (publiques)
+app.use('/install', installRoutes);
 
 // WebSocket stats endpoint
 app.get('/ws/stats', (req, res) => {

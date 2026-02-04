@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VeeoCore - Installation Apps</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%233b82f6'/><text x='50' y='65' font-size='50' fill='white' text-anchor='middle' font-family='Arial' font-weight='bold'>V</text></svg>">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: { 50: '#eff6ff', 100: '#dbeafe', 200: '#bfdbfe', 300: '#93c5fd', 400: '#60a5fa', 500: '#3b82f6', 600: '#2563eb', 700: '#1d4ed8', 800: '#1e40af', 900: '#1e3a8a' }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .copy-btn:active { transform: scale(0.95); }
+        .gradient-bg { background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%); }
+        code { font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Fira Mono', monospace; }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <!-- Header -->
+    <header class="gradient-bg text-white py-16">
+        <div class="max-w-6xl mx-auto px-6 text-center">
+            <div class="inline-flex items-center justify-center w-20 h-20 bg-white/20 rounded-2xl mb-6">
+                <svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+                </svg>
+            </div>
+            <h1 class="text-4xl font-bold mb-4">Installation VeeoCore</h1>
+            <p class="text-xl text-blue-100 max-w-2xl mx-auto">
+                Installez votre Dashboard Admin et l'App Chauffeur en quelques commandes
+            </p>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="max-w-6xl mx-auto px-6 py-12">
+        <!-- Step 1: Credentials -->
+        <section class="bg-white rounded-2xl shadow-lg p-8 mb-8">
+            <div class="flex items-center gap-4 mb-6">
+                <div class="w-10 h-10 rounded-full bg-primary-100 flex items-center justify-center text-primary-600 font-bold">1</div>
+                <h2 class="text-2xl font-bold text-gray-900">Vos Credentials VeeoCore</h2>
+            </div>
+            
+            <p class="text-gray-600 mb-6">
+                Entrez vos identifiants pour générer les commandes d'installation personnalisées.
+            </p>
+
+            <div class="grid md:grid-cols-2 gap-6">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Tenant ID</label>
+                    <input 
+                        type="text" 
+                        id="tenantId" 
+                        placeholder="votre-tenant-id"
+                        class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none transition"
+                    >
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">API Key</label>
+                    <input 
+                        type="text" 
+                        id="apiKey" 
+                        placeholder="key_xxxxxxxxxxxxxxxx"
+                        class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none transition"
+                    >
+                </div>
+            </div>
+
+            <button 
+                onclick="generateCommands()"
+                class="mt-6 px-8 py-3 bg-primary-600 text-white rounded-xl font-medium hover:bg-primary-700 transition-colors"
+            >
+                Générer les commandes
+            </button>
+        </section>
+
+        <!-- Apps Grid -->
+        <div class="grid md:grid-cols-2 gap-8">
+            <!-- Dashboard Tenant Admin -->
+            <section class="bg-white rounded-2xl shadow-lg overflow-hidden">
+                <div class="p-6 border-b bg-gradient-to-r from-blue-50 to-indigo-50">
+                    <div class="flex items-center gap-4">
+                        <div class="w-14 h-14 rounded-xl bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center">
+                            <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17V7m0 10a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h2a2 2 0 012 2m0 10a2 2 0 002 2h2a2 2 0 002-2M9 7a2 2 0 012-2h2a2 2 0 012 2m0 10V7m0 10a2 2 0 002 2h2a2 2 0 002-2V7a2 2 0 00-2-2h-2a2 2 0 00-2 2"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold text-gray-900">Dashboard Tenant Admin</h3>
+                            <p class="text-gray-600">Gérez votre flotte VTC</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="p-6">
+                    <ul class="space-y-3 mb-6">
+                        <li class="flex items-center gap-2 text-gray-600">
+                            <svg class="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                            </svg>
+                            Gestion des chauffeurs
+                        </li>
+                        <li class="flex items-center gap-2 text-gray-600">
+                            <svg class="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                            </svg>
+                            Suivi des réservations temps réel
+                        </li>
+                        <li class="flex items-center gap-2 text-gray-600">
+                            <svg class="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                            </svg>
+                            Configuration tarification
+                        </li>
+                        <li class="flex items-center gap-2 text-gray-600">
+                            <svg class="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                            </svg>
+                            Analytics & statistiques
+                        </li>
+                    </ul>
+
+                    <div class="bg-gray-900 rounded-xl p-4 mb-4">
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="text-xs text-gray-400 uppercase tracking-wider">Commande d'installation</span>
+                            <button onclick="copyCommand('tenantAdminCmd')" class="copy-btn text-gray-400 hover:text-white transition">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                                </svg>
+                            </button>
+                        </div>
+                        <code id="tenantAdminCmd" class="text-green-400 text-sm break-all block">
+curl -fsSL https://api-core.veeo-stras.fr/install/tenant-admin.sh | bash -s -- --tenant-id=YOUR_ID --api-key=YOUR_KEY
+                        </code>
+                    </div>
+
+                    <a href="/install/tenant-admin.sh" download class="block w-full py-3 text-center bg-primary-600 text-white rounded-xl font-medium hover:bg-primary-700 transition-colors">
+                        Télécharger le script
+                    </a>
+                </div>
+            </section>
+
+            <!-- App Driver PWA -->
+            <section class="bg-white rounded-2xl shadow-lg overflow-hidden">
+                <div class="p-6 border-b bg-gradient-to-r from-green-50 to-emerald-50">
+                    <div class="flex items-center gap-4">
+                        <div class="w-14 h-14 rounded-xl bg-gradient-to-br from-green-500 to-emerald-600 flex items-center justify-center">
+                            <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold text-gray-900">App Driver (PWA)</h3>
+                            <p class="text-gray-600">Pour vos chauffeurs</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="p-6">
+                    <ul class="space-y-3 mb-6">
+                        <li class="flex items-center gap-2 text-gray-600">
+                            <svg class="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                            </svg>
+                            Application PWA installable
+                        </li>
+                        <li class="flex items-center gap-2 text-gray-600">
+                            <svg class="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                            </svg>
+                            Notifications push temps réel
+                        </li>
+                        <li class="flex items-center gap-2 text-gray-600">
+                            <svg class="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                            </svg>
+                            Géolocalisation GPS
+                        </li>
+                        <li class="flex items-center gap-2 text-gray-600">
+                            <svg class="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                            </svg>
+                            Mode hors ligne
+                        </li>
+                    </ul>
+
+                    <div class="bg-gray-900 rounded-xl p-4 mb-4">
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="text-xs text-gray-400 uppercase tracking-wider">Commande d'installation</span>
+                            <button onclick="copyCommand('driverAppCmd')" class="copy-btn text-gray-400 hover:text-white transition">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                                </svg>
+                            </button>
+                        </div>
+                        <code id="driverAppCmd" class="text-green-400 text-sm break-all block">
+curl -fsSL https://api-core.veeo-stras.fr/install/driver-app.sh | bash -s -- --tenant-id=YOUR_ID --api-key=YOUR_KEY
+                        </code>
+                    </div>
+
+                    <a href="/install/driver-app.sh" download class="block w-full py-3 text-center bg-green-600 text-white rounded-xl font-medium hover:bg-green-700 transition-colors">
+                        Télécharger le script
+                    </a>
+                </div>
+            </section>
+        </div>
+
+        <!-- Requirements -->
+        <section class="mt-12 bg-white rounded-2xl shadow-lg p-8">
+            <h2 class="text-2xl font-bold text-gray-900 mb-6">Prérequis</h2>
+            
+            <div class="grid md:grid-cols-3 gap-6">
+                <div class="flex items-start gap-4">
+                    <div class="w-12 h-12 rounded-xl bg-green-100 flex items-center justify-center flex-shrink-0">
+                        <svg class="w-6 h-6 text-green-600" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 21.985c-.275 0-.532-.074-.772-.202l-2.439-1.448c-.366-.205-.187-.277-.067-.32.486-.169.583-.207 1.1-.5.054-.031.125-.019.182.014l1.873 1.115c.068.038.162.038.226 0l7.311-4.225c.068-.039.111-.117.111-.2V7.995c0-.084-.043-.161-.111-.201l-7.308-4.22c-.068-.039-.159-.039-.227 0L4.571 7.794c-.068.04-.111.118-.111.201v8.424c0 .082.043.159.11.199l2.004 1.16c1.088.543 1.754-.097 1.754-.744V8.666c0-.118.094-.212.212-.212h.926c.116 0 .212.094.212.212v8.369c0 1.457-.794 2.294-2.176 2.294-.425 0-.759 0-1.694-.462l-1.918-1.107c-.477-.276-.772-.793-.772-1.34V7.995c0-.547.295-1.064.772-1.339l7.308-4.225c.466-.263 1.086-.263 1.549 0l7.308 4.225c.477.275.772.792.772 1.339v8.424c0 .547-.295 1.063-.772 1.34l-7.308 4.225c-.24.127-.498.201-.773.201zM14.75 15.935c-3.199 0-3.869-.952-3.869-1.752 0-.117.094-.212.212-.212h.944c.105 0 .192.073.21.176.143.964.571 1.452 2.503 1.452 1.541 0 2.198-.349 2.198-1.169 0-.472-.186-.823-2.58-1.058-2.001-.199-3.239-.641-3.239-2.243 0-1.476 1.246-2.356 3.333-2.356 2.345 0 3.504.814 3.65 2.558.006.064-.017.125-.062.173-.044.047-.104.074-.167.074h-.95c-.098 0-.184-.066-.208-.16-.231-1.026-.79-1.354-2.263-1.354-1.667 0-1.862.581-1.862 1.015 0 .527.229.682 2.503.98 2.253.296 3.315.716 3.315 2.308 0 1.597-1.332 2.508-3.668 2.508z"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <h3 class="font-semibold text-gray-900">Node.js 18+</h3>
+                        <p class="text-gray-600 text-sm">Runtime JavaScript requis</p>
+                        <a href="https://nodejs.org" target="_blank" class="text-primary-600 text-sm hover:underline">nodejs.org →</a>
+                    </div>
+                </div>
+
+                <div class="flex items-start gap-4">
+                    <div class="w-12 h-12 rounded-xl bg-red-100 flex items-center justify-center flex-shrink-0">
+                        <svg class="w-6 h-6 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <h3 class="font-semibold text-gray-900">npm 9+</h3>
+                        <p class="text-gray-600 text-sm">Gestionnaire de paquets</p>
+                        <p class="text-gray-500 text-sm">Inclus avec Node.js</p>
+                    </div>
+                </div>
+
+                <div class="flex items-start gap-4">
+                    <div class="w-12 h-12 rounded-xl bg-blue-100 flex items-center justify-center flex-shrink-0">
+                        <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <h3 class="font-semibold text-gray-900">Terminal</h3>
+                        <p class="text-gray-600 text-sm">Bash, Zsh ou PowerShell</p>
+                        <p class="text-gray-500 text-sm">Linux, macOS ou WSL</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Instructions -->
+        <section class="mt-12 bg-white rounded-2xl shadow-lg p-8">
+            <h2 class="text-2xl font-bold text-gray-900 mb-6">Instructions d'installation</h2>
+            
+            <div class="space-y-6">
+                <div class="flex gap-4">
+                    <div class="w-8 h-8 rounded-full bg-primary-100 flex items-center justify-center text-primary-600 font-bold flex-shrink-0">1</div>
+                    <div>
+                        <h3 class="font-semibold text-gray-900">Copiez la commande</h3>
+                        <p class="text-gray-600">Cliquez sur l'icône de copie à côté de la commande d'installation.</p>
+                    </div>
+                </div>
+
+                <div class="flex gap-4">
+                    <div class="w-8 h-8 rounded-full bg-primary-100 flex items-center justify-center text-primary-600 font-bold flex-shrink-0">2</div>
+                    <div>
+                        <h3 class="font-semibold text-gray-900">Collez dans votre terminal</h3>
+                        <p class="text-gray-600">Ouvrez un terminal et collez la commande. Le script téléchargera et installera l'application automatiquement.</p>
+                    </div>
+                </div>
+
+                <div class="flex gap-4">
+                    <div class="w-8 h-8 rounded-full bg-primary-100 flex items-center justify-center text-primary-600 font-bold flex-shrink-0">3</div>
+                    <div>
+                        <h3 class="font-semibold text-gray-900">Lancez l'application</h3>
+                        <p class="text-gray-600">Une fois installée, entrez dans le dossier créé et lancez <code class="bg-gray-100 px-2 py-1 rounded">npm run dev</code>.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Help -->
+        <section class="mt-12 bg-gradient-to-r from-primary-50 to-blue-50 rounded-2xl p-8">
+            <div class="flex items-start gap-4">
+                <div class="w-12 h-12 rounded-xl bg-primary-100 flex items-center justify-center flex-shrink-0">
+                    <svg class="w-6 h-6 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold text-gray-900 mb-2">Besoin d'aide ?</h3>
+                    <p class="text-gray-600 mb-4">
+                        Consultez la documentation complète ou contactez notre support technique.
+                    </p>
+                    <div class="flex flex-wrap gap-4">
+                        <a href="/demo/docs-tenant.html" class="inline-flex items-center gap-2 px-4 py-2 bg-white rounded-lg shadow-sm hover:shadow transition">
+                            <svg class="w-5 h-5 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
+                            </svg>
+                            Documentation
+                        </a>
+                        <a href="mailto:support@veeo-stras.fr" class="inline-flex items-center gap-2 px-4 py-2 bg-white rounded-lg shadow-sm hover:shadow transition">
+                            <svg class="w-5 h-5 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                            </svg>
+                            Support
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-gray-400 py-8 mt-16">
+        <div class="max-w-6xl mx-auto px-6 text-center">
+            <p>© 2026 VeeoCore. Tous droits réservés.</p>
+            <div class="flex justify-center gap-6 mt-4">
+                <a href="/demo/admin.html" class="hover:text-white transition">Admin</a>
+                <a href="/api/docs" class="hover:text-white transition">API</a>
+                <a href="/demo/docs-driver.html" class="hover:text-white transition">Doc Driver</a>
+                <a href="/demo/docs-tenant.html" class="hover:text-white transition">Doc Tenant</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Générer les commandes avec les credentials
+        function generateCommands() {
+            const tenantId = document.getElementById('tenantId').value.trim() || 'YOUR_ID';
+            const apiKey = document.getElementById('apiKey').value.trim() || 'YOUR_KEY';
+            
+            const baseUrl = 'https://api-core.veeo-stras.fr';
+            
+            document.getElementById('tenantAdminCmd').textContent = 
+                `curl -fsSL ${baseUrl}/install/tenant-admin.sh | bash -s -- --tenant-id=${tenantId} --api-key=${apiKey}`;
+            
+            document.getElementById('driverAppCmd').textContent = 
+                `curl -fsSL ${baseUrl}/install/driver-app.sh | bash -s -- --tenant-id=${tenantId} --api-key=${apiKey}`;
+            
+            // Animation
+            ['tenantAdminCmd', 'driverAppCmd'].forEach(id => {
+                const el = document.getElementById(id);
+                el.classList.add('animate-pulse');
+                setTimeout(() => el.classList.remove('animate-pulse'), 1000);
+            });
+        }
+
+        // Copier une commande
+        function copyCommand(elementId) {
+            const text = document.getElementById(elementId).textContent.trim();
+            navigator.clipboard.writeText(text).then(() => {
+                // Feedback visuel
+                const btn = event.currentTarget;
+                const originalHTML = btn.innerHTML;
+                btn.innerHTML = '<svg class="w-5 h-5 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>';
+                setTimeout(() => { btn.innerHTML = originalHTML; }, 2000);
+            });
+        }
+
+        // Auto-generate on input
+        document.getElementById('tenantId').addEventListener('input', generateCommands);
+        document.getElementById('apiKey').addEventListener('input', generateCommands);
+    </script>
+</body>
+</html>
