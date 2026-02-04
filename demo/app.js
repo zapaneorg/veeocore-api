@@ -6,7 +6,8 @@
 // Configuration
 const API_BASE_URL = 'https://api-core.veeo-stras.fr';
 const DEMO_API_KEY = 'demo-api-key-12345';
-const GOOGLE_MAPS_API_KEY = 'AIzaSyBlK-tzlbkQHQaIpa8loQGA6IP_2LAOzC4';
+// Google Maps API Key - Set via window.GOOGLE_MAPS_API_KEY or replace with your key
+const GOOGLE_MAPS_API_KEY = window.GOOGLE_MAPS_API_KEY || 'YOUR_GOOGLE_MAPS_API_KEY';
 
 // State
 const state = {

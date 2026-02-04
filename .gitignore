@@ -36,3 +36,6 @@ coverage/
 *.tgz
 .cache
 .parcel-cache
+
+# Demo config with secrets
+**/demo/config.js
