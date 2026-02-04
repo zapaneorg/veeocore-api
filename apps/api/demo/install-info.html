@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VeeoCore - Scripts d'Installation</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #6366f1;
+      --primary-dark: #4f46e5;
+      --success: #10b981;
+      --gray-50: #f9fafb;
+      --gray-100: #f3f4f6;
+      --gray-200: #e5e7eb;
+      --gray-600: #4b5563;
+      --gray-700: #374151;
+      --gray-900: #111827;
+    }
+    
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--gray-50);
+      color: var(--gray-700);
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+    
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 40px 24px;
+    }
+    
+    .header {
+      text-align: center;
+      margin-bottom: 48px;
+    }
+    
+    .logo {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--gray-900);
+      text-decoration: none;
+      margin-bottom: 16px;
+    }
+    
+    .logo-icon {
+      font-size: 28px;
+    }
+    
+    .logo-badge {
+      background: var(--primary);
+      color: white;
+      padding: 2px 8px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+    
+    h1 {
+      font-size: 32px;
+      font-weight: 700;
+      color: var(--gray-900);
+      margin-bottom: 8px;
+    }
+    
+    .subtitle {
+      color: var(--gray-600);
+      font-size: 16px;
+    }
+    
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(16, 185, 129, 0.1);
+      color: var(--success);
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 500;
+      margin-top: 16px;
+    }
+    
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      background: var(--success);
+      border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+    
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+    
+    .scripts-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+      gap: 24px;
+      margin-bottom: 48px;
+    }
+    
+    .script-card {
+      background: white;
+      border-radius: 16px;
+      padding: 28px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+      border: 1px solid var(--gray-200);
+    }
+    
+    .script-header {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+    
+    .script-icon {
+      width: 52px;
+      height: 52px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+    }
+    
+    .script-icon.tenant {
+      background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+    }
+    
+    .script-icon.driver {
+      background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    }
+    
+    .script-name {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--gray-900);
+      margin-bottom: 4px;
+    }
+    
+    .script-slug {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      color: var(--gray-600);
+      background: var(--gray-100);
+      padding: 2px 8px;
+      border-radius: 4px;
+    }
+    
+    .script-description {
+      color: var(--gray-600);
+      font-size: 14px;
+      margin-bottom: 16px;
+    }
+    
+    .features-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 20px;
+    }
+    
+    .feature-tag {
+      background: var(--gray-100);
+      color: var(--gray-700);
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 500;
+    }
+    
+    .install-command {
+      background: var(--gray-900);
+      border-radius: 10px;
+      padding: 14px 16px;
+      margin-bottom: 16px;
+      position: relative;
+    }
+    
+    .install-command code {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: #a5f3fc;
+      word-break: break-all;
+      display: block;
+      padding-right: 36px;
+    }
+    
+    .copy-btn {
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(255,255,255,0.1);
+      border: none;
+      border-radius: 6px;
+      padding: 6px 8px;
+      cursor: pointer;
+      color: var(--gray-400);
+      transition: all 0.2s;
+    }
+    
+    .copy-btn:hover {
+      background: rgba(255,255,255,0.2);
+      color: white;
+    }
+    
+    .script-actions {
+      display: flex;
+      gap: 10px;
+    }
+    
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 10px 16px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 500;
+      text-decoration: none;
+      transition: all 0.2s;
+      border: none;
+      cursor: pointer;
+      flex: 1;
+    }
+    
+    .btn-primary {
+      background: var(--primary);
+      color: white;
+    }
+    
+    .btn-primary:hover {
+      background: var(--primary-dark);
+    }
+    
+    .btn-green {
+      background: var(--success);
+      color: white;
+    }
+    
+    .btn-green:hover {
+      background: #059669;
+    }
+    
+    .btn-outline {
+      background: white;
+      color: var(--gray-700);
+      border: 1px solid var(--gray-200);
+    }
+    
+    .btn-outline:hover {
+      background: var(--gray-50);
+      border-color: var(--gray-300);
+    }
+    
+    .api-section {
+      background: white;
+      border-radius: 16px;
+      padding: 28px;
+      border: 1px solid var(--gray-200);
+      margin-bottom: 32px;
+    }
+    
+    .api-section h2 {
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--gray-900);
+      margin-bottom: 20px;
+    }
+    
+    .endpoint {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 16px;
+      background: var(--gray-50);
+      border-radius: 8px;
+      margin-bottom: 10px;
+    }
+    
+    .endpoint:last-child {
+      margin-bottom: 0;
+    }
+    
+    .method {
+      padding: 4px 10px;
+      border-radius: 4px;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      background: rgba(16, 185, 129, 0.1);
+      color: var(--success);
+    }
+    
+    .endpoint code {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      color: var(--gray-900);
+      font-weight: 500;
+    }
+    
+    .endpoint .desc {
+      margin-left: auto;
+      font-size: 13px;
+      color: var(--gray-600);
+    }
+    
+    .json-section {
+      background: white;
+      border-radius: 16px;
+      padding: 28px;
+      border: 1px solid var(--gray-200);
+    }
+    
+    .json-section h2 {
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--gray-900);
+      margin-bottom: 16px;
+    }
+    
+    .json-block {
+      background: var(--gray-900);
+      border-radius: 10px;
+      padding: 20px;
+      overflow-x: auto;
+    }
+    
+    .json-block pre {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      color: #e5e7eb;
+      line-height: 1.6;
+    }
+    
+    .json-key { color: #a5f3fc; }
+    .json-string { color: #fcd34d; }
+    .json-boolean { color: #f472b6; }
+    
+    .footer {
+      text-align: center;
+      padding-top: 32px;
+      color: var(--gray-600);
+      font-size: 14px;
+    }
+    
+    .footer a {
+      color: var(--primary);
+      text-decoration: none;
+    }
+    
+    .footer a:hover {
+      text-decoration: underline;
+    }
+    
+    @media (max-width: 800px) {
+      .scripts-grid {
+        grid-template-columns: 1fr;
+      }
+      .endpoint {
+        flex-wrap: wrap;
+      }
+      .endpoint .desc {
+        width: 100%;
+        margin-left: 0;
+        margin-top: 8px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header class="header">
+      <a href="/demo/" class="logo">
+        <span class="logo-icon">⚡</span>
+        <span>VeeoCore</span>
+        <span class="logo-badge">API</span>
+      </a>
+      <h1>Scripts d'Installation</h1>
+      <p class="subtitle">Déployez votre plateforme VTC en une seule commande</p>
+      <div class="status-badge">
+        <span class="status-dot"></span>
+        API en ligne
+      </div>
+    </header>
+
+    <div class="scripts-grid" id="scriptsGrid">
+      <!-- Tenant Admin -->
+      <div class="script-card">
+        <div class="script-header">
+          <div class="script-icon tenant">🖥️</div>
+          <div>
+            <div class="script-name">Dashboard Tenant Admin</div>
+            <span class="script-slug">tenant-admin</span>
+          </div>
+        </div>
+        <p class="script-description">Dashboard complet pour gérer votre flotte VTC</p>
+        <div class="features-list">
+          <span class="feature-tag">Gestion des chauffeurs</span>
+          <span class="feature-tag">Suivi des réservations</span>
+          <span class="feature-tag">Configuration tarification</span>
+          <span class="feature-tag">Analytics</span>
+        </div>
+        <div class="install-command">
+          <code>curl -fsSL https://api-core.veeo-stras.fr/install/tenant-admin.sh | bash -s -- --tenant-id=YOUR_ID --api-key=YOUR_KEY</code>
+          <button class="copy-btn" onclick="copyCommand('tenant-admin')">📋</button>
+        </div>
+        <div class="script-actions">
+          <a href="/install/tenant-admin.sh" download class="btn btn-primary">⬇️ Télécharger</a>
+          <a href="/demo/docs-tenant.html" class="btn btn-outline">Documentation</a>
+        </div>
+      </div>
+
+      <!-- Driver App -->
+      <div class="script-card">
+        <div class="script-header">
+          <div class="script-icon driver">📱</div>
+          <div>
+            <div class="script-name">App Driver (PWA)</div>
+            <span class="script-slug">driver-app</span>
+          </div>
+        </div>
+        <p class="script-description">Application mobile PWA pour vos chauffeurs</p>
+        <div class="features-list">
+          <span class="feature-tag">PWA installable</span>
+          <span class="feature-tag">Notifications push</span>
+          <span class="feature-tag">Géolocalisation GPS</span>
+          <span class="feature-tag">Mode hors ligne</span>
+        </div>
+        <div class="install-command">
+          <code>curl -fsSL https://api-core.veeo-stras.fr/install/driver-app.sh | bash -s -- --tenant-id=YOUR_ID --api-key=YOUR_KEY</code>
+          <button class="copy-btn" onclick="copyCommand('driver-app')">📋</button>
+        </div>
+        <div class="script-actions">
+          <a href="/install/driver-app.sh" download class="btn btn-green">⬇️ Télécharger</a>
+          <a href="/demo/docs-driver.html" class="btn btn-outline">Documentation</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="api-section">
+      <h2>Endpoints API</h2>
+      <div class="endpoint">
+        <span class="method">GET</span>
+        <code>/install/info</code>
+        <span class="desc">Informations JSON sur les scripts</span>
+      </div>
+      <div class="endpoint">
+        <span class="method">GET</span>
+        <code>/install/tenant-admin.sh</code>
+        <span class="desc">Script bash Dashboard Tenant</span>
+      </div>
+      <div class="endpoint">
+        <span class="method">GET</span>
+        <code>/install/driver-app.sh</code>
+        <span class="desc">Script bash App Driver PWA</span>
+      </div>
+    </div>
+
+    <div class="json-section">
+      <h2>Réponse JSON de /install/info</h2>
+      <div class="json-block">
+        <pre>{
+  <span class="json-key">"success"</span>: <span class="json-boolean">true</span>,
+  <span class="json-key">"scripts"</span>: [
+    {
+      <span class="json-key">"name"</span>: <span class="json-string">"Dashboard Tenant Admin"</span>,
+      <span class="json-key">"slug"</span>: <span class="json-string">"tenant-admin"</span>,
+      <span class="json-key">"description"</span>: <span class="json-string">"Dashboard complet pour gérer votre flotte VTC"</span>,
+      <span class="json-key">"downloadUrl"</span>: <span class="json-string">"/install/tenant-admin.sh"</span>,
+      <span class="json-key">"installCommand"</span>: <span class="json-string">"curl -fsSL https://api-core.veeo-stras.fr/install/tenant-admin.sh | bash -s -- --tenant-id=YOUR_ID --api-key=YOUR_KEY"</span>,
+      <span class="json-key">"features"</span>: [<span class="json-string">"Gestion des chauffeurs"</span>, <span class="json-string">"Suivi des réservations"</span>, ...]
+    },
+    {
+      <span class="json-key">"name"</span>: <span class="json-string">"App Driver (PWA)"</span>,
+      <span class="json-key">"slug"</span>: <span class="json-string">"driver-app"</span>,
+      ...
+    }
+  ],
+  <span class="json-key">"documentation"</span>: <span class="json-string">"/demo/install.html"</span>
+}</pre>
+      </div>
+    </div>
+
+    <footer class="footer">
+      <p>
+        <a href="/demo/">← Retour à la démo</a> · 
+        <a href="/demo/admin.html">Admin VeeoCore</a> · 
+        <a href="/install/info" target="_blank">API JSON</a>
+      </p>
+      <p style="margin-top: 12px;">© 2026 VeeoCore. Tous droits réservés.</p>
+    </footer>
+  </div>
+
+  <script>
+    function copyCommand(type) {
+      const commands = {
+        'tenant-admin': 'curl -fsSL https://api-core.veeo-stras.fr/install/tenant-admin.sh | bash -s -- --tenant-id=YOUR_ID --api-key=YOUR_KEY',
+        'driver-app': 'curl -fsSL https://api-core.veeo-stras.fr/install/driver-app.sh | bash -s -- --tenant-id=YOUR_ID --api-key=YOUR_KEY'
+      };
+      
+      navigator.clipboard.writeText(commands[type]).then(() => {
+        const btn = event.target;
+        btn.textContent = '✓';
+        setTimeout(() => { btn.textContent = '📋'; }, 2000);
+      });
+    }
+  </script>
+</body>
+</html>

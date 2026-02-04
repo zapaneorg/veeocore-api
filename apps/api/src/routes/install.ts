@@ -105,6 +105,21 @@ router.get('/info', (req, res) => {
 });
 
 /**
+ * GET /install/info.html
+ * Page web avec les informations d'installation
+ */
+router.get('/info.html', (req, res) => {
+  const htmlPath = path.resolve(__dirname, '../../demo/install-info.html');
+  
+  if (!fs.existsSync(htmlPath)) {
+    return res.status(404).send('Page not found');
+  }
+
+  res.setHeader('Content-Type', 'text/html; charset=utf-8');
+  fs.createReadStream(htmlPath).pipe(res);
+});
+
+/**
  * POST /install/validate
  * Valide les credentials avant installation
  */
