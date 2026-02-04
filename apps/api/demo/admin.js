@@ -190,22 +190,31 @@ function initDashboard() {
  */
 function setupEventListeners() {
   // Search
-  document.getElementById('search-input').addEventListener('input', (e) => {
-    state.filters.search = e.target.value.toLowerCase();
-    renderApiKeysTable();
-  });
+  const searchInput = document.getElementById('search-input');
+  if (searchInput) {
+    searchInput.addEventListener('input', (e) => {
+      state.filters.search = e.target.value.toLowerCase();
+      renderApiKeysTable();
+    });
+  }
   
   // Plan filter
-  document.getElementById('plan-filter').addEventListener('change', (e) => {
-    state.filters.plan = e.target.value;
-    renderApiKeysTable();
-  });
+  const planFilter = document.getElementById('plan-filter');
+  if (planFilter) {
+    planFilter.addEventListener('change', (e) => {
+      state.filters.plan = e.target.value;
+      renderApiKeysTable();
+    });
+  }
   
   // Status filter
-  document.getElementById('status-filter').addEventListener('change', (e) => {
-    state.filters.status = e.target.value;
-    renderApiKeysTable();
-  });
+  const statusFilter = document.getElementById('status-filter');
+  if (statusFilter) {
+    statusFilter.addEventListener('change', (e) => {
+      state.filters.status = e.target.value;
+      renderApiKeysTable();
+    });
+  }
 }
 
 /**
@@ -213,6 +222,7 @@ function setupEventListeners() {
  */
 function renderApiKeysTable() {
   const tbody = document.getElementById('api-keys-table');
+  if (!tbody) return;
   
   // Apply filters
   let filtered = apiKeys.filter(key => {
@@ -308,10 +318,15 @@ function updateStats() {
   const uniqueClients = new Set(apiKeys.map(k => k.email)).size;
   const rateLimited = apiKeys.filter(k => k.usage.limit !== -1 && k.usage.current / k.usage.limit > 0.9).length * 3; // Simulated
   
-  document.getElementById('total-keys').textContent = activeKeys;
-  document.getElementById('total-requests').textContent = formatNumber(totalRequests);
-  document.getElementById('total-clients').textContent = uniqueClients;
-  document.getElementById('rate-limited').textContent = rateLimited;
+  const totalKeysEl = document.getElementById('total-keys');
+  const totalRequestsEl = document.getElementById('total-requests');
+  const totalClientsEl = document.getElementById('total-clients');
+  const rateLimitedEl = document.getElementById('rate-limited');
+  
+  if (totalKeysEl) totalKeysEl.textContent = activeKeys;
+  if (totalRequestsEl) totalRequestsEl.textContent = formatNumber(totalRequests);
+  if (totalClientsEl) totalClientsEl.textContent = uniqueClients;
+  if (rateLimitedEl) rateLimitedEl.textContent = rateLimited;
 }
 
 /**
