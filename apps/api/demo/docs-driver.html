@@ -1,0 +1,990 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VeeoCore - Documentation App Chauffeur PWA</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #6366f1;
+      --primary-dark: #4f46e5;
+      --primary-light: #818cf8;
+      --success: #10b981;
+      --warning: #f59e0b;
+      --error: #ef4444;
+      --gray-50: #f9fafb;
+      --gray-100: #f3f4f6;
+      --gray-200: #e5e7eb;
+      --gray-300: #d1d5db;
+      --gray-400: #9ca3af;
+      --gray-500: #6b7280;
+      --gray-600: #4b5563;
+      --gray-700: #374151;
+      --gray-800: #1f2937;
+      --gray-900: #111827;
+    }
+    
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      color: var(--gray-800);
+    }
+    
+    .header {
+      background: rgba(255,255,255,0.1);
+      backdrop-filter: blur(10px);
+      padding: 20px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: white;
+      text-decoration: none;
+      font-size: 24px;
+      font-weight: 800;
+    }
+    
+    .logo-icon { font-size: 32px; }
+    
+    .nav-links {
+      display: flex;
+      gap: 8px;
+    }
+    
+    .nav-links a {
+      color: rgba(255,255,255,0.8);
+      text-decoration: none;
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-weight: 500;
+      transition: all 0.2s;
+    }
+    
+    .nav-links a:hover, .nav-links a.active {
+      background: rgba(255,255,255,0.2);
+      color: white;
+    }
+    
+    .hero {
+      text-align: center;
+      padding: 60px 40px;
+      color: white;
+    }
+    
+    .hero h1 {
+      font-size: 48px;
+      font-weight: 800;
+      margin-bottom: 16px;
+    }
+    
+    .hero p {
+      font-size: 20px;
+      opacity: 0.9;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    
+    .badge-pwa {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255,255,255,0.2);
+      padding: 8px 16px;
+      border-radius: 20px;
+      margin-top: 20px;
+      font-weight: 600;
+    }
+    
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 40px 60px;
+    }
+    
+    .content-card {
+      background: white;
+      border-radius: 20px;
+      padding: 40px;
+      margin-bottom: 30px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+    }
+    
+    .content-card h2 {
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--gray-900);
+      margin-bottom: 24px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    
+    .content-card h2 .icon {
+      width: 48px;
+      height: 48px;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 24px;
+    }
+    
+    .content-card h3 {
+      font-size: 20px;
+      font-weight: 600;
+      color: var(--gray-800);
+      margin: 30px 0 16px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid var(--gray-100);
+    }
+    
+    .content-card p {
+      color: var(--gray-600);
+      line-height: 1.7;
+      margin-bottom: 16px;
+    }
+    
+    .step-list {
+      counter-reset: step;
+    }
+    
+    .step {
+      display: flex;
+      gap: 20px;
+      padding: 24px;
+      background: var(--gray-50);
+      border-radius: 12px;
+      margin-bottom: 16px;
+      position: relative;
+    }
+    
+    .step-number {
+      width: 40px;
+      height: 40px;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 18px;
+      flex-shrink: 0;
+    }
+    
+    .step-content h4 {
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--gray-800);
+      margin-bottom: 8px;
+    }
+    
+    .step-content p {
+      margin: 0;
+      color: var(--gray-600);
+    }
+    
+    .code-block {
+      background: var(--gray-900);
+      border-radius: 12px;
+      padding: 20px;
+      margin: 16px 0;
+      overflow-x: auto;
+    }
+    
+    .code-block pre {
+      margin: 0;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 14px;
+      color: #e5e7eb;
+      line-height: 1.6;
+    }
+    
+    .code-block .comment { color: #6b7280; }
+    .code-block .keyword { color: #c084fc; }
+    .code-block .string { color: #86efac; }
+    .code-block .function { color: #60a5fa; }
+    .code-block .number { color: #fbbf24; }
+    
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+      margin: 24px 0;
+    }
+    
+    .feature-item {
+      background: linear-gradient(135deg, var(--gray-50) 0%, white 100%);
+      border: 1px solid var(--gray-200);
+      border-radius: 16px;
+      padding: 24px;
+      transition: all 0.3s;
+    }
+    
+    .feature-item:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 24px rgba(0,0,0,0.1);
+      border-color: var(--primary);
+    }
+    
+    .feature-item .icon {
+      width: 48px;
+      height: 48px;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 16px;
+      font-size: 24px;
+    }
+    
+    .feature-item h4 {
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--gray-800);
+      margin-bottom: 8px;
+    }
+    
+    .feature-item p {
+      color: var(--gray-600);
+      font-size: 14px;
+      margin: 0;
+    }
+    
+    .notification-demo {
+      background: var(--gray-900);
+      border-radius: 16px;
+      padding: 30px;
+      margin: 24px 0;
+    }
+    
+    .phone-mockup {
+      width: 280px;
+      height: 500px;
+      background: #1a1a1a;
+      border-radius: 40px;
+      padding: 12px;
+      margin: 0 auto;
+      position: relative;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+    }
+    
+    .phone-screen {
+      background: linear-gradient(180deg, #1e1e1e 0%, #2a2a2a 100%);
+      border-radius: 32px;
+      height: 100%;
+      overflow: hidden;
+      position: relative;
+    }
+    
+    .phone-notch {
+      width: 120px;
+      height: 30px;
+      background: #1a1a1a;
+      border-radius: 0 0 20px 20px;
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+    
+    .notification-card {
+      background: rgba(255,255,255,0.95);
+      margin: 50px 12px 12px;
+      border-radius: 16px;
+      padding: 16px;
+      animation: slideDown 0.5s ease;
+    }
+    
+    @keyframes slideDown {
+      from { transform: translateY(-100%); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+    
+    .notification-card .app-icon {
+      width: 36px;
+      height: 36px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 18px;
+      float: left;
+      margin-right: 12px;
+    }
+    
+    .notification-card .notif-title {
+      font-weight: 600;
+      color: var(--gray-900);
+      font-size: 14px;
+    }
+    
+    .notification-card .notif-body {
+      color: var(--gray-600);
+      font-size: 13px;
+      margin-top: 4px;
+    }
+    
+    .notification-card .notif-time {
+      color: var(--gray-400);
+      font-size: 11px;
+      margin-top: 8px;
+    }
+    
+    .action-buttons {
+      display: flex;
+      gap: 8px;
+      margin-top: 12px;
+      clear: both;
+    }
+    
+    .action-btn {
+      flex: 1;
+      padding: 10px;
+      border: none;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 13px;
+      cursor: pointer;
+    }
+    
+    .action-btn.accept {
+      background: var(--success);
+      color: white;
+    }
+    
+    .action-btn.decline {
+      background: var(--gray-200);
+      color: var(--gray-700);
+    }
+    
+    .api-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+    }
+    
+    .api-table th, .api-table td {
+      padding: 14px 16px;
+      text-align: left;
+      border-bottom: 1px solid var(--gray-200);
+    }
+    
+    .api-table th {
+      background: var(--gray-50);
+      font-weight: 600;
+      color: var(--gray-700);
+      font-size: 13px;
+      text-transform: uppercase;
+    }
+    
+    .api-table td {
+      color: var(--gray-600);
+    }
+    
+    .api-table code {
+      background: var(--gray-100);
+      padding: 4px 8px;
+      border-radius: 4px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      color: var(--primary-dark);
+    }
+    
+    .method-badge {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 600;
+      font-family: 'JetBrains Mono', monospace;
+    }
+    
+    .method-badge.get { background: rgba(16, 185, 129, 0.15); color: #059669; }
+    .method-badge.post { background: rgba(99, 102, 241, 0.15); color: var(--primary); }
+    .method-badge.put { background: rgba(245, 158, 11, 0.15); color: #d97706; }
+    .method-badge.delete { background: rgba(239, 68, 68, 0.15); color: #dc2626; }
+    
+    .status-flow {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      padding: 30px;
+      background: var(--gray-50);
+      border-radius: 16px;
+      margin: 24px 0;
+      flex-wrap: wrap;
+    }
+    
+    .status-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+    }
+    
+    .status-circle {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      color: white;
+    }
+    
+    .status-circle.pending { background: var(--warning); }
+    .status-circle.accepted { background: var(--primary); }
+    .status-circle.pickup { background: #8b5cf6; }
+    .status-circle.progress { background: #06b6d4; }
+    .status-circle.completed { background: var(--success); }
+    
+    .status-label {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--gray-700);
+    }
+    
+    .status-arrow {
+      font-size: 24px;
+      color: var(--gray-400);
+    }
+    
+    .tip-box {
+      background: linear-gradient(135deg, rgba(99, 102, 241, 0.1) 0%, rgba(139, 92, 246, 0.1) 100%);
+      border-left: 4px solid var(--primary);
+      border-radius: 0 12px 12px 0;
+      padding: 20px;
+      margin: 20px 0;
+    }
+    
+    .tip-box h4 {
+      color: var(--primary-dark);
+      font-weight: 600;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    
+    .tip-box p {
+      color: var(--gray-700);
+      margin: 0;
+      font-size: 14px;
+    }
+    
+    .footer {
+      text-align: center;
+      padding: 40px;
+      color: rgba(255,255,255,0.8);
+    }
+    
+    .footer a {
+      color: white;
+      text-decoration: none;
+      font-weight: 600;
+    }
+    
+    @media (max-width: 768px) {
+      .header { padding: 16px 20px; flex-direction: column; gap: 16px; }
+      .hero h1 { font-size: 32px; }
+      .container { padding: 0 20px 40px; }
+      .content-card { padding: 24px; }
+      .phone-mockup { width: 240px; height: 420px; }
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <a href="index.html" class="logo">
+      <span class="logo-icon">🚀</span>
+      <span>VeeoCore</span>
+    </a>
+    <nav class="nav-links">
+      <a href="docs.html">API Docs</a>
+      <a href="docs-driver.html" class="active">App Chauffeur</a>
+      <a href="docs-tenant.html">Dashboard Tenant</a>
+      <a href="admin.html">Admin</a>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <h1>📱 App Chauffeur PWA</h1>
+    <p>Application mobile Progressive Web App pour les chauffeurs avec notifications push temps réel</p>
+    <div class="badge-pwa">
+      <span>⚡</span>
+      <span>Progressive Web App</span>
+    </div>
+  </section>
+
+  <div class="container">
+    
+    <!-- Section 1: Présentation -->
+    <div class="content-card">
+      <h2><span class="icon">🎯</span> Présentation</h2>
+      <p>L'App Chauffeur VeeoCore est une Progressive Web App (PWA) conçue pour permettre aux chauffeurs VTC de recevoir et gérer leurs courses en temps réel, directement depuis leur smartphone.</p>
+      
+      <div class="feature-grid">
+        <div class="feature-item">
+          <div class="icon">🔔</div>
+          <h4>Notifications Push</h4>
+          <p>Recevez instantanément les nouvelles courses avec notifications push natives</p>
+        </div>
+        <div class="feature-item">
+          <div class="icon">📍</div>
+          <h4>GPS Temps Réel</h4>
+          <p>Géolocalisation continue pour le suivi de position et l'ETA</p>
+        </div>
+        <div class="feature-item">
+          <div class="icon">💬</div>
+          <h4>Communication</h4>
+          <p>Chat intégré avec le client et appel direct</p>
+        </div>
+        <div class="feature-item">
+          <div class="icon">📊</div>
+          <h4>Statistiques</h4>
+          <p>Suivi des gains, courses et performances</p>
+        </div>
+        <div class="feature-item">
+          <div class="icon">🌐</div>
+          <h4>Mode Hors-ligne</h4>
+          <p>Fonctionnement même sans connexion internet</p>
+        </div>
+        <div class="feature-item">
+          <div class="icon">🔒</div>
+          <h4>Sécurisé</h4>
+          <p>Authentification JWT et données chiffrées</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Section 2: Installation PWA -->
+    <div class="content-card">
+      <h2><span class="icon">📲</span> Installation de la PWA</h2>
+      
+      <h3>Phase 1 : Configuration du manifest.json</h3>
+      <div class="code-block">
+<pre><span class="comment">// manifest.json - Configuration PWA</span>
+{
+  <span class="string">"name"</span>: <span class="string">"VeeoCore Driver"</span>,
+  <span class="string">"short_name"</span>: <span class="string">"Chauffeur"</span>,
+  <span class="string">"description"</span>: <span class="string">"App Chauffeur VTC"</span>,
+  <span class="string">"start_url"</span>: <span class="string">"/driver"</span>,
+  <span class="string">"display"</span>: <span class="string">"standalone"</span>,
+  <span class="string">"background_color"</span>: <span class="string">"#667eea"</span>,
+  <span class="string">"theme_color"</span>: <span class="string">"#667eea"</span>,
+  <span class="string">"icons"</span>: [
+    { <span class="string">"src"</span>: <span class="string">"/icons/icon-192.png"</span>, <span class="string">"sizes"</span>: <span class="string">"192x192"</span> },
+    { <span class="string">"src"</span>: <span class="string">"/icons/icon-512.png"</span>, <span class="string">"sizes"</span>: <span class="string">"512x512"</span> }
+  ]
+}</pre>
+      </div>
+
+      <h3>Phase 2 : Enregistrement du Service Worker</h3>
+      <div class="code-block">
+<pre><span class="comment">// driver-app.js - Enregistrement SW</span>
+<span class="keyword">if</span> (<span class="string">'serviceWorker'</span> <span class="keyword">in</span> navigator) {
+  navigator.serviceWorker.<span class="function">register</span>(<span class="string">'/sw-driver.js'</span>)
+    .<span class="function">then</span>(registration => {
+      console.<span class="function">log</span>(<span class="string">'✅ Service Worker enregistré'</span>);
+    });
+}</pre>
+      </div>
+
+      <h3>Phase 3 : Connexion WebSocket</h3>
+      <div class="code-block">
+<pre><span class="comment">// Connexion temps réel</span>
+<span class="keyword">import</span> { io } <span class="keyword">from</span> <span class="string">'socket.io-client'</span>;
+
+<span class="keyword">const</span> socket = <span class="function">io</span>(<span class="string">'wss://api-core.veeo-stras.fr'</span>, {
+  auth: { token: driverToken }
+});
+
+<span class="comment">// Rejoindre le canal chauffeur</span>
+socket.<span class="function">emit</span>(<span class="string">'driver:join'</span>, { driverId: <span class="string">'drv_abc123'</span> });
+
+<span class="comment">// Écouter les nouvelles courses</span>
+socket.<span class="function">on</span>(<span class="string">'booking:new'</span>, (booking) => {
+  <span class="function">showNotification</span>(booking);
+  <span class="function">playSound</span>();
+});</pre>
+      </div>
+    </div>
+
+    <!-- Section 3: Notifications Push -->
+    <div class="content-card">
+      <h2><span class="icon">🔔</span> Notifications Push</h2>
+      <p>Les chauffeurs reçoivent des notifications push instantanées pour chaque nouvelle course.</p>
+      
+      <div class="notification-demo">
+        <div class="phone-mockup">
+          <div class="phone-screen">
+            <div class="phone-notch"></div>
+            <div class="notification-card">
+              <div class="app-icon">🚗</div>
+              <div class="notif-title">Nouvelle course disponible !</div>
+              <div class="notif-body">Strasbourg Centre → Aéroport<br>Distance: 12.5 km • Gain: 28,50€</div>
+              <div class="notif-time">maintenant</div>
+              <div class="action-buttons">
+                <button class="action-btn accept">✓ Accepter</button>
+                <button class="action-btn decline">✕ Refuser</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <h3>Demande de permission</h3>
+      <div class="code-block">
+<pre><span class="comment">// Demander la permission pour les notifications</span>
+<span class="keyword">async function</span> <span class="function">requestNotificationPermission</span>() {
+  <span class="keyword">const</span> permission = <span class="keyword">await</span> Notification.<span class="function">requestPermission</span>();
+  
+  <span class="keyword">if</span> (permission === <span class="string">'granted'</span>) {
+    <span class="comment">// Obtenir le token push</span>
+    <span class="keyword">const</span> subscription = <span class="keyword">await</span> registration.pushManager.<span class="function">subscribe</span>({
+      userVisibleOnly: <span class="keyword">true</span>,
+      applicationServerKey: VAPID_PUBLIC_KEY
+    });
+    
+    <span class="comment">// Envoyer au serveur</span>
+    <span class="keyword">await</span> <span class="function">fetch</span>(<span class="string">'/api/v1/drivers/push-token'</span>, {
+      method: <span class="string">'POST'</span>,
+      body: JSON.<span class="function">stringify</span>({ subscription })
+    });
+  }
+}</pre>
+      </div>
+
+      <h3>Types de notifications</h3>
+      <table class="api-table">
+        <thead>
+          <tr>
+            <th>Événement</th>
+            <th>Titre</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>booking:new</code></td>
+            <td>Nouvelle course</td>
+            <td>Course disponible à accepter</td>
+          </tr>
+          <tr>
+            <td><code>booking:assigned</code></td>
+            <td>Course attribuée</td>
+            <td>Confirmation d'attribution</td>
+          </tr>
+          <tr>
+            <td><code>booking:cancelled</code></td>
+            <td>Course annulée</td>
+            <td>Le client a annulé</td>
+          </tr>
+          <tr>
+            <td><code>message:new</code></td>
+            <td>Nouveau message</td>
+            <td>Message du client</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Section 4: Workflow Course -->
+    <div class="content-card">
+      <h2><span class="icon">🔄</span> Workflow d'une Course</h2>
+      <p>Cycle de vie complet d'une course du point de vue chauffeur.</p>
+      
+      <div class="status-flow">
+        <div class="status-item">
+          <div class="status-circle pending">⏳</div>
+          <span class="status-label">En attente</span>
+        </div>
+        <span class="status-arrow">→</span>
+        <div class="status-item">
+          <div class="status-circle accepted">✓</div>
+          <span class="status-label">Acceptée</span>
+        </div>
+        <span class="status-arrow">→</span>
+        <div class="status-item">
+          <div class="status-circle pickup">📍</div>
+          <span class="status-label">En route</span>
+        </div>
+        <span class="status-arrow">→</span>
+        <div class="status-item">
+          <div class="status-circle progress">🚗</div>
+          <span class="status-label">En cours</span>
+        </div>
+        <span class="status-arrow">→</span>
+        <div class="status-item">
+          <div class="status-circle completed">✅</div>
+          <span class="status-label">Terminée</span>
+        </div>
+      </div>
+
+      <h3>Actions API du chauffeur</h3>
+      <table class="api-table">
+        <thead>
+          <tr>
+            <th>Action</th>
+            <th>Endpoint</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="method-badge post">POST</span></td>
+            <td><code>/api/v1/bookings/:id/accept</code></td>
+            <td>Accepter une course</td>
+          </tr>
+          <tr>
+            <td><span class="method-badge post">POST</span></td>
+            <td><code>/api/v1/bookings/:id/decline</code></td>
+            <td>Refuser une course</td>
+          </tr>
+          <tr>
+            <td><span class="method-badge post">POST</span></td>
+            <td><code>/api/v1/bookings/:id/pickup</code></td>
+            <td>Client pris en charge</td>
+          </tr>
+          <tr>
+            <td><span class="method-badge post">POST</span></td>
+            <td><code>/api/v1/bookings/:id/complete</code></td>
+            <td>Course terminée</td>
+          </tr>
+          <tr>
+            <td><span class="method-badge post">POST</span></td>
+            <td><code>/api/v1/drivers/location</code></td>
+            <td>Mettre à jour la position GPS</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3>Exemple: Accepter une course</h3>
+      <div class="code-block">
+<pre><span class="comment">// Accepter une course</span>
+<span class="keyword">async function</span> <span class="function">acceptBooking</span>(bookingId) {
+  <span class="keyword">const</span> response = <span class="keyword">await</span> <span class="function">fetch</span>(
+    <span class="string">`/api/v1/bookings/${bookingId}/accept`</span>,
+    {
+      method: <span class="string">'POST'</span>,
+      headers: {
+        <span class="string">'Authorization'</span>: <span class="string">`Bearer ${driverToken}`</span>,
+        <span class="string">'Content-Type'</span>: <span class="string">'application/json'</span>
+      }
+    }
+  );
+  
+  <span class="keyword">if</span> (response.ok) {
+    <span class="keyword">const</span> booking = <span class="keyword">await</span> response.<span class="function">json</span>();
+    <span class="function">navigateToPickup</span>(booking.pickup_location);
+  }
+}</pre>
+      </div>
+    </div>
+
+    <!-- Section 5: Géolocalisation -->
+    <div class="content-card">
+      <h2><span class="icon">📍</span> Géolocalisation Temps Réel</h2>
+      <p>Le suivi GPS permet au client de suivre l'arrivée du chauffeur et calcule l'ETA en temps réel.</p>
+      
+      <div class="step-list">
+        <div class="step">
+          <div class="step-number">1</div>
+          <div class="step-content">
+            <h4>Demander la permission GPS</h4>
+            <p>L'utilisateur doit autoriser l'accès à sa position</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-number">2</div>
+          <div class="step-content">
+            <h4>Activer le tracking continu</h4>
+            <p>watchPosition() surveille les déplacements</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-number">3</div>
+          <div class="step-content">
+            <h4>Envoyer au serveur</h4>
+            <p>Position transmise toutes les 5 secondes via WebSocket</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="code-block">
+<pre><span class="comment">// Tracking GPS continu</span>
+<span class="keyword">let</span> watchId = navigator.geolocation.<span class="function">watchPosition</span>(
+  (position) => {
+    <span class="keyword">const</span> { latitude, longitude } = position.coords;
+    
+    <span class="comment">// Envoyer via WebSocket</span>
+    socket.<span class="function">emit</span>(<span class="string">'driver:location'</span>, {
+      lat: latitude,
+      lng: longitude,
+      heading: position.coords.heading,
+      speed: position.coords.speed
+    });
+  },
+  (error) => console.<span class="function">error</span>(error),
+  { 
+    enableHighAccuracy: <span class="keyword">true</span>,
+    maximumAge: <span class="number">5000</span>
+  }
+);</pre>
+      </div>
+
+      <div class="tip-box">
+        <h4>💡 Optimisation batterie</h4>
+        <p>Réduisez la fréquence de tracking (10s au lieu de 5s) quand le chauffeur est en attente pour économiser la batterie.</p>
+      </div>
+    </div>
+
+    <!-- Section 6: Événements WebSocket -->
+    <div class="content-card">
+      <h2><span class="icon">⚡</span> Événements WebSocket</h2>
+      <p>Liste complète des événements temps réel pour l'app chauffeur.</p>
+      
+      <table class="api-table">
+        <thead>
+          <tr>
+            <th>Événement</th>
+            <th>Direction</th>
+            <th>Payload</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>driver:join</code></td>
+            <td>→ Serveur</td>
+            <td><code>{ driverId }</code></td>
+          </tr>
+          <tr>
+            <td><code>driver:location</code></td>
+            <td>→ Serveur</td>
+            <td><code>{ lat, lng, heading, speed }</code></td>
+          </tr>
+          <tr>
+            <td><code>driver:status</code></td>
+            <td>→ Serveur</td>
+            <td><code>{ status: 'available' | 'busy' | 'offline' }</code></td>
+          </tr>
+          <tr>
+            <td><code>booking:new</code></td>
+            <td>← Serveur</td>
+            <td><code>{ booking }</code> - Nouvelle course</td>
+          </tr>
+          <tr>
+            <td><code>booking:updated</code></td>
+            <td>← Serveur</td>
+            <td><code>{ booking }</code> - Mise à jour</td>
+          </tr>
+          <tr>
+            <td><code>booking:cancelled</code></td>
+            <td>← Serveur</td>
+            <td><code>{ bookingId, reason }</code></td>
+          </tr>
+          <tr>
+            <td><code>message:new</code></td>
+            <td>← Serveur</td>
+            <td><code>{ from, content }</code></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Section 7: Intégration complète -->
+    <div class="content-card">
+      <h2><span class="icon">🛠️</span> Exemple d'intégration complète</h2>
+      
+      <div class="code-block">
+<pre><span class="comment">// driver-app-complete.js</span>
+<span class="keyword">import</span> { io } <span class="keyword">from</span> <span class="string">'socket.io-client'</span>;
+
+<span class="keyword">class</span> <span class="function">DriverApp</span> {
+  <span class="keyword">constructor</span>(apiKey, driverToken) {
+    <span class="keyword">this</span>.apiKey = apiKey;
+    <span class="keyword">this</span>.token = driverToken;
+    <span class="keyword">this</span>.socket = <span class="keyword">null</span>;
+    <span class="keyword">this</span>.currentBooking = <span class="keyword">null</span>;
+  }
+  
+  <span class="comment">// Connexion au serveur</span>
+  <span class="function">connect</span>() {
+    <span class="keyword">this</span>.socket = <span class="function">io</span>(<span class="string">'wss://api-core.veeo-stras.fr'</span>, {
+      auth: { token: <span class="keyword">this</span>.token }
+    });
+    
+    <span class="keyword">this</span>.socket.<span class="function">on</span>(<span class="string">'connect'</span>, () => {
+      console.<span class="function">log</span>(<span class="string">'✅ Connecté au serveur'</span>);
+      <span class="keyword">this</span>.<span class="function">startLocationTracking</span>();
+    });
+    
+    <span class="keyword">this</span>.socket.<span class="function">on</span>(<span class="string">'booking:new'</span>, <span class="keyword">this</span>.<span class="function">onNewBooking</span>.<span class="function">bind</span>(<span class="keyword">this</span>));
+    <span class="keyword">this</span>.socket.<span class="function">on</span>(<span class="string">'booking:cancelled'</span>, <span class="keyword">this</span>.<span class="function">onBookingCancelled</span>.<span class="function">bind</span>(<span class="keyword">this</span>));
+  }
+  
+  <span class="comment">// Nouvelle course reçue</span>
+  <span class="function">onNewBooking</span>(booking) {
+    <span class="keyword">this</span>.<span class="function">showNotification</span>({
+      title: <span class="string">'Nouvelle course !'</span>,
+      body: <span class="string">`${booking.pickup_address} → ${booking.dropoff_address}`</span>,
+      data: booking
+    });
+  }
+  
+  <span class="comment">// Accepter une course</span>
+  <span class="keyword">async</span> <span class="function">acceptBooking</span>(bookingId) {
+    <span class="keyword">const</span> res = <span class="keyword">await</span> <span class="function">fetch</span>(<span class="string">`/api/v1/bookings/${bookingId}/accept`</span>, {
+      method: <span class="string">'POST'</span>,
+      headers: { <span class="string">'Authorization'</span>: <span class="string">`Bearer ${<span class="keyword">this</span>.token}`</span> }
+    });
+    <span class="keyword">this</span>.currentBooking = <span class="keyword">await</span> res.<span class="function">json</span>();
+  }
+  
+  <span class="comment">// Tracking GPS</span>
+  <span class="function">startLocationTracking</span>() {
+    navigator.geolocation.<span class="function">watchPosition</span>((pos) => {
+      <span class="keyword">this</span>.socket.<span class="function">emit</span>(<span class="string">'driver:location'</span>, {
+        lat: pos.coords.latitude,
+        lng: pos.coords.longitude
+      });
+    }, <span class="keyword">null</span>, { enableHighAccuracy: <span class="keyword">true</span> });
+  }
+}
+
+<span class="comment">// Utilisation</span>
+<span class="keyword">const</span> app = <span class="keyword">new</span> <span class="function">DriverApp</span>(API_KEY, DRIVER_TOKEN);
+app.<span class="function">connect</span>();</pre>
+      </div>
+    </div>
+
+  </div>
+
+  <footer class="footer">
+    <p>VeeoCore Driver Documentation • <a href="docs.html">API Reference</a> • <a href="docs-tenant.html">Dashboard Tenant</a></p>
+  </footer>
+
+</body>
+</html>

@@ -1,0 +1,1118 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VeeoCore - Documentation Dashboard Tenant</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #6366f1;
+      --primary-dark: #4f46e5;
+      --primary-light: #818cf8;
+      --success: #10b981;
+      --warning: #f59e0b;
+      --error: #ef4444;
+      --gray-50: #f9fafb;
+      --gray-100: #f3f4f6;
+      --gray-200: #e5e7eb;
+      --gray-300: #d1d5db;
+      --gray-400: #9ca3af;
+      --gray-500: #6b7280;
+      --gray-600: #4b5563;
+      --gray-700: #374151;
+      --gray-800: #1f2937;
+      --gray-900: #111827;
+    }
+    
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: linear-gradient(135deg, #0ea5e9 0%, #6366f1 100%);
+      min-height: 100vh;
+      color: var(--gray-800);
+    }
+    
+    .header {
+      background: rgba(255,255,255,0.1);
+      backdrop-filter: blur(10px);
+      padding: 20px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: white;
+      text-decoration: none;
+      font-size: 24px;
+      font-weight: 800;
+    }
+    
+    .logo-icon { font-size: 32px; }
+    
+    .nav-links {
+      display: flex;
+      gap: 8px;
+    }
+    
+    .nav-links a {
+      color: rgba(255,255,255,0.8);
+      text-decoration: none;
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-weight: 500;
+      transition: all 0.2s;
+    }
+    
+    .nav-links a:hover, .nav-links a.active {
+      background: rgba(255,255,255,0.2);
+      color: white;
+    }
+    
+    .hero {
+      text-align: center;
+      padding: 60px 40px;
+      color: white;
+    }
+    
+    .hero h1 {
+      font-size: 48px;
+      font-weight: 800;
+      margin-bottom: 16px;
+    }
+    
+    .hero p {
+      font-size: 20px;
+      opacity: 0.9;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+    
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 40px 60px;
+    }
+    
+    .content-card {
+      background: white;
+      border-radius: 20px;
+      padding: 40px;
+      margin-bottom: 30px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+    }
+    
+    .content-card h2 {
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--gray-900);
+      margin-bottom: 24px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    
+    .content-card h2 .icon {
+      width: 48px;
+      height: 48px;
+      background: linear-gradient(135deg, #0ea5e9 0%, #6366f1 100%);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 24px;
+    }
+    
+    .content-card h3 {
+      font-size: 20px;
+      font-weight: 600;
+      color: var(--gray-800);
+      margin: 30px 0 16px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid var(--gray-100);
+    }
+    
+    .content-card p {
+      color: var(--gray-600);
+      line-height: 1.7;
+      margin-bottom: 16px;
+    }
+    
+    .module-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 24px;
+      margin: 24px 0;
+    }
+    
+    .module-card {
+      background: linear-gradient(135deg, var(--gray-50) 0%, white 100%);
+      border: 2px solid var(--gray-200);
+      border-radius: 16px;
+      padding: 28px;
+      transition: all 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .module-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 16px 32px rgba(0,0,0,0.12);
+      border-color: var(--primary);
+    }
+    
+    .module-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, #0ea5e9 0%, #6366f1 100%);
+    }
+    
+    .module-card .icon {
+      width: 56px;
+      height: 56px;
+      background: linear-gradient(135deg, #0ea5e9 0%, #6366f1 100%);
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 20px;
+      font-size: 28px;
+    }
+    
+    .module-card h4 {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--gray-800);
+      margin-bottom: 10px;
+    }
+    
+    .module-card p {
+      color: var(--gray-600);
+      font-size: 14px;
+      margin: 0 0 16px;
+    }
+    
+    .module-card .feature-list {
+      list-style: none;
+    }
+    
+    .module-card .feature-list li {
+      padding: 8px 0;
+      color: var(--gray-600);
+      font-size: 14px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      border-bottom: 1px solid var(--gray-100);
+    }
+    
+    .module-card .feature-list li:last-child {
+      border-bottom: none;
+    }
+    
+    .module-card .feature-list li::before {
+      content: '✓';
+      color: var(--success);
+      font-weight: 700;
+    }
+    
+    .code-block {
+      background: var(--gray-900);
+      border-radius: 12px;
+      padding: 20px;
+      margin: 16px 0;
+      overflow-x: auto;
+    }
+    
+    .code-block pre {
+      margin: 0;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 14px;
+      color: #e5e7eb;
+      line-height: 1.6;
+    }
+    
+    .code-block .comment { color: #6b7280; }
+    .code-block .keyword { color: #c084fc; }
+    .code-block .string { color: #86efac; }
+    .code-block .function { color: #60a5fa; }
+    .code-block .number { color: #fbbf24; }
+    
+    .step-list {
+      counter-reset: step;
+    }
+    
+    .step {
+      display: flex;
+      gap: 20px;
+      padding: 24px;
+      background: var(--gray-50);
+      border-radius: 12px;
+      margin-bottom: 16px;
+    }
+    
+    .step-number {
+      width: 44px;
+      height: 44px;
+      background: linear-gradient(135deg, #0ea5e9 0%, #6366f1 100%);
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 18px;
+      flex-shrink: 0;
+    }
+    
+    .step-content h4 {
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--gray-800);
+      margin-bottom: 8px;
+    }
+    
+    .step-content p {
+      margin: 0;
+      color: var(--gray-600);
+    }
+    
+    .api-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+    }
+    
+    .api-table th, .api-table td {
+      padding: 14px 16px;
+      text-align: left;
+      border-bottom: 1px solid var(--gray-200);
+    }
+    
+    .api-table th {
+      background: var(--gray-50);
+      font-weight: 600;
+      color: var(--gray-700);
+      font-size: 13px;
+      text-transform: uppercase;
+    }
+    
+    .api-table td {
+      color: var(--gray-600);
+    }
+    
+    .api-table code {
+      background: var(--gray-100);
+      padding: 4px 8px;
+      border-radius: 4px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      color: var(--primary-dark);
+    }
+    
+    .method-badge {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 600;
+      font-family: 'JetBrains Mono', monospace;
+    }
+    
+    .method-badge.get { background: rgba(16, 185, 129, 0.15); color: #059669; }
+    .method-badge.post { background: rgba(99, 102, 241, 0.15); color: var(--primary); }
+    .method-badge.put { background: rgba(245, 158, 11, 0.15); color: #d97706; }
+    .method-badge.delete { background: rgba(239, 68, 68, 0.15); color: #dc2626; }
+    
+    .dashboard-preview {
+      background: var(--gray-900);
+      border-radius: 16px;
+      padding: 20px;
+      margin: 24px 0;
+    }
+    
+    .browser-bar {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+      margin-bottom: 16px;
+    }
+    
+    .browser-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+    }
+    
+    .browser-dot.red { background: #ef4444; }
+    .browser-dot.yellow { background: #f59e0b; }
+    .browser-dot.green { background: #10b981; }
+    
+    .browser-url {
+      flex: 1;
+      background: rgba(255,255,255,0.1);
+      padding: 8px 16px;
+      border-radius: 6px;
+      color: rgba(255,255,255,0.6);
+      font-size: 13px;
+      font-family: 'JetBrains Mono', monospace;
+      margin-left: 16px;
+    }
+    
+    .dashboard-mockup {
+      display: grid;
+      grid-template-columns: 200px 1fr;
+      gap: 16px;
+      min-height: 300px;
+    }
+    
+    .mock-sidebar {
+      background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%);
+      border-radius: 12px;
+      padding: 20px;
+    }
+    
+    .mock-nav-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px;
+      color: rgba(255,255,255,0.6);
+      border-radius: 8px;
+      margin-bottom: 4px;
+      font-size: 14px;
+    }
+    
+    .mock-nav-item.active {
+      background: rgba(99, 102, 241, 0.3);
+      color: white;
+    }
+    
+    .mock-content {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-template-rows: auto 1fr;
+      gap: 16px;
+    }
+    
+    .mock-stat {
+      background: linear-gradient(135deg, rgba(99, 102, 241, 0.2) 0%, rgba(14, 165, 233, 0.2) 100%);
+      border-radius: 12px;
+      padding: 20px;
+      text-align: center;
+    }
+    
+    .mock-stat .value {
+      font-size: 28px;
+      font-weight: 700;
+      color: white;
+    }
+    
+    .mock-stat .label {
+      font-size: 12px;
+      color: rgba(255,255,255,0.6);
+      margin-top: 4px;
+    }
+    
+    .mock-chart {
+      grid-column: span 3;
+      background: rgba(255,255,255,0.05);
+      border-radius: 12px;
+      padding: 20px;
+      display: flex;
+      align-items: flex-end;
+      gap: 8px;
+    }
+    
+    .chart-bar {
+      flex: 1;
+      background: linear-gradient(180deg, #6366f1 0%, #0ea5e9 100%);
+      border-radius: 4px 4px 0 0;
+      transition: height 0.3s;
+    }
+    
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+      margin: 24px 0;
+    }
+    
+    .pricing-item {
+      background: var(--gray-50);
+      border-radius: 12px;
+      padding: 20px;
+      text-align: center;
+    }
+    
+    .pricing-item .label {
+      font-size: 13px;
+      color: var(--gray-500);
+      margin-bottom: 8px;
+    }
+    
+    .pricing-item .value {
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--gray-800);
+    }
+    
+    .pricing-item .unit {
+      font-size: 14px;
+      color: var(--gray-500);
+    }
+    
+    .tip-box {
+      background: linear-gradient(135deg, rgba(14, 165, 233, 0.1) 0%, rgba(99, 102, 241, 0.1) 100%);
+      border-left: 4px solid #0ea5e9;
+      border-radius: 0 12px 12px 0;
+      padding: 20px;
+      margin: 20px 0;
+    }
+    
+    .tip-box h4 {
+      color: #0369a1;
+      font-weight: 600;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    
+    .tip-box p {
+      color: var(--gray-700);
+      margin: 0;
+      font-size: 14px;
+    }
+    
+    .webhook-flow {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+      padding: 30px;
+      background: var(--gray-50);
+      border-radius: 16px;
+      margin: 24px 0;
+      flex-wrap: wrap;
+    }
+    
+    .webhook-node {
+      background: white;
+      border: 2px solid var(--gray-200);
+      border-radius: 12px;
+      padding: 16px 24px;
+      text-align: center;
+    }
+    
+    .webhook-node.highlight {
+      border-color: var(--primary);
+      background: linear-gradient(135deg, rgba(99, 102, 241, 0.05) 0%, rgba(14, 165, 233, 0.05) 100%);
+    }
+    
+    .webhook-node .icon {
+      font-size: 28px;
+      margin-bottom: 8px;
+    }
+    
+    .webhook-node .label {
+      font-weight: 600;
+      color: var(--gray-800);
+    }
+    
+    .webhook-arrow {
+      font-size: 24px;
+      color: var(--gray-400);
+    }
+    
+    .footer {
+      text-align: center;
+      padding: 40px;
+      color: rgba(255,255,255,0.8);
+    }
+    
+    .footer a {
+      color: white;
+      text-decoration: none;
+      font-weight: 600;
+    }
+    
+    @media (max-width: 768px) {
+      .header { padding: 16px 20px; flex-direction: column; gap: 16px; }
+      .hero h1 { font-size: 32px; }
+      .container { padding: 0 20px 40px; }
+      .content-card { padding: 24px; }
+      .dashboard-mockup { grid-template-columns: 1fr; }
+      .mock-sidebar { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <a href="index.html" class="logo">
+      <span class="logo-icon">🚀</span>
+      <span>VeeoCore</span>
+    </a>
+    <nav class="nav-links">
+      <a href="docs.html">API Docs</a>
+      <a href="docs-driver.html">App Chauffeur</a>
+      <a href="docs-tenant.html" class="active">Dashboard Tenant</a>
+      <a href="admin.html">Admin</a>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <h1>🖥️ Dashboard Tenant</h1>
+    <p>Interface web complète pour gérer votre flotte de véhicules, les réservations et configurer vos tarifs</p>
+  </section>
+
+  <div class="container">
+    
+    <!-- Section 1: Présentation -->
+    <div class="content-card">
+      <h2><span class="icon">🎯</span> Présentation</h2>
+      <p>Le Dashboard Tenant VeeoCore est une interface web complète permettant aux opérateurs VTC de gérer l'ensemble de leur activité : flotte de chauffeurs, réservations, tarification et analytics.</p>
+      
+      <div class="module-grid">
+        <div class="module-card">
+          <div class="icon">👥</div>
+          <h4>Gestion des Chauffeurs</h4>
+          <p>Gérez votre flotte de chauffeurs en temps réel</p>
+          <ul class="feature-list">
+            <li>Ajout/modification de chauffeurs</li>
+            <li>Suivi GPS en direct</li>
+            <li>Statut de disponibilité</li>
+            <li>Historique des courses</li>
+          </ul>
+        </div>
+        
+        <div class="module-card">
+          <div class="icon">📅</div>
+          <h4>Gestion des Réservations</h4>
+          <p>Visualisez et gérez toutes vos courses</p>
+          <ul class="feature-list">
+            <li>Vue calendrier/liste</li>
+            <li>Filtres avancés</li>
+            <li>Attribution manuelle</li>
+            <li>Export CSV/PDF</li>
+          </ul>
+        </div>
+        
+        <div class="module-card">
+          <div class="icon">💰</div>
+          <h4>Configuration Tarifs</h4>
+          <p>Définissez votre politique tarifaire</p>
+          <ul class="feature-list">
+            <li>Tarif de base et km</li>
+            <li>Zones géographiques</li>
+            <li>Majorations horaires</li>
+            <li>Suppléments</li>
+          </ul>
+        </div>
+        
+        <div class="module-card">
+          <div class="icon">📊</div>
+          <h4>Analytics & Rapports</h4>
+          <p>Analysez vos performances</p>
+          <ul class="feature-list">
+            <li>Chiffre d'affaires</li>
+            <li>Nombre de courses</li>
+            <li>Performance chauffeurs</li>
+            <li>Rapports automatiques</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Section 2: Aperçu Interface -->
+    <div class="content-card">
+      <h2><span class="icon">🖼️</span> Aperçu de l'interface</h2>
+      
+      <div class="dashboard-preview">
+        <div class="browser-bar">
+          <div class="browser-dot red"></div>
+          <div class="browser-dot yellow"></div>
+          <div class="browser-dot green"></div>
+          <div class="browser-url">https://dashboard.votre-societe.com</div>
+        </div>
+        <div class="dashboard-mockup">
+          <div class="mock-sidebar">
+            <div class="mock-nav-item active">📊 Dashboard</div>
+            <div class="mock-nav-item">📅 Réservations</div>
+            <div class="mock-nav-item">👥 Chauffeurs</div>
+            <div class="mock-nav-item">💰 Tarifs</div>
+            <div class="mock-nav-item">📈 Analytics</div>
+            <div class="mock-nav-item">⚙️ Paramètres</div>
+          </div>
+          <div class="mock-content">
+            <div class="mock-stat">
+              <div class="value">156</div>
+              <div class="label">Courses aujourd'hui</div>
+            </div>
+            <div class="mock-stat">
+              <div class="value">12</div>
+              <div class="label">Chauffeurs actifs</div>
+            </div>
+            <div class="mock-stat">
+              <div class="value">€4,280</div>
+              <div class="label">CA du jour</div>
+            </div>
+            <div class="mock-chart">
+              <div class="chart-bar" style="height: 60%;"></div>
+              <div class="chart-bar" style="height: 80%;"></div>
+              <div class="chart-bar" style="height: 45%;"></div>
+              <div class="chart-bar" style="height: 90%;"></div>
+              <div class="chart-bar" style="height: 70%;"></div>
+              <div class="chart-bar" style="height: 55%;"></div>
+              <div class="chart-bar" style="height: 100%;"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Section 3: Intégration -->
+    <div class="content-card">
+      <h2><span class="icon">🔧</span> Phases d'Intégration</h2>
+      
+      <div class="step-list">
+        <div class="step">
+          <div class="step-number">1</div>
+          <div class="step-content">
+            <h4>Création du compte Tenant</h4>
+            <p>Inscription sur VeeoCore et obtention de votre clé API tenant</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-number">2</div>
+          <div class="step-content">
+            <h4>Configuration initiale</h4>
+            <p>Paramétrage des informations société, logo, et identité visuelle</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-number">3</div>
+          <div class="step-content">
+            <h4>Import des chauffeurs</h4>
+            <p>Ajout de votre flotte de chauffeurs via CSV ou API</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-number">4</div>
+          <div class="step-content">
+            <h4>Configuration des tarifs</h4>
+            <p>Définition de votre grille tarifaire et zones géographiques</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-number">5</div>
+          <div class="step-content">
+            <h4>Intégration Widget</h4>
+            <p>Installation du widget de réservation sur votre site web</p>
+          </div>
+        </div>
+      </div>
+
+      <h3>Authentification Tenant</h3>
+      <div class="code-block">
+<pre><span class="comment">// Authentification au Dashboard Tenant</span>
+<span class="keyword">const</span> response = <span class="keyword">await</span> <span class="function">fetch</span>(<span class="string">'https://api-core.veeo-stras.fr/api/v1/auth/tenant/login'</span>, {
+  method: <span class="string">'POST'</span>,
+  headers: { <span class="string">'Content-Type'</span>: <span class="string">'application/json'</span> },
+  body: JSON.<span class="function">stringify</span>({
+    email: <span class="string">'admin@votre-societe.com'</span>,
+    password: <span class="string">'votre_mot_de_passe'</span>
+  })
+});
+
+<span class="keyword">const</span> { token, tenant } = <span class="keyword">await</span> response.<span class="function">json</span>();
+<span class="comment">// token = JWT valide 24h</span>
+<span class="comment">// tenant = infos du compte tenant</span></pre>
+      </div>
+    </div>
+
+    <!-- Section 4: Gestion Chauffeurs -->
+    <div class="content-card">
+      <h2><span class="icon">👥</span> Gestion des Chauffeurs</h2>
+      <p>API complète pour gérer votre flotte de chauffeurs.</p>
+      
+      <table class="api-table">
+        <thead>
+          <tr>
+            <th>Méthode</th>
+            <th>Endpoint</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="method-badge get">GET</span></td>
+            <td><code>/api/v1/tenant/drivers</code></td>
+            <td>Liste tous les chauffeurs</td>
+          </tr>
+          <tr>
+            <td><span class="method-badge post">POST</span></td>
+            <td><code>/api/v1/tenant/drivers</code></td>
+            <td>Ajouter un chauffeur</td>
+          </tr>
+          <tr>
+            <td><span class="method-badge get">GET</span></td>
+            <td><code>/api/v1/tenant/drivers/:id</code></td>
+            <td>Détails d'un chauffeur</td>
+          </tr>
+          <tr>
+            <td><span class="method-badge put">PUT</span></td>
+            <td><code>/api/v1/tenant/drivers/:id</code></td>
+            <td>Modifier un chauffeur</td>
+          </tr>
+          <tr>
+            <td><span class="method-badge delete">DELETE</span></td>
+            <td><code>/api/v1/tenant/drivers/:id</code></td>
+            <td>Désactiver un chauffeur</td>
+          </tr>
+          <tr>
+            <td><span class="method-badge get">GET</span></td>
+            <td><code>/api/v1/tenant/drivers/:id/stats</code></td>
+            <td>Statistiques chauffeur</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3>Exemple: Ajouter un chauffeur</h3>
+      <div class="code-block">
+<pre><span class="comment">// Créer un nouveau chauffeur</span>
+<span class="keyword">const</span> driver = <span class="keyword">await</span> <span class="function">fetch</span>(<span class="string">'/api/v1/tenant/drivers'</span>, {
+  method: <span class="string">'POST'</span>,
+  headers: {
+    <span class="string">'Authorization'</span>: <span class="string">`Bearer ${tenantToken}`</span>,
+    <span class="string">'Content-Type'</span>: <span class="string">'application/json'</span>
+  },
+  body: JSON.<span class="function">stringify</span>({
+    first_name: <span class="string">'Jean'</span>,
+    last_name: <span class="string">'Dupont'</span>,
+    email: <span class="string">'jean.dupont@email.com'</span>,
+    phone: <span class="string">'+33612345678'</span>,
+    license_number: <span class="string">'VTC-2024-12345'</span>,
+    vehicle: {
+      brand: <span class="string">'Mercedes'</span>,
+      model: <span class="string">'Classe E'</span>,
+      plate: <span class="string">'AB-123-CD'</span>,
+      color: <span class="string">'Noir'</span>
+    }
+  })
+});
+
+<span class="keyword">const</span> result = <span class="keyword">await</span> driver.<span class="function">json</span>();
+console.<span class="function">log</span>(result.id); <span class="comment">// drv_abc123</span></pre>
+      </div>
+    </div>
+
+    <!-- Section 5: Configuration Tarifs -->
+    <div class="content-card">
+      <h2><span class="icon">💰</span> Configuration des Tarifs</h2>
+      <p>Définissez votre politique tarifaire avec une granularité complète.</p>
+      
+      <div class="pricing-grid">
+        <div class="pricing-item">
+          <div class="label">Prise en charge</div>
+          <div class="value">2,50 <span class="unit">€</span></div>
+        </div>
+        <div class="pricing-item">
+          <div class="label">Prix au km</div>
+          <div class="value">1,80 <span class="unit">€/km</span></div>
+        </div>
+        <div class="pricing-item">
+          <div class="label">Prix à la minute</div>
+          <div class="value">0,40 <span class="unit">€/min</span></div>
+        </div>
+        <div class="pricing-item">
+          <div class="label">Minimum</div>
+          <div class="value">8,00 <span class="unit">€</span></div>
+        </div>
+      </div>
+
+      <h3>Structure tarifaire</h3>
+      <div class="code-block">
+<pre><span class="comment">// Configuration tarifs tenant</span>
+<span class="keyword">const</span> pricingConfig = {
+  base_fare: <span class="number">2.50</span>,          <span class="comment">// Prise en charge</span>
+  per_km: <span class="number">1.80</span>,              <span class="comment">// Prix au kilomètre</span>
+  per_minute: <span class="number">0.40</span>,          <span class="comment">// Prix à la minute</span>
+  minimum_fare: <span class="number">8.00</span>,        <span class="comment">// Course minimum</span>
+  
+  <span class="comment">// Majorations horaires</span>
+  time_multipliers: [
+    { start: <span class="string">'22:00'</span>, end: <span class="string">'06:00'</span>, multiplier: <span class="number">1.5</span> },  <span class="comment">// Nuit +50%</span>
+    { start: <span class="string">'07:00'</span>, end: <span class="string">'09:00'</span>, multiplier: <span class="number">1.2</span> },  <span class="comment">// Rush +20%</span>
+    { start: <span class="string">'17:00'</span>, end: <span class="string">'19:00'</span>, multiplier: <span class="number">1.2</span> }   <span class="comment">// Rush +20%</span>
+  ],
+  
+  <span class="comment">// Suppléments</span>
+  supplements: {
+    luggage: <span class="number">2.00</span>,            <span class="comment">// Bagage volumineux</span>
+    child_seat: <span class="number">5.00</span>,         <span class="comment">// Siège enfant</span>
+    pet: <span class="number">3.00</span>,                <span class="comment">// Animal</span>
+    airport_pickup: <span class="number">5.00</span>      <span class="comment">// Prise en charge aéroport</span>
+  }
+};</pre>
+      </div>
+
+      <h3>API Configuration Tarifs</h3>
+      <table class="api-table">
+        <thead>
+          <tr>
+            <th>Méthode</th>
+            <th>Endpoint</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="method-badge get">GET</span></td>
+            <td><code>/api/v1/tenant/pricing</code></td>
+            <td>Configuration actuelle</td>
+          </tr>
+          <tr>
+            <td><span class="method-badge put">PUT</span></td>
+            <td><code>/api/v1/tenant/pricing</code></td>
+            <td>Mettre à jour les tarifs</td>
+          </tr>
+          <tr>
+            <td><span class="method-badge get">GET</span></td>
+            <td><code>/api/v1/tenant/pricing/zones</code></td>
+            <td>Zones géographiques</td>
+          </tr>
+          <tr>
+            <td><span class="method-badge post">POST</span></td>
+            <td><code>/api/v1/tenant/pricing/zones</code></td>
+            <td>Créer une zone</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Section 6: Gestion Réservations -->
+    <div class="content-card">
+      <h2><span class="icon">📅</span> Gestion des Réservations</h2>
+      <p>Visualisez, filtrez et gérez toutes vos réservations.</p>
+      
+      <table class="api-table">
+        <thead>
+          <tr>
+            <th>Méthode</th>
+            <th>Endpoint</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="method-badge get">GET</span></td>
+            <td><code>/api/v1/tenant/bookings</code></td>
+            <td>Liste des réservations (paginée)</td>
+          </tr>
+          <tr>
+            <td><span class="method-badge get">GET</span></td>
+            <td><code>/api/v1/tenant/bookings/:id</code></td>
+            <td>Détails d'une réservation</td>
+          </tr>
+          <tr>
+            <td><span class="method-badge post">POST</span></td>
+            <td><code>/api/v1/tenant/bookings/:id/assign</code></td>
+            <td>Attribuer à un chauffeur</td>
+          </tr>
+          <tr>
+            <td><span class="method-badge post">POST</span></td>
+            <td><code>/api/v1/tenant/bookings/:id/cancel</code></td>
+            <td>Annuler une réservation</td>
+          </tr>
+          <tr>
+            <td><span class="method-badge get">GET</span></td>
+            <td><code>/api/v1/tenant/bookings/export</code></td>
+            <td>Export CSV/PDF</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3>Filtres disponibles</h3>
+      <div class="code-block">
+<pre><span class="comment">// Récupérer les réservations avec filtres</span>
+<span class="keyword">const</span> bookings = <span class="keyword">await</span> <span class="function">fetch</span>(<span class="string">'/api/v1/tenant/bookings?'</span> + <span class="keyword">new</span> URLSearchParams({
+  status: <span class="string">'pending,confirmed'</span>,    <span class="comment">// Filtrer par statut</span>
+  date_from: <span class="string">'2026-02-01'</span>,         <span class="comment">// Date début</span>
+  date_to: <span class="string">'2026-02-28'</span>,           <span class="comment">// Date fin</span>
+  driver_id: <span class="string">'drv_abc123'</span>,         <span class="comment">// Chauffeur spécifique</span>
+  page: <span class="number">1</span>,
+  limit: <span class="number">20</span>
+}), {
+  headers: { <span class="string">'Authorization'</span>: <span class="string">`Bearer ${token}`</span> }
+});</pre>
+      </div>
+    </div>
+
+    <!-- Section 7: Webhooks -->
+    <div class="content-card">
+      <h2><span class="icon">🔗</span> Webhooks & Notifications</h2>
+      <p>Recevez des notifications en temps réel pour chaque événement.</p>
+      
+      <div class="webhook-flow">
+        <div class="webhook-node">
+          <div class="icon">📱</div>
+          <div class="label">Client réserve</div>
+        </div>
+        <div class="webhook-arrow">→</div>
+        <div class="webhook-node highlight">
+          <div class="icon">🚀</div>
+          <div class="label">VeeoCore</div>
+        </div>
+        <div class="webhook-arrow">→</div>
+        <div class="webhook-node">
+          <div class="icon">🔔</div>
+          <div class="label">Votre serveur</div>
+        </div>
+      </div>
+
+      <h3>Événements disponibles</h3>
+      <table class="api-table">
+        <thead>
+          <tr>
+            <th>Événement</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>booking.created</code></td>
+            <td>Nouvelle réservation créée</td>
+          </tr>
+          <tr>
+            <td><code>booking.confirmed</code></td>
+            <td>Réservation confirmée</td>
+          </tr>
+          <tr>
+            <td><code>booking.assigned</code></td>
+            <td>Chauffeur attribué</td>
+          </tr>
+          <tr>
+            <td><code>booking.started</code></td>
+            <td>Course démarrée</td>
+          </tr>
+          <tr>
+            <td><code>booking.completed</code></td>
+            <td>Course terminée</td>
+          </tr>
+          <tr>
+            <td><code>booking.cancelled</code></td>
+            <td>Réservation annulée</td>
+          </tr>
+          <tr>
+            <td><code>payment.received</code></td>
+            <td>Paiement reçu</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3>Configuration webhook</h3>
+      <div class="code-block">
+<pre><span class="comment">// Configurer votre endpoint webhook</span>
+<span class="keyword">await</span> <span class="function">fetch</span>(<span class="string">'/api/v1/tenant/webhooks'</span>, {
+  method: <span class="string">'POST'</span>,
+  headers: {
+    <span class="string">'Authorization'</span>: <span class="string">`Bearer ${token}`</span>,
+    <span class="string">'Content-Type'</span>: <span class="string">'application/json'</span>
+  },
+  body: JSON.<span class="function">stringify</span>({
+    url: <span class="string">'https://votre-serveur.com/webhooks/veeocore'</span>,
+    events: [<span class="string">'booking.created'</span>, <span class="string">'booking.completed'</span>, <span class="string">'payment.received'</span>],
+    secret: <span class="string">'whsec_votre_secret_32_chars'</span>
+  })
+});</pre>
+      </div>
+
+      <div class="tip-box">
+        <h4>💡 Vérification de signature</h4>
+        <p>Chaque webhook inclut un header <code>X-VeeoCore-Signature</code> pour vérifier l'authenticité. Utilisez HMAC-SHA256 avec votre secret pour valider.</p>
+      </div>
+    </div>
+
+    <!-- Section 8: Widget Intégration -->
+    <div class="content-card">
+      <h2><span class="icon">🧩</span> Intégration Widget</h2>
+      <p>Intégrez le widget de réservation sur votre site en une ligne de code.</p>
+      
+      <div class="code-block">
+<pre><span class="comment">&lt;!-- Ajoutez dans votre page HTML --&gt;</span>
+&lt;script 
+  src=<span class="string">"https://api-core.veeo-stras.fr/widget.js"</span>
+  data-tenant-id=<span class="string">"ten_votre_id"</span>
+  data-theme=<span class="string">"light"</span>
+  data-primary-color=<span class="string">"#6366f1"</span>
+&gt;&lt;/script&gt;
+
+<span class="comment">&lt;!-- Conteneur du widget --&gt;</span>
+&lt;div id=<span class="string">"veeocore-booking-widget"</span>&gt;&lt;/div&gt;</pre>
+      </div>
+
+      <h3>Options de personnalisation</h3>
+      <table class="api-table">
+        <thead>
+          <tr>
+            <th>Attribut</th>
+            <th>Description</th>
+            <th>Défaut</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>data-tenant-id</code></td>
+            <td>ID de votre compte tenant</td>
+            <td>Requis</td>
+          </tr>
+          <tr>
+            <td><code>data-theme</code></td>
+            <td>Thème : light ou dark</td>
+            <td>light</td>
+          </tr>
+          <tr>
+            <td><code>data-primary-color</code></td>
+            <td>Couleur principale HEX</td>
+            <td>#6366f1</td>
+          </tr>
+          <tr>
+            <td><code>data-locale</code></td>
+            <td>Langue : fr, en, de</td>
+            <td>fr</td>
+          </tr>
+          <tr>
+            <td><code>data-callback</code></td>
+            <td>Fonction callback réservation</td>
+            <td>-</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+
+  <footer class="footer">
+    <p>VeeoCore Tenant Documentation • <a href="docs.html">API Reference</a> • <a href="docs-driver.html">App Chauffeur</a></p>
+  </footer>
+
+</body>
+</html>
