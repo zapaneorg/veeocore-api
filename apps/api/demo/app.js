@@ -749,66 +749,77 @@ window.submitBooking = async function(event) {
     return;
   }
   
-  setLoading(true);
-  
-  try {
-    // Create booking via API
-    const bookingData = {
-      customerName: state.customerName,
-      customerPhone: state.customerPhone,
-      customerEmail: state.customerEmail,
-      
-      pickup: {
-        address: state.pickup.address,
-        lat: state.pickup.lat,
-        lng: state.pickup.lng
-      },
-      dropoff: {
-        address: state.dropoff.address,
-        lat: state.dropoff.lat,
-        lng: state.dropoff.lng
-      },
-      
-      vehicleType: state.selectedQuote.vehicleType,
-      passengers: state.passengers,
-      luggage: state.luggage,
-      
-      scheduledFor: `${state.date}T${state.time}:00Z`,
-      estimatedPrice: state.selectedQuote.price,
-      estimatedDistance: state.distanceKm,
-      estimatedDuration: state.durationMin,
-      
-      customerNotes: state.customerNotes
-    };
-    
-    console.log('📤 Creating booking:', bookingData);
-    
-    const response = await fetch(`${API_BASE_URL}/api/v1/bookings`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'X-API-Key': DEMO_API_KEY
-      },
-      body: JSON.stringify(bookingData)
-    });
-    
-    const data = await response.json();
-    console.log('📥 Booking response:', data);
-    
-    if (data.success && data.data.booking) {
-      state.bookingId = data.data.booking.id;
-    }
-    
-    // Show confirmation (demo mode - always succeeds)
-    showConfirmation();
-    
-  } catch (error) {
-    console.error('Booking error:', error);
-    // In demo mode, still show confirmation
-    showConfirmation();
-  } finally {
-    setLoading(false);
+  // Immediately show loading state on button
+  const confirmBtn = document.querySelector('.btn-confirm, .btn-confirm-full');
+  if (confirmBtn) {
+    confirmBtn.disabled = true;
+    confirmBtn.innerHTML = '<span class="btn-spinner"></span> Confirmation en cours...';
   }
+  
+  // Prepare booking data
+  const bookingData = {
+    customerName: state.customerName,
+    customerPhone: state.customerPhone,
+    customerEmail: state.customerEmail,
+    
+    pickup: {
+      address: state.pickup.address,
+      lat: state.pickup.lat,
+      lng: state.pickup.lng
+    },
+    dropoff: {
+      address: state.dropoff.address,
+      lat: state.dropoff.lat,
+      lng: state.dropoff.lng
+    },
+    
+    vehicleType: state.selectedQuote.vehicleType,
+    passengers: state.passengers,
+    luggage: state.luggage,
+    
+    scheduledFor: `${state.date}T${state.time}:00Z`,
+    estimatedPrice: state.selectedQuote.price,
+    estimatedDistance: state.distanceKm,
+    estimatedDuration: state.durationMin,
+    
+    customerNotes: state.customerNotes
+  };
+  
+  console.log('📤 Creating booking:', bookingData);
+  
+  // Show confirmation immediately (optimistic UI)
+  // Generate temporary booking ID for demo
+  state.bookingId = 'DEMO-' + Date.now().toString(36).toUpperCase();
+  
+  // Quick delay for visual feedback then show confirmation
+  setTimeout(() => {
+    showConfirmation();
+  }, 300);
+  
+  // Create booking in background (fire and forget for demo)
+  fetch(`${API_BASE_URL}/api/v1/bookings`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'X-API-Key': DEMO_API_KEY
+    },
+    body: JSON.stringify(bookingData)
+  })
+  .then(response => response.json())
+  .then(data => {
+    console.log('📥 Booking response:', data);
+    if (data.success && data.data?.booking?.id) {
+      state.bookingId = data.data.booking.id;
+      // Update the reference if still visible
+      const refElement = document.querySelector('.booking-ref');
+      if (refElement) {
+        refElement.textContent = 'Référence: #' + state.bookingId.substring(0, 8).toUpperCase();
+      }
+    }
+  })
+  .catch(error => {
+    console.error('Booking API error (demo continues):', error);
+  });
 };
 
 function showConfirmation() {
