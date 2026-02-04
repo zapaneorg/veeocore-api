@@ -99,6 +99,60 @@ const apiKeys = [
   }
 ];
 
+// ==================== NAVIGATION ====================
+
+/**
+ * Navigate to a specific page/section
+ * @param {string} page - Page identifier (dashboard, api-keys, clients, usage, security, config)
+ */
+function navigateTo(page) {
+  // Hide all pages
+  document.querySelectorAll('.page-section').forEach(section => {
+    section.style.display = 'none';
+  });
+  
+  // Show target page
+  const targetPage = document.getElementById('page-' + page);
+  if (targetPage) {
+    targetPage.style.display = 'block';
+  }
+  
+  // Update navigation active state
+  document.querySelectorAll('.nav-item').forEach(item => {
+    item.classList.remove('active');
+  });
+  
+  const activeNav = document.querySelector(`.nav-item[data-page="${page}"]`);
+  if (activeNav) {
+    activeNav.classList.add('active');
+  }
+  
+  // Update URL hash
+  window.location.hash = page;
+}
+
+/**
+ * Handle initial page load based on URL hash
+ */
+function handleInitialNavigation() {
+  const hash = window.location.hash.replace('#', '');
+  if (hash && document.getElementById('page-' + hash)) {
+    navigateTo(hash);
+  } else {
+    navigateTo('dashboard');
+  }
+}
+
+// Listen for hash changes
+window.addEventListener('hashchange', () => {
+  const hash = window.location.hash.replace('#', '');
+  if (hash) {
+    navigateTo(hash);
+  }
+});
+
+// ==================== STATE ====================
+
 // State
 let state = {
   selectedKey: null,
@@ -121,6 +175,9 @@ document.addEventListener('DOMContentLoaded', () => {
  * Initialize dashboard
  */
 function initDashboard() {
+  // Handle navigation based on URL hash
+  handleInitialNavigation();
+  
   // Load data from localStorage or API
   const savedKeys = localStorage.getItem('veeocore_api_keys');
   if (savedKeys) {

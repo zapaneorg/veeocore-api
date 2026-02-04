@@ -23,7 +23,7 @@
     <nav class="sidebar-nav">
       <div class="nav-section">
         <span class="nav-section-title">Principal</span>
-        <a href="#" class="nav-item active">
+        <a href="#dashboard" class="nav-item active" data-page="dashboard" onclick="navigateTo('dashboard')">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <rect x="3" y="3" width="7" height="9" rx="1"></rect>
             <rect x="14" y="3" width="7" height="5" rx="1"></rect>
@@ -32,13 +32,13 @@
           </svg>
           Dashboard
         </a>
-        <a href="#" class="nav-item">
+        <a href="#api-keys" class="nav-item" data-page="api-keys" onclick="navigateTo('api-keys')">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 11-7.778 7.778 5.5 5.5 0 017.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"></path>
           </svg>
           Clés API
         </a>
-        <a href="#" class="nav-item">
+        <a href="#clients" class="nav-item" data-page="clients" onclick="navigateTo('clients')">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"></path>
             <circle cx="9" cy="7" r="4"></circle>
@@ -50,7 +50,7 @@
       
       <div class="nav-section">
         <span class="nav-section-title">Analytics</span>
-        <a href="#" class="nav-item">
+        <a href="#usage" class="nav-item" data-page="usage" onclick="navigateTo('usage')">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <line x1="18" y1="20" x2="18" y2="10"></line>
             <line x1="12" y1="20" x2="12" y2="4"></line>
@@ -58,7 +58,7 @@
           </svg>
           Utilisation
         </a>
-        <a href="#" class="nav-item">
+        <a href="#security" class="nav-item" data-page="security" onclick="navigateTo('security')">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
           </svg>
@@ -68,7 +68,7 @@
       
       <div class="nav-section">
         <span class="nav-section-title">Paramètres</span>
-        <a href="#" class="nav-item">
+        <a href="#config" class="nav-item" data-page="config" onclick="navigateTo('config')">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <circle cx="12" cy="12" r="3"></circle>
             <path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-2 2 2 2 0 01-2-2v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83 0 2 2 0 010-2.83l.06-.06a1.65 1.65 0 00.33-1.82 1.65 1.65 0 00-1.51-1H3a2 2 0 01-2-2 2 2 0 012-2h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 010-2.83 2 2 0 012.83 0l.06.06a1.65 1.65 0 001.82.33H9a1.65 1.65 0 001-1.51V3a2 2 0 012-2 2 2 0 012 2v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 0 2 2 0 010 2.83l-.06.06a1.65 1.65 0 00-.33 1.82V9a1.65 1.65 0 001.51 1H21a2 2 0 012 2 2 2 0 01-2 2h-.09a1.65 1.65 0 00-1.51 1z"></path>
@@ -91,25 +91,204 @@
 
   <!-- Main Content -->
   <main class="main-content">
-    <!-- Header -->
-    <header class="content-header">
-      <div class="header-left">
-        <h1>Gestion des Clés API</h1>
-        <p>Créez et gérez les clés API pour vos clients</p>
-      </div>
-      <div class="header-right">
-        <button class="btn btn-primary" onclick="openCreateModal()">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <line x1="12" y1="5" x2="12" y2="19"></line>
-            <line x1="5" y1="12" x2="19" y2="12"></line>
-          </svg>
-          Nouvelle Clé API
-        </button>
-      </div>
-    </header>
+    
+    <!-- ==================== PAGE: DASHBOARD ==================== -->
+    <section class="page-section" id="page-dashboard" style="display: block;">
+      <header class="content-header">
+        <div class="header-left">
+          <h1>Dashboard</h1>
+          <p>Vue d'ensemble de votre plateforme VeeoCore</p>
+        </div>
+      </header>
 
-    <!-- Stats Cards -->
-    <div class="stats-grid">
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-icon" style="--color: #6366f1;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 11-7.778 7.778 5.5 5.5 0 017.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"></path>
+            </svg>
+          </div>
+          <div class="stat-content">
+            <span class="stat-value">12</span>
+            <span class="stat-label">Clés API actives</span>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon" style="--color: #10b981;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M22 12h-4l-3 9L9 3l-3 9H2"></path>
+            </svg>
+          </div>
+          <div class="stat-content">
+            <span class="stat-value">45.2K</span>
+            <span class="stat-label">Requêtes ce mois</span>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon" style="--color: #f59e0b;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"></path>
+              <circle cx="9" cy="7" r="4"></circle>
+              <path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"></path>
+            </svg>
+          </div>
+          <div class="stat-content">
+            <span class="stat-value">8</span>
+            <span class="stat-label">Clients actifs</span>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon" style="--color: #8b5cf6;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+              <line x1="16" y1="2" x2="16" y2="6"></line>
+              <line x1="8" y1="2" x2="8" y2="6"></line>
+              <line x1="3" y1="10" x2="21" y2="10"></line>
+            </svg>
+          </div>
+          <div class="stat-content">
+            <span class="stat-value">156</span>
+            <span class="stat-label">Réservations aujourd'hui</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="dashboard-grid">
+        <div class="table-card">
+          <div class="table-header">
+            <h2>Activité récente</h2>
+          </div>
+          <div class="activity-list">
+            <div class="activity-item">
+              <div class="activity-icon" style="background: rgba(16, 185, 129, 0.1); color: #10b981;">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M22 11.08V12a10 10 0 11-5.93-9.14"></path>
+                  <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                </svg>
+              </div>
+              <div class="activity-content">
+                <strong>Nouvelle clé API créée</strong>
+                <span>VTC Bordeaux Premium - Plan Pro</span>
+              </div>
+              <span class="activity-time">Il y a 5 min</span>
+            </div>
+            <div class="activity-item">
+              <div class="activity-icon" style="background: rgba(99, 102, 241, 0.1); color: #6366f1;">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"></path>
+                  <circle cx="9" cy="7" r="4"></circle>
+                </svg>
+              </div>
+              <div class="activity-content">
+                <strong>Nouveau client enregistré</strong>
+                <span>Taxi Express Lyon</span>
+              </div>
+              <span class="activity-time">Il y a 1h</span>
+            </div>
+            <div class="activity-item">
+              <div class="activity-icon" style="background: rgba(245, 158, 11, 0.1); color: #f59e0b;">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"></path>
+                  <line x1="12" y1="9" x2="12" y2="13"></line>
+                  <line x1="12" y1="17" x2="12.01" y2="17"></line>
+                </svg>
+              </div>
+              <div class="activity-content">
+                <strong>Rate limit atteint</strong>
+                <span>veco_live_abc123... - 5000/5000 requêtes</span>
+              </div>
+              <span class="activity-time">Il y a 2h</span>
+            </div>
+            <div class="activity-item">
+              <div class="activity-icon" style="background: rgba(239, 68, 68, 0.1); color: #ef4444;">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <line x1="15" y1="9" x2="9" y2="15"></line>
+                  <line x1="9" y1="9" x2="15" y2="15"></line>
+                </svg>
+              </div>
+              <div class="activity-content">
+                <strong>Clé API révoquée</strong>
+                <span>Ancien client test</span>
+              </div>
+              <span class="activity-time">Il y a 1 jour</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="table-card">
+          <div class="table-header">
+            <h2>Top clients (requêtes)</h2>
+          </div>
+          <div class="top-clients-list">
+            <div class="top-client">
+              <div class="client-rank">1</div>
+              <div class="client-info">
+                <strong>VTC Paris Express</strong>
+                <span class="plan-badge pro">Pro</span>
+              </div>
+              <div class="client-stats">
+                <span class="client-requests">15,234</span>
+                <div class="progress-bar"><div class="progress" style="width: 100%;"></div></div>
+              </div>
+            </div>
+            <div class="top-client">
+              <div class="client-rank">2</div>
+              <div class="client-info">
+                <strong>Taxi Marseille</strong>
+                <span class="plan-badge enterprise">Enterprise</span>
+              </div>
+              <div class="client-stats">
+                <span class="client-requests">12,456</span>
+                <div class="progress-bar"><div class="progress" style="width: 82%;"></div></div>
+              </div>
+            </div>
+            <div class="top-client">
+              <div class="client-rank">3</div>
+              <div class="client-info">
+                <strong>Lyon Mobility</strong>
+                <span class="plan-badge starter">Starter</span>
+              </div>
+              <div class="client-stats">
+                <span class="client-requests">8,901</span>
+                <div class="progress-bar"><div class="progress" style="width: 58%;"></div></div>
+              </div>
+            </div>
+            <div class="top-client">
+              <div class="client-rank">4</div>
+              <div class="client-info">
+                <strong>Nice Premium VTC</strong>
+                <span class="plan-badge pro">Pro</span>
+              </div>
+              <div class="client-stats">
+                <span class="client-requests">5,678</span>
+                <div class="progress-bar"><div class="progress" style="width: 37%;"></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== PAGE: API KEYS ==================== -->
+    <section class="page-section" id="page-api-keys" style="display: none;">
+      <header class="content-header">
+        <div class="header-left">
+          <h1>Gestion des Clés API</h1>
+          <p>Créez et gérez les clés API pour vos clients</p>
+        </div>
+        <div class="header-right">
+          <button class="btn btn-primary" onclick="openCreateModal()">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="12" y1="5" x2="12" y2="19"></line>
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+            </svg>
+            Nouvelle Clé API
+          </button>
+        </div>
+      </header>
+
+      <div class="stats-grid">
       <div class="stat-card">
         <div class="stat-icon" style="--color: #6366f1;">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -218,6 +397,473 @@
         </div>
       </div>
     </div>
+    </section>
+
+    <!-- ==================== PAGE: CLIENTS ==================== -->
+    <section class="page-section" id="page-clients" style="display: none;">
+      <header class="content-header">
+        <div class="header-left">
+          <h1>Gestion des Clients</h1>
+          <p>Vue d'ensemble de tous vos clients VeeoCore</p>
+        </div>
+        <div class="header-right">
+          <button class="btn btn-primary" onclick="openCreateModal()">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="12" y1="5" x2="12" y2="19"></line>
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+            </svg>
+            Nouveau Client
+          </button>
+        </div>
+      </header>
+
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-icon" style="--color: #10b981;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"></path>
+              <circle cx="9" cy="7" r="4"></circle>
+            </svg>
+          </div>
+          <div class="stat-content">
+            <span class="stat-value">8</span>
+            <span class="stat-label">Clients actifs</span>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon" style="--color: #6366f1;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 11-7.778 7.778 5.5 5.5 0 017.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"></path>
+            </svg>
+          </div>
+          <div class="stat-content">
+            <span class="stat-value">12</span>
+            <span class="stat-label">Clés API totales</span>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon" style="--color: #f59e0b;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="12" y1="1" x2="12" y2="23"></line>
+              <path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"></path>
+            </svg>
+          </div>
+          <div class="stat-content">
+            <span class="stat-value">€4,280</span>
+            <span class="stat-label">Revenus ce mois</span>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon" style="--color: #8b5cf6;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline>
+              <polyline points="17 6 23 6 23 12"></polyline>
+            </svg>
+          </div>
+          <div class="stat-content">
+            <span class="stat-value">+23%</span>
+            <span class="stat-label">Croissance</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="table-card">
+        <div class="table-header">
+          <h2>Liste des Clients</h2>
+        </div>
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Client</th>
+              <th>Email</th>
+              <th>Plan</th>
+              <th>Clés API</th>
+              <th>Inscrit le</th>
+              <th>Statut</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>VTC Paris Express</strong></td>
+              <td>contact@vtc-paris.com</td>
+              <td><span class="plan-badge pro">Pro</span></td>
+              <td>3</td>
+              <td>15 Jan 2026</td>
+              <td><span class="status-badge active">Actif</span></td>
+            </tr>
+            <tr>
+              <td><strong>Taxi Marseille</strong></td>
+              <td>api@taxi-marseille.fr</td>
+              <td><span class="plan-badge enterprise">Enterprise</span></td>
+              <td>5</td>
+              <td>3 Déc 2025</td>
+              <td><span class="status-badge active">Actif</span></td>
+            </tr>
+            <tr>
+              <td><strong>Lyon Mobility</strong></td>
+              <td>tech@lyon-mobility.com</td>
+              <td><span class="plan-badge starter">Starter</span></td>
+              <td>1</td>
+              <td>20 Jan 2026</td>
+              <td><span class="status-badge active">Actif</span></td>
+            </tr>
+            <tr>
+              <td><strong>Nice Premium VTC</strong></td>
+              <td>contact@nice-vtc.fr</td>
+              <td><span class="plan-badge pro">Pro</span></td>
+              <td>2</td>
+              <td>8 Nov 2025</td>
+              <td><span class="status-badge active">Actif</span></td>
+            </tr>
+            <tr>
+              <td><strong>Bordeaux Drive</strong></td>
+              <td>dev@bordeaux-drive.com</td>
+              <td><span class="plan-badge free">Free</span></td>
+              <td>1</td>
+              <td>25 Jan 2026</td>
+              <td><span class="status-badge active">Actif</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ==================== PAGE: USAGE ==================== -->
+    <section class="page-section" id="page-usage" style="display: none;">
+      <header class="content-header">
+        <div class="header-left">
+          <h1>Utilisation & Analytics</h1>
+          <p>Statistiques détaillées de l'utilisation de l'API</p>
+        </div>
+      </header>
+
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-icon" style="--color: #10b981;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M22 12h-4l-3 9L9 3l-3 9H2"></path>
+            </svg>
+          </div>
+          <div class="stat-content">
+            <span class="stat-value">45,234</span>
+            <span class="stat-label">Requêtes ce mois</span>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon" style="--color: #6366f1;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10"></circle>
+              <polyline points="12 6 12 12 16 14"></polyline>
+            </svg>
+          </div>
+          <div class="stat-content">
+            <span class="stat-value">142ms</span>
+            <span class="stat-label">Latence moyenne</span>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon" style="--color: #10b981;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M22 11.08V12a10 10 0 11-5.93-9.14"></path>
+              <polyline points="22 4 12 14.01 9 11.01"></polyline>
+            </svg>
+          </div>
+          <div class="stat-content">
+            <span class="stat-value">99.7%</span>
+            <span class="stat-label">Taux de succès</span>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon" style="--color: #ef4444;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10"></circle>
+              <line x1="12" y1="8" x2="12" y2="12"></line>
+              <line x1="12" y1="16" x2="12.01" y2="16"></line>
+            </svg>
+          </div>
+          <div class="stat-content">
+            <span class="stat-value">23</span>
+            <span class="stat-label">Erreurs 4xx/5xx</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="table-card">
+        <div class="table-header">
+          <h2>Graphique d'utilisation (30 derniers jours)</h2>
+        </div>
+        <div class="chart-placeholder" style="height: 300px; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, rgba(99, 102, 241, 0.1) 0%, rgba(16, 185, 129, 0.1) 100%); border-radius: 12px; margin: 20px;">
+          <div style="text-align: center; color: #64748b;">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin: 0 auto 10px;">
+              <line x1="18" y1="20" x2="18" y2="10"></line>
+              <line x1="12" y1="20" x2="12" y2="4"></line>
+              <line x1="6" y1="20" x2="6" y2="14"></line>
+            </svg>
+            <p>Graphique interactive disponible avec Chart.js</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="table-card">
+        <div class="table-header">
+          <h2>Endpoints les plus utilisés</h2>
+        </div>
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Endpoint</th>
+              <th>Méthode</th>
+              <th>Requêtes</th>
+              <th>Latence moy.</th>
+              <th>Taux succès</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>/api/v1/bookings</code></td>
+              <td><span class="method-badge post">POST</span></td>
+              <td>12,456</td>
+              <td>156ms</td>
+              <td><span class="status-badge active">99.8%</span></td>
+            </tr>
+            <tr>
+              <td><code>/api/v1/pricing/calculate</code></td>
+              <td><span class="method-badge post">POST</span></td>
+              <td>18,234</td>
+              <td>89ms</td>
+              <td><span class="status-badge active">99.9%</span></td>
+            </tr>
+            <tr>
+              <td><code>/api/v1/drivers</code></td>
+              <td><span class="method-badge get">GET</span></td>
+              <td>8,901</td>
+              <td>45ms</td>
+              <td><span class="status-badge active">100%</span></td>
+            </tr>
+            <tr>
+              <td><code>/api/v1/bookings/:id</code></td>
+              <td><span class="method-badge get">GET</span></td>
+              <td>5,643</td>
+              <td>38ms</td>
+              <td><span class="status-badge active">99.5%</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ==================== PAGE: SECURITY ==================== -->
+    <section class="page-section" id="page-security" style="display: none;">
+      <header class="content-header">
+        <div class="header-left">
+          <h1>Sécurité</h1>
+          <p>Surveillance et logs de sécurité</p>
+        </div>
+      </header>
+
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-icon" style="--color: #10b981;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+            </svg>
+          </div>
+          <div class="stat-content">
+            <span class="stat-value">A+</span>
+            <span class="stat-label">Score sécurité</span>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon" style="--color: #f59e0b;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"></path>
+              <line x1="12" y1="9" x2="12" y2="13"></line>
+              <line x1="12" y1="17" x2="12.01" y2="17"></line>
+            </svg>
+          </div>
+          <div class="stat-content">
+            <span class="stat-value">3</span>
+            <span class="stat-label">Alertes actives</span>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon" style="--color: #ef4444;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+              <path d="M7 11V7a5 5 0 0110 0v4"></path>
+            </svg>
+          </div>
+          <div class="stat-content">
+            <span class="stat-value">0</span>
+            <span class="stat-label">Tentatives intrusion</span>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon" style="--color: #6366f1;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+              <circle cx="12" cy="12" r="3"></circle>
+            </svg>
+          </div>
+          <div class="stat-content">
+            <span class="stat-value">24/7</span>
+            <span class="stat-label">Monitoring</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="table-card">
+        <div class="table-header">
+          <h2>Logs de sécurité récents</h2>
+        </div>
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Type</th>
+              <th>Description</th>
+              <th>IP Source</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>27 Jan 2026 14:32</td>
+              <td><span class="log-type warning">Rate Limit</span></td>
+              <td>Rate limit atteint pour veco_live_abc123...</td>
+              <td>192.168.1.45</td>
+              <td><span class="status-badge warning">Bloqué</span></td>
+            </tr>
+            <tr>
+              <td>27 Jan 2026 12:15</td>
+              <td><span class="log-type info">Auth</span></td>
+              <td>Nouvelle connexion admin depuis Paris</td>
+              <td>82.234.12.89</td>
+              <td><span class="status-badge active">OK</span></td>
+            </tr>
+            <tr>
+              <td>26 Jan 2026 23:45</td>
+              <td><span class="log-type danger">Blocked</span></td>
+              <td>IP bloquée après 5 tentatives échouées</td>
+              <td>45.67.89.123</td>
+              <td><span class="status-badge danger">Bloqué</span></td>
+            </tr>
+            <tr>
+              <td>26 Jan 2026 18:20</td>
+              <td><span class="log-type success">API Key</span></td>
+              <td>Nouvelle clé API créée - VTC Bordeaux</td>
+              <td>86.12.34.56</td>
+              <td><span class="status-badge active">OK</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ==================== PAGE: CONFIG ==================== -->
+    <section class="page-section" id="page-config" style="display: none;">
+      <header class="content-header">
+        <div class="header-left">
+          <h1>Configuration</h1>
+          <p>Paramètres généraux de la plateforme</p>
+        </div>
+      </header>
+
+      <div class="config-grid">
+        <div class="table-card">
+          <div class="table-header">
+            <h2>Paramètres API</h2>
+          </div>
+          <div class="config-form">
+            <div class="config-item">
+              <label class="config-label">Rate Limit par défaut</label>
+              <select class="form-input">
+                <option value="100">100 req/min (Free)</option>
+                <option value="500">500 req/min (Starter)</option>
+                <option value="2000" selected>2000 req/min (Pro)</option>
+                <option value="unlimited">Illimité (Enterprise)</option>
+              </select>
+            </div>
+            <div class="config-item">
+              <label class="config-label">Durée de vie des tokens</label>
+              <select class="form-input">
+                <option value="1h">1 heure</option>
+                <option value="24h" selected>24 heures</option>
+                <option value="7d">7 jours</option>
+                <option value="30d">30 jours</option>
+              </select>
+            </div>
+            <div class="config-item">
+              <label class="config-label">Mode debug API</label>
+              <label class="toggle">
+                <input type="checkbox">
+                <span class="toggle-slider"></span>
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <div class="table-card">
+          <div class="table-header">
+            <h2>Webhooks</h2>
+          </div>
+          <div class="config-form">
+            <div class="config-item">
+              <label class="config-label">URL Webhook principal</label>
+              <input type="url" class="form-input" value="https://example.com/webhooks" placeholder="https://...">
+            </div>
+            <div class="config-item">
+              <label class="config-label">Secret Webhook</label>
+              <div class="input-with-button">
+                <input type="password" class="form-input" value="whsec_xxxxxxxx" readonly>
+                <button class="btn btn-outline btn-sm">Régénérer</button>
+              </div>
+            </div>
+            <div class="config-item">
+              <label class="config-label">Événements activés</label>
+              <div class="checkbox-group">
+                <label><input type="checkbox" checked> booking.created</label>
+                <label><input type="checkbox" checked> booking.updated</label>
+                <label><input type="checkbox" checked> driver.assigned</label>
+                <label><input type="checkbox"> payment.completed</label>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="table-card">
+          <div class="table-header">
+            <h2>Notifications</h2>
+          </div>
+          <div class="config-form">
+            <div class="config-item">
+              <label class="config-label">Email notifications admin</label>
+              <input type="email" class="form-input" value="admin@veeo-stras.fr" placeholder="email@exemple.com">
+            </div>
+            <div class="config-item">
+              <label class="config-label">Alertes rate limit</label>
+              <label class="toggle">
+                <input type="checkbox" checked>
+                <span class="toggle-slider"></span>
+              </label>
+            </div>
+            <div class="config-item">
+              <label class="config-label">Rapports hebdomadaires</label>
+              <label class="toggle">
+                <input type="checkbox" checked>
+                <span class="toggle-slider"></span>
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div style="margin-top: 20px; text-align: right;">
+        <button class="btn btn-outline" style="margin-right: 10px;">Réinitialiser</button>
+        <button class="btn btn-primary">Sauvegarder les modifications</button>
+      </div>
+    </section>
+
   </main>
 
   <!-- Create API Key Modal -->
